@@ -16,9 +16,6 @@ const TTS = (text, rate = 0.71) => {
   }
 
   synth.speak(toSpeak);
-
-
-
 };
 
 export const stopTTS = () => {

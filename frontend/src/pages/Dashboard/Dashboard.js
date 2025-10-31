@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Button, Container } from 'react-bootstrap';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import './Dashboard.scss';
+import React, { useEffect, useState } from "react";
+import { Card, Button, Container } from "react-bootstrap";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "./Dashboard.scss";
 
 const Dashboard = () => {
   const [recipes, setRecipes] = useState([]);
@@ -16,10 +16,10 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/recipe/api/getRecipes');
+        const response = await axios.get("http://localhost:5000/recipe/api/getRecipes");
         setRecipes(response.data.allRecipeData);
       } catch (error) {
-        console.error('Failed to fetch recipes:', error);
+        console.error("Failed to fetch recipes:", error);
       }
     };
 
@@ -69,17 +69,17 @@ const Dashboard = () => {
   };
 
   return (
-    <Container className='dashboard_container'>
+    <Container className="dashboard_container">
       <div className="recipe_container">
         <h1 className="text-center mt-5">Công thức ({recipes.length})</h1>
         <div className="filters">
-          <input className='search_input'
+          <input className="search_input"
             type="text"
             placeholder="Tìm kiếm"
             value={nameFilter}
             onChange={handleNameFilterChange}
           />
-          <select className='form-select' onChange={handleSortOrderChange} value={sortOrder}>
+          <select className="form-select" onChange={handleSortOrderChange} value={sortOrder}>
             <option value="date↑">Mới nhất</option>
             <option value="date↓">Cũ nhất</option>
             <option value="rating↓">Điểm ↓</option>
@@ -92,8 +92,8 @@ const Dashboard = () => {
         </div>
         <div className="recipecard">
           {filteredRecipe.map((recipe) => (
-            <Card key={recipe._id} style={{ maxWidth: '21rem', width: "100%", marginBottom: "15px", boxShadow: "0px 2px 20px #cfd8dc", height: "27rem", cursor: "pointer" }}>
-              <Card.Img style={{ width: "100%", height: "190px", maxWidth:"334px" }} variant="top" src={recipe.recipeImg || '/dragondancing_1200x1200.jpg'} />
+            <Card key={recipe._id} style={{ maxWidth: "21rem", width: "100%", marginBottom: "15px", boxShadow: "0px 2px 20px #cfd8dc", height: "27rem", cursor: "pointer" }}>
+              <Card.Img style={{ width: "100%", height: "190px", maxWidth:"334px" }} variant="top" src={recipe.recipeImg || "/dragondancing_1200x1200.jpg"} />
               <Card.Body>
                 <Card.Title>{recipe.recipename} <small style={{ fontweight: "100px" }}>({new Date(recipe.createdAt).toLocaleDateString()})</small></Card.Title>
 

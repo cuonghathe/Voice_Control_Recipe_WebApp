@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Table, Container } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import './TopRecipe.scss';
+import React, { useEffect, useState } from "react";
+import { Table, Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./TopRecipe.scss";
 
 const TopUser = () => {
   const [users, setUsers] = useState([]);
-  const [sortBy, setSortBy] = useState('averageRating'); 
+  const [sortBy, setSortBy] = useState("averageRating"); 
   const navigate = useNavigate();
   const [nameFilter, setNameFilter] = useState("");
 
@@ -14,10 +14,10 @@ const TopUser = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/user/api/alluserstats');
+        const response = await axios.get("http://localhost:5000/user/api/alluserstats");
         setUsers(response.data);
       } catch (error) {
-        console.error('Failed to fetch user stats:', error);
+        console.error("Failed to fetch user stats:", error);
       }
     };
 
@@ -41,9 +41,9 @@ const filteredUsers = users
   return matchesName;
 })
 .sort((a, b) => {
-  if (sortBy === 'averageRating') {
+  if (sortBy === "averageRating") {
     return parseFloat(b.averageRatingAcrossRecipes) - parseFloat(a.averageRatingAcrossRecipes);
-  } else if (sortBy === 'totalRecipes') {
+  } else if (sortBy === "totalRecipes") {
     return b.totalRecipes - a.totalRecipes;
   }
   return 0;
@@ -65,7 +65,7 @@ const filteredUsers = users
         </div>
 
         <div className="filters">
-          <input className='search_input'
+          <input className="search_input"
             type="text"
             placeholder="Tìm kiếm"
             value={nameFilter}
@@ -90,9 +90,9 @@ const filteredUsers = users
                 <td>{index + 1}</td>
                 <td>
                   <img
-                    src={user.userprofile || '/dragondancing_1200x1200.jpg'}
+                    src={user.userprofile || "/dragondancing_1200x1200.jpg"}
                     alt={user.username}
-                    style={{ width: '75px', height: '75px', objectFit: 'cover'}}
+                    style={{ width: "75px", height: "75px", objectFit: "cover"}}
                   />
                 </td>
                 <td onClick={() => handlenav(user._id)}>{user.username}</td>

@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import '../Login/Login.scss';
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
+import "../Login/Login.scss";
 
 const UpdateProfile = () => {
     const { userId } = useParams();
     const navigate = useNavigate();
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [file, setFile] = useState(null);
-    const [userprofile, setUserprofile] = useState('');
+    const [userprofile, setUserprofile] = useState("");
     const [passShow, setPassShow] = useState(false);
-    const [error, setError] = useState('');
+    const [error, setError] = useState("");
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -33,27 +33,27 @@ const UpdateProfile = () => {
     const handleUpdate = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append('username', username);
-        formData.append('email', email);
+        formData.append("username", username);
+        formData.append("email", email);
         if (password) {
-            formData.append('password', password);
+            formData.append("password", password);
         }
         if (file) {
-            formData.append('userprofile', file);
+            formData.append("userprofile", file);
         }
 
         try {
             const res = await axios.put(`http://localhost:5000/user/api/updateprofile/${userId}`, formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    "Content-Type": "multipart/form-data"
                 }
             });
 
             console.log(res.data);
             navigate(`/userprofile/${userId}`);
         } catch (err) {
-            console.error('Cập nhật thất bại:', err);
-            setError(err.response?.data?.error || 'Cập nhật thất bại');
+            console.error("Cập nhật thất bại:", err);
+            setError(err.response?.data?.error || "Cập nhật thất bại");
         }
     };
 
@@ -70,7 +70,7 @@ const UpdateProfile = () => {
                             <input
                                 type="text"
                                 name="username"
-                                placeholder='Tên tài khoản'
+                                placeholder="Tên tài khoản"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                             />
@@ -80,7 +80,7 @@ const UpdateProfile = () => {
                             <input
                                 type="email"
                                 name="email"
-                                placeholder='Địa chỉ Email'
+                                placeholder="Địa chỉ Email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
@@ -104,7 +104,7 @@ const UpdateProfile = () => {
                                 <input
                                     type={!passShow ? "password" : "text"}
                                     name="password"
-                                    placeholder='Nhập mật khẩu mới'
+                                    placeholder="Nhập mật khẩu mới"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
@@ -116,7 +116,7 @@ const UpdateProfile = () => {
 
                         {error && <div className="error_message">{error}</div>}
 
-                        <button className='btn' type="submit">Cập nhật</button>
+                        <button className="btn" type="submit">Cập nhật</button>
                     </form>
                 </div>
             </section>

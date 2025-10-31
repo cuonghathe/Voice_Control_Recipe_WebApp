@@ -1,8 +1,8 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Container, Table } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import './TopRecipe.scss';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Container, Table } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import "./TopRecipe.scss";
 
 const TopRecipe = () => {
   const [recipes, setRecipes] = useState([]);
@@ -28,7 +28,7 @@ const TopRecipe = () => {
       }
 
       try {
-        const response = await axios.get('http://localhost:5000/recipe/api/getRecipes');
+        const response = await axios.get("http://localhost:5000/recipe/api/getRecipes");
         const sortedRecipes = response.data.allRecipeData
           .filter((recipe) => {
             const createdAt = new Date(recipe.createdAt);
@@ -37,7 +37,7 @@ const TopRecipe = () => {
           .sort((a, b) => b.averageRating - a.averageRating);
         setRecipes(sortedRecipes);
       } catch (error) {
-        console.error('Failed to fetch recipes:', error);
+        console.error("Failed to fetch recipes:", error);
       }
     };
 
@@ -62,7 +62,7 @@ const TopRecipe = () => {
   };
 
   return (
-    <div className='TopRecipe_body'>
+    <div className="TopRecipe_body">
 
       <Container className="leaderboard-container">
         <h1 className="leaderboard-title">Top công thức</h1>
@@ -81,7 +81,7 @@ const TopRecipe = () => {
         </div>
 
         <div className="filters">
-          <input className='search_input'
+          <input className="search_input"
             type="text"
             placeholder="Tìm kiếm"
             value={nameFilter}
@@ -108,13 +108,13 @@ const TopRecipe = () => {
                   <td>{originalIndex + 1}</td> { }
                   <td>
                     <img
-                      src={recipe.recipeImg || '/default-image.png'}
+                      src={recipe.recipeImg || "/default-image.png"}
                       alt={recipe.recipename}
-                      style={{ width: '75px', height: '75px', objectFit: 'cover', borderRadius: '5px' }}
+                      style={{ width: "75px", height: "75px", objectFit: "cover", borderRadius: "5px" }}
                     />
                   </td>
                   <td onClick={() => handleNavigateRecipe(recipe._id)}>{recipe.recipename}</td>
-                  <td>{recipe.userData[0]?.username || 'Unknown'}</td>
+                  <td>{recipe.userData[0]?.username || "Unknown"}</td>
                   <td>{recipe.averageRating}★</td>
                   <td>{recipe.reviewCount}</td>
                 </tr>
