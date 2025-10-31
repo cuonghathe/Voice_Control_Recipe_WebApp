@@ -1,13 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
+import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Form from 'react-bootstrap/Form';
-import Scrolling from '../../api/voiceControl/scrolling';
-import TTS, { stopTTS } from '../../api/voiceControl/TTS';
+import Form from "react-bootstrap/Form";
+import { useParams } from "react-router-dom";
+import Scrolling from "../../api/voiceControl/scrolling";
+import TTS, { stopTTS } from "../../api/voiceControl/TTS";
+import ChatBotBox from "../../components/chatBot/ChatBotBox";
+import VoiceControlInstruction from "../../components/voiceControlInstruction";
 import "./Recipe.scss";
 
 const RecipeDetails = () => {
@@ -17,13 +19,12 @@ const RecipeDetails = () => {
     const [servings, setServings] = useState(1);
     const [adjustedIngredients, setAdjustedIngredients] = useState([]);
     const [reviews, setReviews] = useState([]);
-    const [error, setError] = useState('');
-    const [newReview, setNewReview] = useState({ username: '', rating: '', description: '' });
+    const [error, setError] = useState("");
+    const [newReview, setNewReview] = useState({ username: "", rating: "", description: "" });
     const token = localStorage.getItem("authToken");
     const instructionsRef = useRef(null);
     const reviewRef = useRef(null);
     const ingredientsRef = useRef(null);
-    const helpRef = useRef(null);
 
 
     useEffect(() => {
@@ -34,7 +35,7 @@ const RecipeDetails = () => {
                 setServings(response.data.servingSize);
                 setAdjustedIngredients(response.data.ingredients);
             } catch (error) {
-                console.error('Failed to fetch recipe:', error);
+                console.error("Failed to fetch recipe:", error);
             }
         };
 
@@ -43,7 +44,7 @@ const RecipeDetails = () => {
                 const response = await axios.get(`http://localhost:5000/review/api/getreview/${id}`);
                 setReviews(response.data);
             } catch (error) {
-                console.error('Failed to fetch reviews:', error);
+                console.error("Failed to fetch reviews:", error);
             }
         };
 
@@ -82,10 +83,10 @@ const RecipeDetails = () => {
                 headers: { Authorization: `${token}` },
             });
             setReviews([...reviews, response.data.addReview]);
-            setNewReview({ username: '', rating: '', description: '' });
+            setNewReview({ username: "", rating: "", description: "" });
         } catch (error) {
-            console.error('Lỗi tạo:', error);
-            setError(error.response?.data?.error || 'Lỗi tạo:');
+            console.error("Lỗi tạo:", error);
+            setError(error.response?.data?.error || "Lỗi tạo:");
         }
     };
 
@@ -107,19 +108,12 @@ const RecipeDetails = () => {
         ingredientsRef.current?.scrollIntoView();
     };
 
-    const changeOpacity = () => {
-        if (helpRef.current) {
-            const currentOpacity = helpRef.current.style.opacity;
-            helpRef.current.style.opacity = currentOpacity === '1' ? '0.05' : '1';
-        }
-    };
-
     const handleSpeakIngredients = () => {
         if (!recipe || !recipe.ingredients) return;
 
         const ingredientsText = recipe.ingredients
             .map(ingredient => `${ingredient.name}: ${ingredient.quantity} ${ingredient.measurement}`)
-            .join(', ');
+            .join(", ");
 
         TTS(ingredientsText);
     };
@@ -137,22 +131,21 @@ const RecipeDetails = () => {
                     <div className="recipe-header">
                         <h1 className="recipe-title">{recipe.recipename}</h1>
                         <div className="recipe-image-container">
-                            <Card className='recipe-image-card'>
-                                <Card.Img variant="top" src={recipe.recipeImg || '/logo192.png'} />
+                            <Card className="recipe-image-card">
+                                <Card.Img variant="top" src={recipe.recipeImg || "/logo192.png"} />
                             </Card>
                         </div>
                     </div>
                 </div>
                 <div className="recipe-details">
-                    <h4 className="recipe-author">Tác giả: <span className='review'>{recipe.userId.username}</span></h4>
+                    <h4 className="recipe-author">Tác giả: <span className="review">{recipe.userId.username}</span></h4>
                     <div className="rating_info">
                         Điểm: <span className="star">{calculateAverageRating()}<i >★ </i></span>
-                        <Button variant="link" className='review_btn' onClick={scrollToReviews}>({reviews.length}) Đánh giá</Button>
+                        <Button variant="link" className="review_btn" onClick={scrollToReviews}>({reviews.length}) Đánh giá</Button>
                         <Scrolling
                             scrollToInstructions={scrollToInstructions}
                             scrollToReviews={scrollToReviews}
                             scrollToIngredients={scrollToIngredients}
-                            changeOpacity={changeOpacity}
                             handleAddServing={() => handleServingsChange(servings + 1)}
                             handleRemoveServing={() => handleServingsChange(servings - 1)}
                             handleSpeakIngredients={handleSpeakIngredients}
@@ -170,7 +163,7 @@ const RecipeDetails = () => {
                                 <Button variant="outline-secondary" onClick={() => handleServingsChange(servings + 1)}>+</Button>
                             </ButtonGroup>
 
-                            <Button variant="primary" className='navBtn' onClick={scrollToInstructions}>
+                            <Button variant="primary" className="navBtn" onClick={scrollToInstructions}>
                                 Xem Cách Làm
                             </Button>
                         </div>
@@ -186,10 +179,10 @@ const RecipeDetails = () => {
                 <Card className="ingredients-card" ref={ingredientsRef}>
                     <Card.Body>
                         <div className="info_box">
-                            <h4 className='mt-2'>Nguyên liệu</h4>
+                            <h4 className="mt-2">Nguyên liệu</h4>
                             <div className="recipe-ingredients-instructions">
-                                <Button variant="success" size='sm' onClick={handleSpeakIngredients}>Đọc</Button>
-                                <Button variant="danger" size='sm' onClick={stopTTS} >Dừng</Button>
+                                <Button variant="success" size="sm" onClick={handleSpeakIngredients}>Đọc</Button>
+                                <Button variant="danger" size="sm" onClick={stopTTS} >Dừng</Button>
                             </div>
                         </div>
 
@@ -201,7 +194,7 @@ const RecipeDetails = () => {
                                     label={`${ingredient.name}: ${ingredient.quantity} (${ingredient.measurement})`}
                                     checked={checkedIngredients.includes(ingredient.name)}
                                     onChange={() => handleCheck(ingredient.name)}
-                                    className={checkedIngredients.includes(ingredient.name) ? 'checked' : ''}
+                                    className={checkedIngredients.includes(ingredient.name) ? "checked" : ""}
                                 />
                             ))}
                         </Form>
@@ -210,14 +203,14 @@ const RecipeDetails = () => {
 
                 <Card className="instructions-card mt-4" ref={instructionsRef}>
                     <Card.Body>
-                        <h4 className='mt-2'>Cách làm</h4>
+                        <h4 className="mt-2">Cách làm</h4>
                         <Form>
                             {recipe.instructions.map((instruction, index) => (
                                 <Form.Check
                                     key={index}
                                     type="checkbox"
                                     label={instruction}
-                                    className='instruction-item'
+                                    className="instruction-item"
                                 />
                             ))}
                         </Form>
@@ -264,7 +257,7 @@ const RecipeDetails = () => {
                         />
                     </Form.Group>
 
-                    {typeof error === 'object' ? <p className="error">{error.message}</p> : <p className="error">{error}</p>}
+                    {typeof error === "object" ? <p className="error">{error.message}</p> : <p className="error">{error}</p>}
 
                     <Button variant="primary" className="mt-3" onClick={handleAddReview}>
                         Gửi đánh giá
@@ -292,23 +285,10 @@ const RecipeDetails = () => {
                     ))}
                 </div>
             </div>
-
-            <div className="help" ref={helpRef}>
-                <div className="info_box">
-                    <h4>Điều khiển giọng nói</h4>
-                    <span onClick={changeOpacity} className="mb-4" style={{ color: "red", fontSize: "24px", fontWeight: "900" }}>X</span>
-                </div>
-                <p className="instruction" style={{ marginTop: "10px" }}>Ẩn hiện hộp hướng dẫn: "tắt", "bật"</p>
-                <p className="instruction">Lên đầu trang: "đầu"</p>
-                <p className="instruction">Xuống cuối trang: "cuối"</p>
-                <p className="instruction">Cuộn lên xuống: "lên", "xuống"</p>
-                <p className="instruction">Cuộn xuống giữa trang: "nửa"</p>
-                <p className="instruction">Đi đến phần nguyên liệu: "1"</p>
-                <p className="instruction">Đi đến phần hướng dẫn: "2"</p>
-                <p className="instruction">Đi đến phần đánh giá: "3"</p>
-                <p className="instruction">Tăng giảm suất ăn: "tăng", "giảm"</p>
-
-            </div>
+            
+            <ChatBotBox/>
+            <VoiceControlInstruction/>
+            
         </Container>
     );
 }

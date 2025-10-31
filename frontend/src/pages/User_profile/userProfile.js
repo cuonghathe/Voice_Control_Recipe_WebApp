@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 import Container from "react-bootstrap/Container";
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 import "../Recipe/Recipe.scss";
-import { CardTitle } from 'react-bootstrap';
+import { CardTitle } from "react-bootstrap";
 
 const UserProfile = () => {
     const { userId } = useParams();
@@ -24,7 +24,7 @@ const UserProfile = () => {
                 const userResponse = await axios.get(`http://localhost:5000/user/api/profile/${userId}`);
                 setUser(userResponse.data);
             } catch (error) {
-                console.error('Failed to fetch user:', error);
+                console.error("Failed to fetch user:", error);
             }
         };
 
@@ -33,7 +33,7 @@ const UserProfile = () => {
                 const recipeResponse = await axios.get(`http://localhost:5000/user/api/getuserrecipe/${userId}`);
                 setRecipes(recipeResponse.data);
             } catch (error) {
-                console.error('Failed to fetch recipes:', error);
+                console.error("Failed to fetch recipes:", error);
             }
         };
 
@@ -42,7 +42,7 @@ const UserProfile = () => {
                 const reviewResponse = await axios.get(`http://localhost:5000/user/api/getuserreview/${userId}`);
                 setReviews(reviewResponse.data);
             } catch (error) {
-                console.error('Failed to fetch reviews:', error);
+                console.error("Failed to fetch reviews:", error);
             }
         };
 
@@ -62,11 +62,11 @@ const UserProfile = () => {
         try {
             await axios.delete(`http://localhost:5000/user/api/delprofile/${userId}`, {
             });
-            localStorage.removeItem('authToken');
-            navigate('/');
+            localStorage.removeItem("authToken");
+            navigate("/");
 
         } catch (error) {
-            console.error('Fuck!:', error);
+            console.error("Fuck!:", error);
         }
     };
 
@@ -80,7 +80,7 @@ const UserProfile = () => {
             });
             setRecipes((prevRecipes) => prevRecipes.filter((recipe) => recipe._id !== recipeId));
         } catch (error) {
-            console.error('Failed to delete:', error);
+            console.error("Failed to delete:", error);
         }
     };
 
@@ -93,7 +93,7 @@ const UserProfile = () => {
             });
             setReviews(reviews.filter(review => review._id !== reviewId));
         } catch (error) {
-            console.error('Failed to delete:', error);
+            console.error("Failed to delete:", error);
         }
     };
 
@@ -111,8 +111,8 @@ const UserProfile = () => {
                     <div className="recipe-header">
                         <h1 className="recipe-title">{ }</h1>
                         <div className="recipe-image-container">
-                            <Card className='recipe-image-card'>
-                                <Card.Img variant="top" src={user.userprofile || '/dragondancing_1200x1200.jpg'} />
+                            <Card className="recipe-image-card">
+                                <Card.Img variant="top" src={user.userprofile || "/dragondancing_1200x1200.jpg"} />
                             </Card>
                         </div>
                     </div>
@@ -120,7 +120,7 @@ const UserProfile = () => {
                 <div className="user-details">
 
                     <h4 className="recipe-author">
-                        Username: <span className='review'>{user.username}</span>
+                        Username: <span className="review">{user.username}</span>
 
                     </h4>
                     <Card.Title>Email: <span className="mb-4">{user.email}</span></Card.Title>
@@ -129,7 +129,7 @@ const UserProfile = () => {
                     <Card.Title>Số bài đăng:<span className="mb-4"> {user.totalRecipes}</span> </Card.Title>
                     <Card.Title>Số đánh giá:<span className="mb-4"> {reviews.length}</span> </Card.Title>
                     <Card.Title>Số lần đăng nhập:<span className="mb-4"> {user.tokens.length}</span>
-                    <div className='recipe-ingredients-instructions'style={{marginLeft:"600px"}}>
+                    <div className="recipe-ingredients-instructions"style={{marginLeft:"600px"}}>
                         <Button variant="danger" onClick={() => handleDeleteUser(user._id)} >Xóa</Button>
                         <Button variant="warning" onClick={() => navigate(`/updateprofile/${userId}`)}>Sửa</Button>
                     </div></Card.Title>
@@ -140,7 +140,7 @@ const UserProfile = () => {
             <div className="recipe-ingredients-instructions">
                 <Card className="ingredients-card">
                     <Card.Body>
-                        <h4 className='mt-2'>Công thức đã đăng ({recipes.length}) </h4>
+                        <h4 className="mt-2">Công thức đã đăng ({recipes.length}) </h4>
                         <Form>
                             {recipes.map(recipe => (
                                 <Card key={recipe._id} className="recipe-card">
@@ -150,9 +150,9 @@ const UserProfile = () => {
                                                 <p>Ngày tạo: <span className="mb-4">{new Date(recipe.createdAt).toLocaleDateString()}   </span></p>
                                             </h5>
                                             <div className="recipe-ingredients-instructions">
-                                                <Button variant="success" size='sm' href={`/recipe/${recipe._id}`}>Xem</Button>
-                                                <Button variant="warning" size='sm' onClick={() => navigate(`/updaterecipe/${recipe._id}`)} >Sửa!</Button>
-                                                <Button variant="danger" size='sm' onClick={() => handleDeleteRecipe(recipe._id)} >Xóa!</Button>
+                                                <Button variant="success" size="sm" href={`/recipe/${recipe._id}`}>Xem</Button>
+                                                <Button variant="warning" size="sm" onClick={() => navigate(`/updaterecipe/${recipe._id}`)} >Sửa!</Button>
+                                                <Button variant="danger" size="sm" onClick={() => handleDeleteRecipe(recipe._id)} >Xóa!</Button>
                                             </div>
                                         </div>
                                     </Card.Body>
@@ -184,8 +184,8 @@ const UserProfile = () => {
                                     </h5>
 
                                     <div className="recipe-ingredients-instructions">
-                                        <Button variant="success" size='sm' href={`/recipe/${review.recipeid}`}>Xem</Button>
-                                        <Button variant="danger" size='sm' onClick={() => handleDeleteReview(review._id)}>Xóa!</Button>
+                                        <Button variant="success" size="sm" href={`/recipe/${review.recipeid}`}>Xem</Button>
+                                        <Button variant="danger" size="sm" onClick={() => handleDeleteReview(review._id)}>Xóa!</Button>
                                     </div>
                                 </div>
 

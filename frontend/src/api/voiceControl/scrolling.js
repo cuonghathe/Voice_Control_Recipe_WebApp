@@ -27,13 +27,13 @@ const Scrolling = ({ scrollToInstructions, scrollToReviews, scrollToIngredients,
 
     recognition.onerror = (event) => {
       if (event.error === "no-speech") {
-        console.log("FUCK!!! Retrying...");
+        // console.log("FUCK!!! Retrying...");
         setTimeout(() => {
           if (!isRecognitionStarted) {
             try {
               recognition.start();
             } catch (error) {
-              console.error("FUCK!!!:", error);
+              // console.error("FUCK!!!:", error);
             }
           }
         }, 1000);
@@ -43,7 +43,7 @@ const Scrolling = ({ scrollToInstructions, scrollToReviews, scrollToIngredients,
 
     recognition.onresult = (event) => {
       const command = event.results[event.results.length - 1][0].transcript.trim();
-      console.log("Command received:", command);
+      // console.log("Command received:", command);
 
       const currentTime = Date.now();
       if (currentTime - lastExecuted > 2000) {

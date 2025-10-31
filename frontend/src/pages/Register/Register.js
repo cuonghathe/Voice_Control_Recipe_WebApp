@@ -1,43 +1,43 @@
-import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import '../Login/Login.scss';
-import axios from 'axios';
+import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import "../Login/Login.scss";
+import axios from "axios";
 
 const Register = () => {
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [file, setFile] = useState(null);
     const [passShow, setPassShow] = useState(false);
     const [cpassShow, setCPassShow] = useState(false);
-    const [error, setError] = useState('');
+    const [error, setError] = useState("");
     const navigate = useNavigate();
 
     const handleRegister = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append('username', username);
-        formData.append('email', email);
-        formData.append('password', password);
-        formData.append('comfirmpassword', confirmPassword);
+        formData.append("username", username);
+        formData.append("email", email);
+        formData.append("password", password);
+        formData.append("comfirmpassword", confirmPassword);
         if (file) {
-            formData.append('userprofile', file);
+            formData.append("userprofile", file);
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/user/api/register', formData, {
+            const response = await axios.post("http://localhost:5000/user/api/register", formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    "Content-Type": "multipart/form-data"
                 }
             });
             console.log(response.data);
             if (response.data.message === "Đăng ký thành công") {
-                navigate('/login');
+                navigate("/login");
             }
         } catch (error) {
-            console.error('Đăng ký thất bại:', error);
-            setError(error.response?.data?.error || 'Đăng ký thất bại');
+            console.error("Đăng ký thất bại:", error);
+            setError(error.response?.data?.error || "Đăng ký thất bại");
         }
     }
 
@@ -55,7 +55,7 @@ const Register = () => {
                                 <input
                                     type="text"
                                     name="username"
-                                    placeholder='Nhập tên tài khoản'
+                                    placeholder="Nhập tên tài khoản"
                                     value={username}
                                     onChange={(e) => setUsername(e.target.value)}
                                 />
@@ -64,7 +64,7 @@ const Register = () => {
                                 <input
                                     type="email"
                                     name="email"
-                                    placeholder='Địa chỉ Email'
+                                    placeholder="Địa chỉ Email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
@@ -83,7 +83,7 @@ const Register = () => {
                                     <input
                                         type={!passShow ? "password" : "text"}
                                         name="password"
-                                        placeholder='Nhập mật khẩu'
+                                        placeholder="Nhập mật khẩu"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
@@ -98,7 +98,7 @@ const Register = () => {
                                     <input
                                         type={!cpassShow ? "password" : "text"}
                                         name="confirmPassword"
-                                        placeholder='Xác nhận mật khẩu'
+                                        placeholder="Xác nhận mật khẩu"
                                         value={confirmPassword}
                                         onChange={(e) => setConfirmPassword(e.target.value)}
                                     />
@@ -110,7 +110,7 @@ const Register = () => {
 
                             {error && <div className="error_message">{error}</div>}
 
-                            <button className='btn' type="submit">Đăng ký</button>
+                            <button className="btn" type="submit">Đăng ký</button>
                             <p>Đã có tài khoản? <NavLink to="/login">Đăng nhập</NavLink> </p>
                         </form>
                     </div>
