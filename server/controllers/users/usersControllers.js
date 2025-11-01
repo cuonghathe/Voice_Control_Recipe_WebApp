@@ -79,6 +79,7 @@ export const login = async (req, res) => {
           const tokenData = {
             token,
             userId: userValid._id,
+            userProfilePic: userValid.userprofile
           };
 
           return res.status(200).json({ tokenData, message: "Đăng nhập thành công" });
