@@ -1,8 +1,17 @@
+.TopRecipe_body{
+  background-image: url('food.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: flex-start;
+}
+
+
 .leaderboard-container {
   margin-top: 85px;
   background-color: rgba(255, 255, 255, 0.95);
   width: 100%;
-  min-height: 100vh; 
   display: flex;
   flex-direction: column;
   justify-content: flex-start; 
@@ -40,17 +49,6 @@ th, td {
   border-radius: var(--bs-border-radius);
 }
 
-.TopRecipe_body{
-  width: 100%;
-  height: 100vh;
-  background-image: url('food.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .leaderboard-container img {
   border: 2px solid #ddd;
@@ -76,7 +74,14 @@ th, td {
 
 }
 
+.name{
+  cursor: pointer;
+}
 
+.name:hover{
+  color: #ea9c00;
+  font-weight: 700;
+}
 
 .TopUser_body{
   margin-top: 10rem;

@@ -57,7 +57,6 @@ const TopRecipe = () => {
     })
 
   const handleNavigateRecipe = (id) => {
-    if (!window.confirm("Đi đến công thức?")) return;
     navigate(`/recipe/${id}`);
   };
 
@@ -113,7 +112,7 @@ const TopRecipe = () => {
                       style={{ width: "75px", height: "75px", objectFit: "cover", borderRadius: "5px" }}
                     />
                   </td>
-                  <td onClick={() => handleNavigateRecipe(recipe._id)}>{recipe.recipename}</td>
+                  <td className="name" onClick={() => handleNavigateRecipe(recipe._id)}>{recipe.recipename}</td>
                   <td>{recipe.userData[0]?.username || "Unknown"}</td>
                   <td>{recipe.averageRating}★</td>
                   <td>{recipe.reviewCount}</td>

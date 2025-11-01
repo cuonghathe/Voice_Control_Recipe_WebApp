@@ -90,7 +90,6 @@ export const searchRecipe = async (req, res) => {
           ]
       });
       
-
       res.json(allRecipeData);
   } catch (error) {
       console.error("Error searching recipes:", error);
