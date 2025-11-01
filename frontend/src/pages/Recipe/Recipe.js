@@ -15,7 +15,7 @@ import "./Recipe.scss";
 const RecipeDetails = () => {
     const { id } = useParams();
     const [recipe, setRecipe] = useState(null);
-    const [checkedIngredients, setCheckedIngredients] = useState([]);
+    const [checked, setChecked] = useState([]);
     const [servings, setServings] = useState(1);
     const [adjustedIngredients, setAdjustedIngredients] = useState([]);
     const [reviews, setReviews] = useState([]);
@@ -34,6 +34,7 @@ const RecipeDetails = () => {
                 setRecipe(response.data);
                 setServings(response.data.servingSize);
                 setAdjustedIngredients(response.data.ingredients);
+                
             } catch (error) {
                 console.error("Failed to fetch recipe:", error);
             }
@@ -53,11 +54,11 @@ const RecipeDetails = () => {
     }, [id]);
 
 
-    const handleCheck = (ingredient) => {
-        setCheckedIngredients(prevState =>
-            prevState.includes(ingredient)
-                ? prevState.filter(item => item !== ingredient)
-                : [...prevState, ingredient]
+    const handleCheck = (Item) => {
+        setChecked(prevState =>
+            prevState.includes(Item)
+                ? prevState.filter(item => item !== Item)
+                : [...prevState, Item]
         );
     };
 
@@ -126,10 +127,12 @@ const RecipeDetails = () => {
     return (
 
         <Container className="recipe-container">
+            <div className="recipe-title-contaier">
+                <h1 className="recipe-title">{recipe.recipename}</h1>
+            </div>
             <div className="recipe-header-details-container">
                 <div className="recipe-header-container">
                     <div className="recipe-header">
-                        <h1 className="recipe-title">{recipe.recipename}</h1>
                         <div className="recipe-image-container">
                             <Card className="recipe-image-card">
                                 <Card.Img variant="top" src={recipe.recipeImg || "/logo192.png"} />
@@ -141,7 +144,7 @@ const RecipeDetails = () => {
                     <h4 className="recipe-author">Tác giả: <span className="review">{recipe.userId.username}</span></h4>
                     <div className="rating_info">
                         Điểm: <span className="star">{calculateAverageRating()}<i >★ </i></span>
-                        <Button variant="link" className="review_btn" onClick={scrollToReviews}>({reviews.length}) Đánh giá</Button>
+                        <span className="review_btn" onClick={scrollToReviews}>({reviews.length}) Đánh giá</span>
                         <Scrolling
                             scrollToInstructions={scrollToInstructions}
                             scrollToReviews={scrollToReviews}
@@ -191,10 +194,11 @@ const RecipeDetails = () => {
                                 <Form.Check
                                     key={index}
                                     type="checkbox"
+                                    id={`ingredient-${index}`}
                                     label={`${ingredient.name}: ${ingredient.quantity} (${ingredient.measurement})`}
-                                    checked={checkedIngredients.includes(ingredient.name)}
+                                    checked={checked.includes(ingredient.name)}
                                     onChange={() => handleCheck(ingredient.name)}
-                                    className={checkedIngredients.includes(ingredient.name) ? "checked" : ""}
+                                    className={checked.includes(ingredient.name) ? "checked" : ""}
                                 />
                             ))}
                         </Form>
@@ -207,11 +211,14 @@ const RecipeDetails = () => {
                         <Form>
                             {recipe.instructions.map((instruction, index) => (
                                 <Form.Check
-                                    key={index}
-                                    type="checkbox"
-                                    label={instruction}
-                                    className="instruction-item"
-                                />
+                                key={index}
+                                type="checkbox"
+                                id={`instruction-${index}`}
+                                label={instruction}
+                                checked={checked.includes(instruction)}
+                                onChange={() => handleCheck(instruction)}
+                                className={checked.includes(instruction) ? "checked" : ""}
+                            />
                             ))}
                         </Form>
                     </Card.Body>
@@ -286,7 +293,7 @@ const RecipeDetails = () => {
                 </div>
             </div>
             
-            <ChatBotBox/>
+            <ChatBotBox recipeInfo = {recipe}/>
             <VoiceControlInstruction/>
             
         </Container>

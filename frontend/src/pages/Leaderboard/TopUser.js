@@ -25,7 +25,6 @@ const TopUser = () => {
   }, []);
 
   const handlenav = (id) => {
-    if (!window.confirm("Đi đến người dùng?")) return;
     navigate(`/UserProfilePublic/${id}`);
 }
 
@@ -95,7 +94,7 @@ const filteredUsers = users
                     style={{ width: "75px", height: "75px", objectFit: "cover"}}
                   />
                 </td>
-                <td onClick={() => handlenav(user._id)}>{user.username}</td>
+                <td className="name" onClick={() => handlenav(user._id)}>{user.username}</td>
                 <td>{user.averageRatingAcrossRecipes}★</td>
                 <td>{user.totalReviews}</td>
                 <td>{user.totalRecipes}</td>

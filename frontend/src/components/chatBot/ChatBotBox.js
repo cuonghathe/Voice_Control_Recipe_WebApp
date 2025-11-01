@@ -2,18 +2,17 @@ import { useEffect, useState, useRef } from "react";
 import ChatBotIcon from "./ChatBotIcon";
 import ChatBotForm from "./ChatBotForm.js";
 import ChatMessage from "./ChatMessage";
-import { info } from "../../context/info.js";
 import "./chat.scss";
 
 
 
-const ChatBotBox = ({ command }) => {
+const ChatBotBox = ({ command, recipeInfo }) => {
 
   const [chatHistory, setChatHistory] = useState([
     {
       hideInChat: true,
       role: "model",
-      text: info,
+      text: JSON.stringify(recipeInfo),
     },
   ]);
   const [showChatBot, setShowChatbot] = useState(false);
