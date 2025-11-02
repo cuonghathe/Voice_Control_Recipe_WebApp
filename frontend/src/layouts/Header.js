@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { Navbar, Nav, Container, Form } from 'react-bootstrap';
-import axios from 'axios';
+import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { Navbar, Nav, Container, Form } from "react-bootstrap";
+import axios from "axios";
 import "./header.scss";
 
 const Header = () => {
     const navigate = useNavigate();
-    const isLoggedIn = !!localStorage.getItem('authToken');
-    const [searchTerm, setSearchTerm] = useState('');
-    const userId = localStorage.getItem('userId');
+    const isLoggedIn = !!localStorage.getItem("authToken");
+    const [searchTerm, setSearchTerm] = useState("");
+    const userId = localStorage.getItem("userId");
+    const userProfilePic = localStorage.getItem("userProfilePic");
 
     const handleLogout = () => {
-        localStorage.removeItem('authToken');
-        navigate('/login');
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("userProfilePic");
+        navigate("/login");
     };
 
     const handlenav = () => {
@@ -32,9 +35,9 @@ const Header = () => {
 
         try {
             const response = await axios.get(`http://localhost:5000/recipe/api/search/${encodeURIComponent(searchTerm)}`);
-            navigate('/search', { state: { results: response.data } });
+            navigate("/search", { state: { results: response.data } });
         } catch (error) {
-            console.error('Failed to search recipes:', error);
+            console.error("Failed to search recipes:", error);
         }
     };
 
@@ -55,8 +58,8 @@ const Header = () => {
                             <Nav.Link as={NavLink} to="/users/leaderboard">Bảng xếp hạng người dùng</Nav.Link>
                         </Nav>
 
-                        <Nav className='text-mid'>
-                            <Form className='d-flex' style={{ maxWidth: "400px", width: "100%" }} onSubmit={handleSearch}>
+                        <Nav className="text-mid">
+                            <Form className="d-flex" style={{ maxWidth: "400px", width: "100%" }} onSubmit={handleSearch}>
                                 <Form.Control
                                     type="text"
                                     placeholder="Tìm kiếm"
@@ -71,7 +74,9 @@ const Header = () => {
 
                         {isLoggedIn ? (
                             <Nav className="ml-auto">
-                                <Nav.Link onClick={handlenav}>Tài khoản</Nav.Link>
+                            <div className="profile__picture__container">
+                                <Nav.Link onClick={handlenav}><img className = "userProfilePic"src={userProfilePic || "/dragondancing_1200x1200.jpg"} alt = "user profile"/></Nav.Link>
+                            </div>
                                 <Nav.Link onClick={handleLogout}>Đăng xuất</Nav.Link>
                             </Nav>
                         ) : (

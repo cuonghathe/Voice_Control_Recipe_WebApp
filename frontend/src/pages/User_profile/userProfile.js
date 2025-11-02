@@ -129,7 +129,7 @@ const UserProfile = () => {
                     <Card.Title>Số bài đăng:<span className="mb-4"> {user.totalRecipes}</span> </Card.Title>
                     <Card.Title>Số đánh giá:<span className="mb-4"> {reviews.length}</span> </Card.Title>
                     <Card.Title>Số lần đăng nhập:<span className="mb-4"> {user.tokens.length}</span>
-                    <div className="recipe-ingredients-instructions"style={{marginLeft:"600px"}}>
+                    <div className="userprofile__action">
                         <Button variant="danger" onClick={() => handleDeleteUser(user._id)} >Xóa</Button>
                         <Button variant="warning" onClick={() => navigate(`/updateprofile/${userId}`)}>Sửa</Button>
                     </div></Card.Title>

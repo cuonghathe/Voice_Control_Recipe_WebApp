@@ -192,9 +192,12 @@
   width: 7%;
 }
 
-
-
-
 .instruction{
   margin-bottom: 2px;
+}
+
+.userprofile__action{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
