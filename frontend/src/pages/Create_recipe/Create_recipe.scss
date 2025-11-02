@@ -25,14 +25,11 @@ section .form_data form .btn-danger {
 }
 .create_recipe_body{
     width: 100%;
-    height: 100;
     background-image: url('bgcreate.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 
@@ -42,12 +39,6 @@ section .form_data form .btn-danger {
 }
 
 .form_data {
-    max-width: 100%;
-    margin: 0 auto;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     background-color: #ffffff;
 
 }

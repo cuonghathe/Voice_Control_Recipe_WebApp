@@ -21,9 +21,11 @@ export const Login = () => {
         const token = response.data.tokenData.token;
         const userId = response.data.tokenData.userId;
         const userProfilePic = response.data.tokenData.userProfilePic;
+        const userName = response.data.tokenData.userName;
         localStorage.setItem("authToken", token);
         localStorage.setItem("userId", userId);
         localStorage.setItem("userProfilePic", userProfilePic);
+        localStorage.setItem("userName", userName);
 
         
         const decoded = JSON.parse(atob(token.split(".")[1]));

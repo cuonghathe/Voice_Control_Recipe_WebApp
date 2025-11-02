@@ -1,29 +1,132 @@
 header {
   width: 100%;
   z-index: 1;
-  margin-bottom: 0;
   position: fixed;
   top: 0;
 }
 
-.btn-warning{
+.btn-warning {
   margin-right: 0px;
   color: white;
 }
 
-.profile__picture__container{
+.navbar-nav a{
+  margin: auto;
+}
+
+.profile__picture__container {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
   margin-right: 10px;
   margin-left: 10px;
-  background-color: #fff;
 }
 
-.userProfilePic{
-  width: 30px;
-  height: 30px;
+.userProfilePic {
+  width: 39px;
+  height: 39px;
+  border-radius: 50%;
+  background-color: #fff;
+  padding: 1px;
+}
+
+/* Responsive styles */
+
+.user__acction{
+  display: inline-block;
+  margin-left: 24px;
+}
+
+.navbar__btn {
+  display: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+}
+
+.nav-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: none;
+}
+
+.nav-container-mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 320px;
+  font-size: 18px;
+  background-color: rgba(33, 37, 41, 1);
+  transform: translateX(-100%);
+  opacity: 0;
+  transition: transform 0.2s linear, opacity 0.2s linear;
+  padding: 20px;
+}
+
+.nav-container-mobile .nav {
+  list-style: none;
+  margin-top: 20px;
+}
+
+.nav__mobile__close {
+  color: #666;
+  font-size: 20px;
+  position: absolute;
+  top: 0.8rem;
+  right: 1rem;
+}
+
+.nav__input {
+  display: none;
+}
+
+.nav__input:checked ~ .nav-overlay {
+  display: block;
+}
+
+.nav__input:checked ~ .nav-container-mobile {
+  transform: translateX(0%);
+  opacity: 1;
+}
+
+.userProfile__section{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.nav-container-list{
+  border-top: solid 1px rgba(255, 255, 255, 0.55);
+}
+
+.nav-container-list a{
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+
+}
+
+@media (max-width: 1023px) {
+
+  .profile__picture__container{
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
+  .userProfilePic{
+    width: 45px;
+    height: 45px;
+  }
+
+  .navbar__btn {
+    display: block;
+  }
+
+  .nav__option, .nav__rightside{
+    display: none;
+  }
 }
