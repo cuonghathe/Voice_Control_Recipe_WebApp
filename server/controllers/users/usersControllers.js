@@ -55,6 +55,7 @@ export const register = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
 // Đăng nhập
 export const login = async (req, res) => {
   const { email, password } = req.body;
@@ -79,7 +80,8 @@ export const login = async (req, res) => {
           const tokenData = {
             token,
             userId: userValid._id,
-            userProfilePic: userValid.userprofile
+            userProfilePic: userValid.userprofile,
+            userName: userValid.username,
           };
 
           return res.status(200).json({ tokenData, message: "Đăng nhập thành công" });
@@ -112,60 +114,60 @@ export const userVerify = async (req, res) => {
 
 
 //quên mật khẩu
-export const forgotpassword = async (req, res) => {
-  const { email } = req.body;
-  if (!email) {
-    return res.status(400).json({ error: "Vui lòng điền đầy đủ thông tin" });
-  }
+// export const forgotpassword = async (req, res) => {
+//   const { email } = req.body;
+//   if (!email) {
+//     return res.status(400).json({ error: "Vui lòng điền đầy đủ thông tin" });
+//   }
 
-  try {
-    const userFind = await userDB.findOne({ email: email });
-
-
-    if (!userFind) {
-      return res.status(400).json({ error: "Tài khoản không tồn tại" });
-    } else {
-
-      //tao token cho user
-      const token = jwt.sign({ _id: userFind._id }, SECRET_KEY, {
-        expiresIn: "120s",
-      });
-
-      const setToken = await userDB.findOneAndUpdate({ _id: userFind._id }, { verifytoken: token }, { new: true });
+//   try {
+//     const userFind = await userDB.findOne({ email: email });
 
 
-      if (setToken) {
-        const mailOptions = {
-          from: process.env.EMAIL,
-          to: email,
-          subject: "Đặt lại mật khẩu",
-          html: `
-          <h2>Đặt lại mật khẩu</h2>
-          <p>Xin chào ${userFind.username}</p>
-          <p>Chúng tôi đã nhận được yêu cầu đặt lại mật khẩu của bạn. Hãy nhấn vào link phía dưới để tiếp tục</p>
-          <a href="http://localhost:5000/resetpassword/${userFind.id}/${setToken.verifytoken}" style="display: inline-block;
-          <p>Nêu không phải bạn, vui lòng bỏ qua email này</p>
-          `,
-        };
+//     if (!userFind) {
+//       return res.status(400).json({ error: "Tài khoản không tồn tại" });
+//     } else {
 
-        trasporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            console.log(error);
-            return res.status(400).json({ error: "Lỗi gửi mail" });
-          } else {
-            console.log("Email sent: ", info.response);
-            return res.status(200).json({ message: "Email đã được gửi" });
-          }
-        });
-      } else {
-        return res.status(400).json({ error: "Tài khoản không hợp lệ" });
-      }
-    }
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ error: error });
-  }
-};
+//       //tao token cho user
+//       const token = jwt.sign({ _id: userFind._id }, SECRET_KEY, {
+//         expiresIn: "120s",
+//       });
+
+//       const setToken = await userDB.findOneAndUpdate({ _id: userFind._id }, { verifytoken: token }, { new: true });
+
+
+//       if (setToken) {
+//         const mailOptions = {
+//           from: process.env.EMAIL,
+//           to: email,
+//           subject: "Đặt lại mật khẩu",
+//           html: `
+//           <h2>Đặt lại mật khẩu</h2>
+//           <p>Xin chào ${userFind.username}</p>
+//           <p>Chúng tôi đã nhận được yêu cầu đặt lại mật khẩu của bạn. Hãy nhấn vào link phía dưới để tiếp tục</p>
+//           <a href="http://localhost:5000/resetpassword/${userFind.id}/${setToken.verifytoken}" style="display: inline-block;
+//           <p>Nêu không phải bạn, vui lòng bỏ qua email này</p>
+//           `,
+//         };
+
+//         trasporter.sendMail(mailOptions, (error, info) => {
+//           if (error) {
+//             console.log(error);
+//             return res.status(400).json({ error: "Lỗi gửi mail" });
+//           } else {
+//             console.log("Email sent: ", info.response);
+//             return res.status(200).json({ message: "Email đã được gửi" });
+//           }
+//         });
+//       } else {
+//         return res.status(400).json({ error: "Tài khoản không hợp lệ" });
+//       }
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).json({ error: error });
+//   }
+// };
 
 // Lấy tất cả người dùng
 export const getAllUsers = async (req, res) => {
@@ -375,7 +377,7 @@ const userAuthController = {
   register,
   login,
   userVerify,
-  forgotpassword,
+  // forgotpassword,
   deleteUser,
   getUserRecipe,
   getUserReview,
