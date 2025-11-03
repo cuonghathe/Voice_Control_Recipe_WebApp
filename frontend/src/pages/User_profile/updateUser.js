@@ -116,7 +116,7 @@ const UpdateProfile = () => {
                             </div>
                         </div>
 
-                        {error && <div className="error_message">{error}</div>}
+                        {error && <div className="error">{error}</div>}
 
                         <button className="btn" type="submit">Cập nhật</button>
                     </form>

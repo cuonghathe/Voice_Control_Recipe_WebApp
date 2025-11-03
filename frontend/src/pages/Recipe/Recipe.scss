@@ -55,7 +55,7 @@
 
 
 .recipe-image-card {
-  max-width: 32rem;
+  max-width: 28rem;
   border: none;
 }
 
@@ -210,6 +210,10 @@
 @media (max-width: 1023px) {
   .recipe-header-details-container{
     flex-direction: column;
+  }
+
+  .recipe-title{
+    font-size: 30px;
   }
 
   .recipe-details, .user-details{
