@@ -1,8 +1,8 @@
-import recipeDB from "../../models/recipe/recipeModel.js";
 import cloudinary from "../../Cloudinary/cloudinary.js";
+import recipeDB from "../../models/recipe/recipeModel.js";
 import reviewDB from "../../models/review/reviewModel.js";
 
-const ITEM_PER_PAGE = 10;
+const ITEM_PER_PAGE = 9;
 
 const adjustMeasurements = (ingredients, originalServings, newServings) => {
   return ingredients.map(ingredient => {
@@ -47,26 +47,47 @@ export const updateRecipe = async (req, res) => {
   const file = req.file ? req.file.path : "";
   const { recipename, description, instructions, ingredients, cookingTime, servingSize } = req.body;
 
-  var upload;
+  let parsedIngredients;
+  try {
+    parsedIngredients = typeof ingredients === "string" ? JSON.parse(ingredients) : ingredients;
+  } catch (error) {
+    return res.status(400).json({ error: "Invalid ingredients format" });
+  }
+
+  let upload;
   if (file) {
     upload = await cloudinary.uploader.upload(file);
   }
 
   try {
     const existingRecipe = await recipeDB.findById(recipeid);
-    const adjustedIngredients = adjustMeasurements(ingredients, existingRecipe.servingSize, servingSize);
+    if (!existingRecipe) {
+      return res.status(404).json({ error: "Recipe not found" });
+    }
 
-    const updateRecipe = await recipeDB.findByIdAndUpdate({ _id: recipeid }, {
-      recipename, description, instructions, ingredients: adjustedIngredients, cookingTime, recipeImg: upload && upload.secure_url, servingSize
-    }, { new: true });
+    const adjustedIngredients = adjustMeasurements(parsedIngredients, existingRecipe.servingSize, servingSize);
+
+    const updateRecipe = await recipeDB.findByIdAndUpdate(
+      { _id: recipeid },
+      {
+        recipename,
+        description,
+        instructions,
+        ingredients: adjustedIngredients,
+        cookingTime,
+        recipeImg: upload && upload.secure_url,
+        servingSize,
+      },
+      { new: true }
+    );
 
     await updateRecipe.save();
-    res.status(200).json({ message: "Sửa thành công", updateRecipe })
+    res.status(200).json({ message: "Sửa thành công", updateRecipe });
   } catch (error) {
     console.log("error", error);
-    res.status(500).json({ error: error })
+    res.status(500).json({ error: error.message });
   }
-}
+};
 
 //xoa cong thuc
 export const deleteRecipe = async (req, res) => {
@@ -84,18 +105,36 @@ export const deleteRecipe = async (req, res) => {
 // Tìm kiếm công thức
 export const searchRecipe = async (req, res) => {
   try {
-      const allRecipeData = await recipeDB.find({
-          "$or": [
-              { recipename: { $regex: req.params.key, $options: "i" } }
-          ]
-      });
-      
-      res.json(allRecipeData);
+    const allRecipeData = await recipeDB.find({
+      "$or": [
+        { recipename: { $regex: req.params.key, $options: "i" } }
+      ]
+    });
+
+    const recipesWithReviewCount = await Promise.all(
+      allRecipeData.map(async (recipe) => {
+        const reviews = await reviewDB.find({ recipeid: recipe._id });
+
+        const averageRating = reviews.length > 0
+          ? (reviews.reduce((sum, review) => sum + Number(review.rating), 0) / reviews.length).toFixed(1)
+          : 0;
+
+        return {
+          ...recipe.toObject(), 
+          averageRating: Number(averageRating),
+          reviewCount: reviews.length
+        };
+      })
+    );
+
+    res.json(recipesWithReviewCount);
+    
   } catch (error) {
-      console.error("Error searching recipes:", error);
-      res.status(500).json({ message: "Server error" });
+    console.error("Error searching recipes:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };
+
 
 export const getAllRecipes = async (req, res) => {
   try {

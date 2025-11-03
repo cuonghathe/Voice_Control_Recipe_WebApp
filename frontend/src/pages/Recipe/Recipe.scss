@@ -124,8 +124,9 @@
   align-items: center;
 }
 
-.recipe-ingredients-instructions button{
-  
+.recipe-ingredients-instructions .user__action__button{
+  font-size: 12px;
+  min-width: 64px;  
 }
 
 .ingredients-card,
@@ -234,7 +235,12 @@
     gap: 8px;
   }
 
-  .recipe-ingredients-instructions a, .recipe-ingredients-instructions button{
+  .recipe-ingredients-instructions {
+    width: 100%;
+  }
+
+  .recipe-ingredients-instructions .user__action__button{
+    font-size: 14px;
     width: 100%;
   }
 }

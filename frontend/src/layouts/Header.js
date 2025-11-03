@@ -100,7 +100,16 @@ const Header = () => {
                             </div>
 
                             <ul className="nav-container-list">
-                            
+                                <Nav className="text-mid">
+                                    <Form className="d-flex" style={{ maxWidth: "400px", width: "100%", marginTop: "16px", marginLeft: "-16px" }} onSubmit={handleSearch}>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Tìm kiếm"
+                                            value={searchTerm}
+                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                        />
+                                    </Form>
+                                </Nav>
                                 <li className="nav">
                                     <a href="/">Home</a>
                                 </li>

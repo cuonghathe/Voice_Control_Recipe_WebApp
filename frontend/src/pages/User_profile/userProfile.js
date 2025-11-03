@@ -150,9 +150,9 @@ const UserProfile = () => {
                                                 <p>Ngày tạo: <span className="mb-4">{new Date(recipe.createdAt).toLocaleDateString()}   </span></p>
                                             </h5>
                                             <div className="recipe-ingredients-instructions">
-                                                <Button variant="success" size="sm" href={`/recipe/${recipe._id}`}>Xem</Button>
-                                                <Button variant="warning" size="sm" onClick={() => navigate(`/updaterecipe/${recipe._id}`)} >Sửa!</Button>
-                                                <Button variant="danger" size="sm" onClick={() => handleDeleteRecipe(recipe._id)} >Xóa!</Button>
+                                                <Button variant="success" className="user__action__button" href={`/recipe/${recipe._id}`}>Xem</Button>
+                                                <Button variant="warning" className="user__action__button" onClick={() => navigate(`/updaterecipe/${recipe._id}`)} >Sửa!</Button>
+                                                <Button variant="danger" className="user__action__button" onClick={() => handleDeleteRecipe(recipe._id)} >Xóa!</Button>
                                             </div>
                                         </div>
                                     </Card.Body>
@@ -184,8 +184,8 @@ const UserProfile = () => {
                                     </h5>
 
                                     <div className="recipe-ingredients-instructions">
-                                        <Button variant="success" size="sm" href={`/recipe/${review.recipeid}`}>Xem</Button>
-                                        <Button variant="danger" size="sm" onClick={() => handleDeleteReview(review._id)}>Xóa!</Button>
+                                        <Button variant="success" className="user__action__button" href={`/recipe/${review.recipeid}`}>Xem</Button>
+                                        <Button variant="danger" className="user__action__button" onClick={() => handleDeleteReview(review._id)}>Xóa!</Button>
                                     </div>
                                 </div>
 

@@ -188,8 +188,8 @@ const RecipeDetails = () => {
                         <div className="info_box">
                             <h4 className="mt-2">Nguyên liệu</h4>
                             <div className="recipe-ingredients-instructions">
-                                <Button variant="success" size="sm" onClick={handleSpeakIngredients}>Đọc</Button>
-                                <Button variant="danger" size="sm" onClick={stopTTS} >Dừng</Button>
+                                <Button variant="success" className="user__action__button" onClick={handleSpeakIngredients}>Đọc</Button>
+                                <Button variant="danger" className="user__action__button" onClick={stopTTS} >Dừng</Button>
                             </div>
                         </div>
 

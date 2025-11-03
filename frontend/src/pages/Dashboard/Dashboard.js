@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Card, Button, Container } from "react-bootstrap";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Button, Card, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.scss";
 
@@ -92,10 +92,13 @@ const Dashboard = () => {
         </div>
         <div className="recipecard">
           {filteredRecipe.map((recipe) => (
-            <Card key={recipe._id} style={{ maxWidth: "21rem", width: "100%", marginBottom: "15px", boxShadow: "0px 2px 20px #cfd8dc", height: "27rem", cursor: "pointer" }}>
+            <Card key={recipe._id}>
               <Card.Img style={{ width: "100%", height: "190px", maxWidth:"334px" }} variant="top" src={recipe.recipeImg || "/dragondancing_1200x1200.jpg"} />
               <Card.Body>
-                <Card.Title>{recipe.recipename} <small style={{ fontweight: "100px" }}>({new Date(recipe.createdAt).toLocaleDateString()})</small></Card.Title>
+                <Card.Title style={{height: "50px"}}>{recipe.recipename.length > 24 
+                    ? recipe.recipename.slice(0,24) + "..."
+                    : recipe.recipename} <small style={{ fontweight: "100px" }}>
+                    ({new Date(recipe.createdAt).toLocaleDateString()})</small></Card.Title>
 
                 <Card.Text className="card_text">
                   {recipe.description.length > 100
