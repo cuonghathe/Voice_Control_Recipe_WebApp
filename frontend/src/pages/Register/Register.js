@@ -108,7 +108,7 @@ const Register = () => {
                                 </div>
                             </div>
 
-                            {error && <div className="error_message">{error}</div>}
+                            {error && <div className="error">{error}</div>}
 
                             <button className="btn" type="submit">Đăng ký</button>
                             <p>Đã có tài khoản? <NavLink to="/login">Đăng nhập</NavLink> </p>

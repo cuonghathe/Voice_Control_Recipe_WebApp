@@ -81,7 +81,7 @@ export const Login = () => {
                   </div>
                 </div>
 
-                {error && <div className="error_message">{error}</div>}
+                {error && <div className="error">{error}</div>}
 
                 <button className="btn" type="submit">Đăng nhập</button>
                 <p>Chưa có tài khoản? <NavLink to="/register">Đăng ký</NavLink> </p>

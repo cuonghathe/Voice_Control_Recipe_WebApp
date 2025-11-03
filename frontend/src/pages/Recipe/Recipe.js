@@ -270,7 +270,7 @@ const RecipeDetails = () => {
 
                     {typeof error === "object" ? <p className="error">{error.message}</p> : <p className="error">{error}</p>}
 
-                    <Button variant="primary" className="mt-3" onClick={handleAddReview}>
+                    <Button variant="primary" className="mt-3 userprofile__action" onClick={handleAddReview}>
                         Gửi đánh giá
                     </Button>
                 </Form>

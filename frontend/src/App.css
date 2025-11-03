@@ -5,6 +5,11 @@
   box-sizing: border-box;
 }
 
+.error{
+  color: red !important;
+  font-size: 18px !important;
+}
+
 body{
   background-image: url("../src/pages/Dashboard/food.jpg");
 }
