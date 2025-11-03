@@ -80,7 +80,7 @@ const Header = () => {
 
                                     </Nav>
                                     <Nav className="user__acction">
-                                        <Nav.Link onClick={handleLogout}>Thông tin tài khoản</Nav.Link>
+                                        <Nav.Link onClick={handlenav}>Thông tin tài khoản</Nav.Link>
                                     </Nav>
                                     <Nav className="user__acction">
                                         <Nav.Link onClick={handleLogout}>Đăng xuất</Nav.Link>
@@ -100,7 +100,16 @@ const Header = () => {
                             </div>
 
                             <ul className="nav-container-list">
-                            
+                                <Nav className="text-mid">
+                                    <Form className="d-flex" style={{ maxWidth: "400px", width: "100%", marginTop: "16px", marginLeft: "-16px" }} onSubmit={handleSearch}>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Tìm kiếm"
+                                            value={searchTerm}
+                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                        />
+                                    </Form>
+                                </Nav>
                                 <li className="nav">
                                     <a href="/">Home</a>
                                 </li>
@@ -108,14 +117,10 @@ const Header = () => {
                                     <a href="/Recipe/Create">Tạo công thức</a>
                                 </li>
                                 <li className="nav">
-                                    <a href="recipes/leaderboard">
-                                    Bảng xếp hạng công thức
-                                    </a>
+                                    <a href="recipes/leaderboard">Bảng xếp hạng công thức</a>
                                 </li>
                                 <li className="nav">
-                                    <a href="/users/leaderboard">
-                                    Bảng xếp hạng người dùng
-                                    </a>
+                                    <a href="/users/leaderboard">Bảng xếp hạng người dùng</a>
                                 </li>
                             </ul>
                         </div>
