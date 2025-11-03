@@ -1,14 +1,13 @@
-import {useState, useRef } from "react";
+import { useState } from "react";
 
 
 const VoiceControlInstruction = () => {
-  const helpRef = useRef(null);
-  const [showChatBot, setShowChatbot] = useState(false);
+  const [showChatBot, setShowInstruction] = useState(false);
   
   return (
     
     <div className={`chat__container ${showChatBot ? "instruction__open" : ""}`}>
-    <button onClick={() => setShowChatbot((prev) => !prev)} id="instruction__toggler">
+    <button onClick={() => setShowInstruction((prev) => !prev)} id="instruction__toggler">
     </button>
     <div className="instruction__popup">
       <div className="instruction__header">
@@ -18,6 +17,8 @@ const VoiceControlInstruction = () => {
       </div>
 
       <div className="instruction__body">
+      <button onClick={() => window.startRecognition()}>DÙNG MIC</button>
+      <button onClick={() => window.stopRecognition()}>DỪNG MIC</button>
       <p className="instruction">Lên đầu trang: "đầu"</p>
       <p className="instruction">Xuống cuối trang: "cuối"</p>
       <p className="instruction">Cuộn lên xuống: "lên", "xuống"</p>

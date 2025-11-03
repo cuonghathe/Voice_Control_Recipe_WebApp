@@ -80,7 +80,7 @@ const Header = () => {
 
                                     </Nav>
                                     <Nav className="user__acction">
-                                        <Nav.Link onClick={handleLogout}>Thông tin tài khoản</Nav.Link>
+                                        <Nav.Link onClick={handlenav}>Thông tin tài khoản</Nav.Link>
                                     </Nav>
                                     <Nav className="user__acction">
                                         <Nav.Link onClick={handleLogout}>Đăng xuất</Nav.Link>
@@ -108,14 +108,10 @@ const Header = () => {
                                     <a href="/Recipe/Create">Tạo công thức</a>
                                 </li>
                                 <li className="nav">
-                                    <a href="recipes/leaderboard">
-                                    Bảng xếp hạng công thức
-                                    </a>
+                                    <a href="recipes/leaderboard">Bảng xếp hạng công thức</a>
                                 </li>
                                 <li className="nav">
-                                    <a href="/users/leaderboard">
-                                    Bảng xếp hạng người dùng
-                                    </a>
+                                    <a href="/users/leaderboard">Bảng xếp hạng người dùng</a>
                                 </li>
                             </ul>
                         </div>

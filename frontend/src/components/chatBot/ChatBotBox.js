@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import ChatBotIcon from "./ChatBotIcon";
 import ChatBotForm from "./ChatBotForm.js";
 import ChatMessage from "./ChatMessage";
+import TTS, { stopTTS } from "../../api/voiceControl/TTS.js";
 import "./chat.scss";
 
 
@@ -74,6 +75,17 @@ const ChatBotBox = ({ command, recipeInfo }) => {
     }
   }, [chatHistory]);
 
+  const handleSpeakLatestResponse = () => {
+    const lastBotResponse = [...chatHistory]
+      .reverse()
+      .find((msg) => msg.role === "model" && msg.text && !msg.hideInChat);
+    if (lastBotResponse) {
+      TTS(lastBotResponse.text);
+    } else {
+      console.warn("Không có phản hồi nào để đọc!");
+    }
+  };
+
   return (
     <div className={`chat__container ${showChatBot ? "chat__open" : ""}`}>
       <button onClick={() => setShowChatbot((prev) => !prev)} id="chat__toggler">
@@ -105,6 +117,14 @@ const ChatBotBox = ({ command, recipeInfo }) => {
             setChatHistory={setChatHistory}
             generateBotResponse={generateBotResponse}
           />
+          {/* <div className="tts-controls">
+            <button className="btn btn-success" onClick={handleSpeakLatestResponse}>
+              Đọc lại
+            </button>
+            <button className="btn btn-danger" onClick={stopTTS}>
+              Dừng
+            </button>
+          </div> */}
         </div>
       </div>
     </div>

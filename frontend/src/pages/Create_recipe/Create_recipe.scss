@@ -7,6 +7,14 @@ section .form_data form .form_input input {
 
 }
 
+section .form_data form{
+    padding: 10px;
+}
+
+section .form_data{
+    max-width: 750px;
+}
+
 section .form_data form .btn-danger {
     display: flex;
     justify-content: center;
@@ -55,7 +63,7 @@ section .form_data form .btn-danger {
 
 .form {
     width: 100%;
-    padding: 10px 50px;
+    padding: 10px;
 }
 
 .input {
@@ -126,6 +134,8 @@ section .form_data form .btn-danger {
     flex-direction: column;
     width: 100%;
     margin-bottom: 10px;
+    min-width: 296px;
+    justify-self: center;
 
     label {
         font-weight: 600;
@@ -191,3 +201,25 @@ section .form_data form .btn-danger {
         }
     }
 }
+
+
+@media (max-width: 1023px) {
+    .ingredient-row, .instruction-row{
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    section .form_data form .btn-danger, .form_input div select{
+        width: 100%;
+    }
+
+    section .form_data form .form_input input{
+        margin: 0;
+    }
+
+    section .form_data{
+
+    }     
+
+
+  }

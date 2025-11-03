@@ -230,3 +230,16 @@
 .chat__form .chat__message__input:valid ~ button{
   display: block;
 }
+
+
+@media (max-width: 1023px)  {
+  .chat__popup, .instruction__popup {
+    width: 330px;
+    max-height: 555px;
+    right: 22px;
+  }
+
+  #chat__toggler, #instruction__toggler {
+    right: 5px;
+  }
+}

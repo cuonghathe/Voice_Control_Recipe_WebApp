@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
 import { stopTTS } from "./TTS";
 
-const Scrolling = ({ scrollToInstructions, scrollToReviews, scrollToIngredients, handleAddServing, handleRemoveServing, changeOpacity, handleSpeakIngredients }) => {
+const Scrolling = ({ 
+  scrollToInstructions, 
+  scrollToReviews, 
+  scrollToIngredients,
+  handleAddServing,
+  handleRemoveServing,
+  handleSpeakIngredients,
+  userCommand 
+}) => {
   const [, setCommandLog] = useState([]);
   const [lastExecuted, setLastExecuted] = useState(0);
 
@@ -13,6 +21,24 @@ const Scrolling = ({ scrollToInstructions, scrollToReviews, scrollToIngredients,
       console.error("Trình duyệt không hỗ trợ SpeechRecognition");
       return;
     }
+
+    const start = () => {
+      try {
+        isRecognitionStarted = true;
+        recognition.start();
+      } catch (error) {
+        console.error("Lỗi khi khởi động SpeechRecognition:", error);
+      }
+    };
+
+    const stop = () => {
+      try {
+        isRecognitionStarted = false;
+        recognition.abort();
+      } catch (error) {
+        console.error("Lỗi khi tắt SpeechRecognition:", error);
+      }
+    };
 
     const recognition = new SpeechRecognition();
     recognition.lang = "vi-VN";
@@ -27,93 +53,85 @@ const Scrolling = ({ scrollToInstructions, scrollToReviews, scrollToIngredients,
 
     recognition.onerror = (event) => {
       if (event.error === "no-speech") {
-        // console.log("FUCK!!! Retrying...");
         setTimeout(() => {
           if (!isRecognitionStarted) {
             try {
               recognition.start();
-            } catch (error) {
-              // console.error("FUCK!!!:", error);
-            }
+            } catch (error) {}
           }
         }, 1000);
       }
-      console.error("Speech recognition error:", event.error);
     };
 
     recognition.onresult = (event) => {
       const command = event.results[event.results.length - 1][0].transcript.trim();
-      // console.log("Command received:", command);
-
+      userCommand(command);
       const currentTime = Date.now();
+
       if (currentTime - lastExecuted > 2000) {
         setCommandLog((prevLog) => [...prevLog, command]);
 
-        if (command === "kéo lên" || command === "lên" || command === "cuộn lên") {
-          window.scrollBy(0, -150);
-        } else if (command === "kéo xuống" || command === "xuống" || command === "cuộn xuống") {
-          window.scrollBy(0, 150);
-        } else if (command === "xuống lửa" || command === "lửa") {
-          window.scrollBy(0, document.body.scrollHeight / 2);
-        }
-        else if (command === "xuống cuối" || command === "cuối" || command === "cuối trang") {
-          window.scrollTo(0, maxScroll);
-        }
-        else if (command === "lên đầu" || command === "đầu" || command === "đầu trang") {
-          window.scrollTo(0, 0);
-        }
+        const commandMap = {
+          "kéo lên": () => window.scrollBy(0, -150),
+          "lên": () => window.scrollBy(0, -150),
+          "cuộn lên": () => window.scrollBy(0, -150),
 
-        else if (command === "hai" || command === "4" || command === "hài") {
-          scrollToInstructions();
+          "kéo xuống": () => window.scrollBy(0, 150),
+          "xuống": () => window.scrollBy(0, 150),
+          "cuộn xuống": () => window.scrollBy(0, 150),
+
+          "xuống lửa": () => window.scrollBy(0, document.body.scrollHeight / 2),
+          "lửa": () => window.scrollBy(0, document.body.scrollHeight / 2),
+
+          "xuống cuối": () => window.scrollTo(0, maxScroll),
+          "cuối": () => window.scrollTo(0, maxScroll),
+          "cuối trang": () => window.scrollTo(0, maxScroll),
+
+          "lên đầu": () => window.scrollTo(0, 0),
+          "đầu": () => window.scrollTo(0, 0),
+          "đầu trang": () => window.scrollTo(0, 0),
+
+          "hai": scrollToInstructions,
+          "4": scrollToInstructions,
+          "hài": scrollToInstructions,
+
+          "ba": scrollToReviews,
+          "3": scrollToReviews,
+
+          "một": scrollToIngredients,
+          "1": scrollToIngredients,
+
+          "tăng": handleAddServing,
+          "giảm": handleRemoveServing,
+
+          "đọc": handleSpeakIngredients,
+          "dừng": stopTTS,
+          "rừng": stopTTS,
+        };
+
+        if (commandMap[command]) {
+          commandMap[command]();
+          setLastExecuted(currentTime);
         }
-
-        else if (command === "ba" || command === "3") {
-          scrollToReviews();
-        }
-
-        else if (command === "một" || command === "1") {
-          scrollToIngredients();
-        }
-
-        else if (command === "tăng") {
-          handleAddServing();
-        }
-
-        else if (command === "giảm") {
-          handleRemoveServing();
-        }
-
-        else if (command === "tắt" || command === "bật") {
-          changeOpacity();
-        }
-
-        else if (command === "đọc") {
-          handleSpeakIngredients();
-        }
-
-        else if (command === "dừng" || command === "rừng") {
-          stopTTS();
-        }
-
-
-        setLastExecuted(currentTime);
       }
     };
 
 
 
-    try {
-      recognition.start();
-    } catch (error) {
-      console.error("Lỗi khi khởi động SpeechRecognition:", error);
-    }
+    window.startRecognition = start;
+    window.stopRecognition = stop;
 
-  }, [lastExecuted, scrollToInstructions, scrollToReviews, scrollToIngredients, handleAddServing, handleRemoveServing, changeOpacity, handleSpeakIngredients]);
-
-
+  }, [
+    scrollToInstructions, 
+    scrollToReviews, 
+    scrollToIngredients,
+    handleAddServing,
+    handleRemoveServing,
+    handleSpeakIngredients,
+    userCommand 
+  ]);
 
   return null;
-
 };
 
 export default Scrolling;

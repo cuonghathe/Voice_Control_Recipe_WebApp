@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Container from "react-bootstrap/Container";
-import Card from "react-bootstrap/Card";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import "../Recipe/Recipe.scss";
+import React, { useEffect, useState } from "react";
 import { CardTitle } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import { useNavigate, useParams } from "react-router-dom";
+import "../Recipe/Recipe.scss";
 
 const UserProfile = () => {
     const { userId } = useParams();

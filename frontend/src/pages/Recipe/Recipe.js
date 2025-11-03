@@ -26,6 +26,8 @@ const RecipeDetails = () => {
     const instructionsRef = useRef(null);
     const reviewRef = useRef(null);
     const ingredientsRef = useRef(null);
+    const [command, setCommand] = useState("");
+
 
 
     useEffect(() => {
@@ -153,6 +155,7 @@ const RecipeDetails = () => {
                             handleAddServing={() => handleServingsChange(servings + 1)}
                             handleRemoveServing={() => handleServingsChange(servings - 1)}
                             handleSpeakIngredients={handleSpeakIngredients}
+                            userCommand={setCommand}
                         />
 
                     </div>
@@ -294,7 +297,7 @@ const RecipeDetails = () => {
                 </div>
             </div>
             
-            <ChatBotBox recipeInfo = {recipe}/>
+            <ChatBotBox recipeInfo = {recipe} command={command}/>
             <VoiceControlInstruction/>
             {/* <GeminiGenAi/> */}
             

@@ -1,4 +1,4 @@
-const TTS = (text, rate = 0.71) => {
+const TTS = (text, rate = 0.70) => {
   if (!text) return;
 
   const synth = window.speechSynthesis;

@@ -133,3 +133,28 @@ section {
         }
     }
 }
+
+.update_profile__picture__container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  
+  .update_userProfilePic {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #fff;
+    padding: 1px;
+  }
+
+
+@media (max-width: 1023px)  {
+    section .form_data form .form_input .two .showpass {
+        top: 5px;
+        margin-right: 7px;
+        margin-top:0px ;
+    }
+}

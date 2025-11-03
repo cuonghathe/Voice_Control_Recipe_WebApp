@@ -88,7 +88,9 @@ const UpdateProfile = () => {
 
                         <div className="form_input">
                             {userprofile && (
-                                <img src={userprofile} alt="Avatar" style={{ width: "80px", borderRadius: "50%", marginBottom: "10px" }} />
+                                <div className="update_profile__picture__container">
+                                    <img src={userprofile} alt="Avatar" className="update_userProfilePic" />
+                                </div>
                             )}
                             <label htmlFor="file">Cập nhật ảnh đại diện</label>
                             <input
