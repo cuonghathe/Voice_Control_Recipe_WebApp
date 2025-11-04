@@ -8,6 +8,8 @@ import "./chat.scss";
 
 
 const ChatBotBox = ({ command, recipeInfo }) => {
+  const [showChatBot, setShowChatbot] = useState(false);
+  const chatBodyRef = useRef();
 
   const [chatHistory, setChatHistory] = useState([
     {
@@ -16,13 +18,26 @@ const ChatBotBox = ({ command, recipeInfo }) => {
       text: JSON.stringify(recipeInfo),
     },
   ]);
-  const [showChatBot, setShowChatbot] = useState(false);
-  const chatBodyRef = useRef();
+
+  useEffect(() => {
+    if (recipeInfo) {
+        setChatHistory(prev => {
+            const newHistory = [...prev]; 
+            newHistory[0] = {
+                ...newHistory[0],               
+                text: JSON.stringify(recipeInfo)
+            };
+            return newHistory;
+        });
+    }
+  }, [recipeInfo]);
+
+  
 
   const generateBotResponse = async (history) => {
     const upadatedHistory = (text) => {
       setChatHistory((prev) => [
-        ...prev.filter((message) => message.text !== "Thinking..."),
+        ...prev.filter((message) => message.text !== "..."),
         { role: "model", text },
       ]);
     };
@@ -97,13 +112,15 @@ const ChatBotBox = ({ command, recipeInfo }) => {
             <ChatBotIcon />
             <h2 className="chat__logo-text">Chatbot</h2>
           </div>
-          <button onClick={() => setShowChatbot((prev) => !prev)}></button>
+          {/* <button onClick={() => setShowChatbot((prev) => !prev)}>
+            <i class="fa-solid fa-xmark"></i>
+          </button> */}
         </div>
 
         <div ref={chatBodyRef} className="chat__body">
           <div className="chat__bot__message">
             <ChatBotIcon />
-            <p className="chat__message__text">Hi</p>
+            <p className="chat__message__text">Xin chào, tôi có thể giúp gì bạn?</p>
           </div>
 
           {chatHistory.map((chat, index) => (

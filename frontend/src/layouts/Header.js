@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Container, Form, Nav, Navbar } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
+import ChatBotBox from "../components/chatBot/ChatBotBox";
+import VoiceControlInstruction from "../components/voiceControlInstruction";
 import "./header.scss";
 
 const Header = () => {
