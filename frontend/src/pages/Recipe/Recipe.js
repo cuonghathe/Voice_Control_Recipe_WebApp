@@ -23,6 +23,7 @@ const RecipeDetails = () => {
     const [error, setError] = useState("");
     const [newReview, setNewReview] = useState({ username: "", rating: "", description: "" });
     const token = localStorage.getItem("authToken");
+    const [isExpanded, setIsExpanded] = useState(false);
     const instructionsRef = useRef(null);
     const reviewRef = useRef(null);
     const ingredientsRef = useRef(null);
@@ -72,14 +73,20 @@ const RecipeDetails = () => {
             quantity: Math.ceil(ingredient.quantity * adjustmentFactor * 100)/100
         }));
         setAdjustedIngredients(newIngredients);
-    };
+    };    
 
     const handleServingsChange = (newServings) => {
         if (newServings > 0) {
             adjustIngredients(newServings);
             setServings(newServings);
+            setRecipe(prev => ({
+                ...prev,
+                ingredients: adjustedIngredients,
+                servingSize: newServings,
+            }));
         }
     };
+
 
     const handleAddReview = async () => {
         try {
@@ -112,11 +119,15 @@ const RecipeDetails = () => {
         ingredientsRef.current?.scrollIntoView();
     };
 
+    const toggleDescription = () => {
+        setIsExpanded(!isExpanded);
+    };
+
     const handleSpeakIngredients = () => {
         if (!recipe || !recipe.ingredients) return;
 
         const ingredientsText = recipe.ingredients
-            .map(ingredient => `${ingredient.name}: ${ingredient.quantity} ${ingredient.measurement}`)
+            .map((ingredient, i) => `${ingredient.name}: ${adjustedIngredients[i].quantity} ${ingredient.measurement}`)
             .join(", ");
 
         TTS(ingredientsText);
@@ -177,7 +188,13 @@ const RecipeDetails = () => {
                     </div>
                     <div className="description">
                         <Card.Title>Mô tả:</Card.Title>
-                        {recipe.description}
+                        <p className="detail" style={{WebkitLineClamp: isExpanded ? 'none' : 3}}>
+                            {recipe.description}
+                        </p>
+
+                        <p className="toggle" onClick={toggleDescription}>
+                            {isExpanded ? 'Thu gọn' : 'Xem thêm'}
+                        </p>
                     </div>
                 </div>
             </div>
