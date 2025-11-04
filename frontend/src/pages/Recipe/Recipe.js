@@ -28,7 +28,7 @@ const RecipeDetails = () => {
     const reviewRef = useRef(null);
     const ingredientsRef = useRef(null);
     const [command, setCommand] = useState("");
-
+    const [adjustmentFactor, setAdjustmentFactor] = useState([]);
 
 
     useEffect(() => {
@@ -53,6 +53,8 @@ const RecipeDetails = () => {
             }
         };
 
+
+
         fetchRecipe();
         fetchReviews();
     }, [id]);
@@ -66,11 +68,19 @@ const RecipeDetails = () => {
         );
     };
 
+    useEffect(() => {
+        if (!adjustmentFactor.length && recipe) {
+            const factors = recipe.ingredients.map(ingredient => Number(ingredient.quantity) / Number(recipe.servingSize))
+            setAdjustmentFactor(factors);
+        }
+    }, [recipe]);
+    
+    
+    
     const adjustIngredients = (newServings) => {
-        const adjustmentFactor = newServings / recipe.servingSize;
-        const newIngredients = recipe.ingredients.map(ingredient => ({
+        const newIngredients = recipe.ingredients.map((ingredient, i) => ({
             ...ingredient,
-            quantity: Math.ceil(ingredient.quantity * adjustmentFactor * 100)/100
+            quantity: Math.ceil(newServings * adjustmentFactor[i] * 100)/100
         }));
         setAdjustedIngredients(newIngredients);
     };    
