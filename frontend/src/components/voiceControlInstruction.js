@@ -8,7 +8,7 @@ const VoiceControlInstruction = () => {
     
     <div className={`chat__container ${showChatBot ? "instruction__open" : ""}`}>
     <button onClick={() => setShowInstruction((prev) => !prev)} id="instruction__toggler">
-      <i class="fa-solid fa-microphone"></i>
+      <i className="fa-solid fa-microphone"></i>
     </button>
     <div className="instruction__popup">
       <div className="instruction__header">
