@@ -80,7 +80,7 @@ const RecipeDetails = () => {
     const adjustIngredients = (newServings) => {
         const newIngredients = recipe.ingredients.map((ingredient, i) => ({
             ...ingredient,
-            quantity: Math.ceil(newServings * adjustmentFactor[i] * 100)/100
+            quantity: Math.ceil(newServings * adjustmentFactor[i] * 4)/4
         }));
         setAdjustedIngredients(newIngredients);
     };    
