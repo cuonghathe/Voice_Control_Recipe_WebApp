@@ -13,7 +13,6 @@ const userAuthenticate = async (req, res, next) => {
     const verifyToken = jwt.verify(token, SECRET_KEY);
 
     const rootUser = await userDB.findOne({_id:verifyToken._id});
-    console.log("rootUser:",rootUser);
 
     if(!rootUser){
         throw new Error("Tài khoản không tồn tại");

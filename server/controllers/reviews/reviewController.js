@@ -10,12 +10,26 @@ export const createReview = async (req, res) => {
   }
 
   try {
-    const addReview = new reviewDB({
-      userId:req.userId,recipeid,username,rating,description
+    const preUser = await reviewDB.findOne({
+      recipeid:recipeid,      
+      userId:req.userId
     });
+    const preUsername = await reviewDB.findOne({
+      recipeid:recipeid,      
+      username:username
+    });
+    if (preUser) {
+      return res.status(400).json({ error: "Bạn chỉ được viết review một lần cho một công thức" });
+    } else if (preUsername) {
+      return res.status(400).json({ error: "Tên này đã tồn tại" })
+    } {
+      const addReview = new reviewDB({
+        userId:req.userId,recipeid,username,rating,description
+      });
+      await addReview.save();
+      res.status(200).json({ message: "Đánh giá được tạo thành công", addReview })
+    }
 
-    await addReview.save();
-    res.status(200).json({ message: "Đánh giá được tạo thành công", addReview })
     } catch (error) {
     console.log("error", error);
     res.status(500).json({ error: error })
