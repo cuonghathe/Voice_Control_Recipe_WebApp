@@ -21,7 +21,7 @@ const RecipeDetails = () => {
     const [adjustedIngredients, setAdjustedIngredients] = useState([]);
     const [reviews, setReviews] = useState([]);
     const [error, setError] = useState("");
-    const [newReview, setNewReview] = useState({ username: "", rating: "", description: "" });
+    const [newReview, setNewReview] = useState({ username: "", rating: "1", description: "" });
     const token = localStorage.getItem("authToken");
     const [isExpanded, setIsExpanded] = useState(false);
     const instructionsRef = useRef(null);
