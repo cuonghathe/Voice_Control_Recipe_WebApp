@@ -27,7 +27,9 @@ const ChatBotForm = ({setChatHistory, chatHistory, generateBotResponse}) => {
   return (
   <form action="#" className="chat__form" onSubmit={handleFormSummit}>
     <input ref={inputRef} type="text" placeholder="Hỏi CookBot..." className="chat__message__input" required></input>
-    <button></button>
+    <button>
+      <i className="fa-solid fa-arrow-up"></i>
+    </button>
   </form>
   )
 }
