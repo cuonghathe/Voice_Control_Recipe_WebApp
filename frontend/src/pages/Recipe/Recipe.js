@@ -139,7 +139,7 @@ const RecipeDetails = () => {
         const ingredientsText = recipe.ingredients
             .map((ingredient, i) => `${ingredient.name}: ${adjustedIngredients[i].quantity} ${ingredient.measurement}`)
             .join(", ");
-
+        
         TTS(ingredientsText);
     };
 
