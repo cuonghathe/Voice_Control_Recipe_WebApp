@@ -18,16 +18,18 @@ const VoiceControlInstruction = () => {
       </div>
 
       <div className="instruction__body">
-      <button onClick={() => window.startRecognition()}>DÙNG MIC</button>
-      <button onClick={() => window.stopRecognition()}>DỪNG MIC</button>
-      <p className="instruction">Lên đầu trang: "đầu"</p>
-      <p className="instruction">Xuống cuối trang: "cuối"</p>
-      <p className="instruction">Cuộn lên xuống: "lên", "xuống"</p>
-      <p className="instruction">Cuộn xuống giữa trang: "nửa"</p>
-      <p className="instruction">Đi đến phần nguyên liệu: "1"</p>
-      <p className="instruction">Đi đến phần hướng dẫn: "2"</p>
-      <p className="instruction">Đi đến phần đánh giá: "3"</p>
-      <p className="instruction">Tăng giảm suất ăn: "tăng", "giảm"</p>
+        <button onClick={() => window.startRecognition()}>DÙNG MIC</button>
+        <button onClick={() => window.stopRecognition()}>DỪNG MIC</button>
+        <div className="instruction">
+          <p>Lên đầu trang: "đầu"</p>
+          <p>Xuống cuối trang: "cuối"</p>
+          <p>Cuộn lên xuống: "lên", "xuống"</p>
+          <p>Cuộn xuống giữa trang: "nửa"</p>
+          <p>Đi đến phần nguyên liệu: "1"</p>
+          <p>Đi đến phần hướng dẫn: "2"</p>
+          <p>Đi đến phần đánh giá: "3"</p>
+          <p>Tăng giảm suất ăn: "tăng", "giảm"</p>
+        </div>
       </div>
 
     </div>

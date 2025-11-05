@@ -10,6 +10,7 @@ import "./chat.scss";
 const ChatBotBox = ({ command, recipeInfo }) => {
   const [showChatBot, setShowChatbot] = useState(false);
   const chatBodyRef = useRef();
+  const [autoTTSResponse, setAutoTTSResponse] = useState(false)
 
   const [chatHistory, setChatHistory] = useState([
     {
@@ -67,6 +68,10 @@ const ChatBotBox = ({ command, recipeInfo }) => {
         .replace(/\*\*(.*?)\*\*/g, "s1")
         .trim();
       upadatedHistory(formatBotResponse);
+      if (autoTTSResponse) {
+        TTS(formatBotResponse);
+      }
+
     } catch (error) {
       console.error("Error:", error);
     }
@@ -90,17 +95,6 @@ const ChatBotBox = ({ command, recipeInfo }) => {
     }
   }, [chatHistory]);
 
-  const handleSpeakLatestResponse = () => {
-    const lastBotResponse = [...chatHistory]
-      .reverse()
-      .find((msg) => msg.role === "model" && msg.text && !msg.hideInChat);
-    if (lastBotResponse) {
-      TTS(lastBotResponse.text);
-    } else {
-      console.warn("Không có phản hồi nào để đọc!");
-    }
-  };
-
   return (
     <div className={`chat__container ${showChatBot ? "chat__open" : ""}`}>
       <button onClick={() => setShowChatbot((prev) => !prev)} id="chat__toggler">
@@ -110,11 +104,14 @@ const ChatBotBox = ({ command, recipeInfo }) => {
         <div className="chat__header">
           <div className="chat__header__info">
             <ChatBotIcon />
-            <h2 className="chat__logo-text">Chatbot</h2>
+            <h2 className="chat__logo-text">CookBot</h2>
           </div>
-          {/* <button onClick={() => setShowChatbot((prev) => !prev)}>
-            <i class="fa-solid fa-xmark"></i>
-          </button> */}
+          <div className="tts-controls">
+            <button className={`AutoTTS ${autoTTSResponse ? "on" : ""}`} onClick={() => setAutoTTSResponse((prev) => !prev)}>
+              <span className="ms-2">Đọc phản hồi</span>
+              <i className={`fa-solid ${autoTTSResponse ? "fa-toggle-on" : "fa-toggle-off"}`}></i>
+            </button>
+          </div>
         </div>
 
         <div ref={chatBodyRef} className="chat__body">
@@ -134,14 +131,7 @@ const ChatBotBox = ({ command, recipeInfo }) => {
             setChatHistory={setChatHistory}
             generateBotResponse={generateBotResponse}
           />
-          {/* <div className="tts-controls">
-            <button className="btn btn-success" onClick={handleSpeakLatestResponse}>
-              Đọc lại
-            </button>
-            <button className="btn btn-danger" onClick={stopTTS}>
-              Dừng
-            </button>
-          </div> */}
+
         </div>
       </div>
     </div>

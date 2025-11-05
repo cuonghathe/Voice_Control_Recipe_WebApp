@@ -199,6 +199,10 @@ export const getSingleRecipeData = async (req, res) => {
   }
 };
 
+export const getRandomRecipeData = async (res) => {
+  
+}
+
 
 
 

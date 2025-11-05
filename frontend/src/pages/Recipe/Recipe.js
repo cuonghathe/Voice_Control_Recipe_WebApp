@@ -173,9 +173,10 @@ const RecipeDetails = () => {
                             scrollToInstructions={scrollToInstructions}
                             scrollToReviews={scrollToReviews}
                             scrollToIngredients={scrollToIngredients}
-                            handleAddServing={() => handleServingsChange(servings + 1)}
-                            handleRemoveServing={() => handleServingsChange(servings - 1)}
+                            handleAddServing={() =>handleServingsChange(servings + 1)}
+                            handleRemoveServing={() =>handleServingsChange(servings - 1)}
                             handleSpeakIngredients={handleSpeakIngredients}
+                            handleAddReview={handleAddReview}
                             userCommand={setCommand}
                         />
 

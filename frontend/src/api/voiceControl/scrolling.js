@@ -45,10 +45,6 @@ const Scrolling = ({
     recognition.continuous = true;
     recognition.interimResults = true;
 
-    recognition.onstart = () => {
-      console.log(".");
-    };
-
     let isRecognitionStarted = false;
 
     recognition.onerror = (event) => {
@@ -65,7 +61,6 @@ const Scrolling = ({
 
     recognition.onresult = (event) => {
       const command = event.results[event.results.length - 1][0].transcript.trim();
-      userCommand(command);
       const currentTime = Date.now();
 
       if (currentTime - lastExecuted > 2000) {
@@ -115,8 +110,6 @@ const Scrolling = ({
         }
       }
     };
-
-
 
     window.startRecognition = start;
     window.stopRecognition = stop;
