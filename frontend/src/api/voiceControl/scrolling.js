@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { stopTTS } from "./TTS";
 
 const Scrolling = ({ 
   scrollToInstructions, 
@@ -22,14 +21,47 @@ const Scrolling = ({
       return;
     }
 
+    let isRecognitionStarted = false;
+    const recognition = new SpeechRecognition(); 
+    recognition.lang = "vi-VN"; 
+    recognition.continuous = true;
+    recognition.interimResults = false;
+
+
+    recognition.onend = () => {
+      isRecognitionStarted = false;
+    };
+
     const start = () => {
       try {
-        isRecognitionStarted = true;
-        recognition.start();
+        if (!isRecognitionStarted) {
+          recognition.start();
+          isRecognitionStarted = true;
+        }
       } catch (error) {
         console.error("Lỗi khi khởi động SpeechRecognition:", error);
       }
     };
+    
+    const startWithInteriAttribute = (attribute) => {
+      try {
+        recognition.interimResults = attribute;
+        if (isRecognitionStarted) {
+          recognition.stop();
+          recognition.onend = () => {
+            isRecognitionStarted = false;
+            recognition.start();
+            isRecognitionStarted = true;
+          };
+        } else {
+          recognition.start();
+          isRecognitionStarted = true;
+        }
+      } catch (error) {
+        console.error("Lỗi khi khởi động SpeechRecognition với interimResults:", error);
+      }
+    };
+
 
     const stop = () => {
       try {
@@ -40,12 +72,6 @@ const Scrolling = ({
       }
     };
 
-    const recognition = new SpeechRecognition();
-    recognition.lang = "vi-VN";
-    recognition.continuous = true;
-    recognition.interimResults = true;
-
-    let isRecognitionStarted = false;
 
     recognition.onerror = (event) => {
       if (event.error === "no-speech") {
@@ -62,6 +88,9 @@ const Scrolling = ({
     recognition.onresult = (event) => {
       const command = event.results[event.results.length - 1][0].transcript.trim();
       const currentTime = Date.now();
+      if(!recognition.interimResults){
+        userCommand(command);
+      }
 
       if (currentTime - lastExecuted > 2000) {
         setCommandLog((prevLog) => [...prevLog, command]);
@@ -100,19 +129,20 @@ const Scrolling = ({
           "giảm": handleRemoveServing,
 
           "đọc": handleSpeakIngredients,
-          "dừng": stopTTS,
-          "rừng": stopTTS,
         };
 
         if (commandMap[command]) {
           commandMap[command]();
-          setLastExecuted(currentTime);
+          setLastExecuted(currentTime); 
         }
       }
     };
 
     window.startRecognition = start;
     window.stopRecognition = stop;
+    window.startRecognitionWithInterimOn = () => startWithInteriAttribute(true);
+    window.startRecognitionWithInterimOff = () => startWithInteriAttribute(false);    
+
 
   }, [
     scrollToInstructions, 

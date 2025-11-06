@@ -1,16 +1,18 @@
-import { useEffect, useState, useRef } from "react";
-import ChatBotIcon from "./ChatBotIcon";
-import ChatBotForm from "./ChatBotForm.js";
-import ChatMessage from "./ChatMessage";
+import { useEffect, useRef, useState } from "react";
 import TTS, { stopTTS } from "../../api/voiceControl/TTS.js";
 import "./chat.scss";
+import ChatBotForm from "./ChatBotForm.js";
+import ChatBotIcon from "./ChatBotIcon";
+import ChatMessage from "./ChatMessage";
 
 
 
 const ChatBotBox = ({ command, recipeInfo }) => {
   const [showChatBot, setShowChatbot] = useState(false);
   const chatBodyRef = useRef();
-  const [autoTTSResponse, setAutoTTSResponse] = useState(false)
+  const [autoTTSResponse, setAutoTTSResponse] = useState(false);
+  const [interimResultsMode, setInterimResultsMode] = useState(true);
+
 
   const [chatHistory, setChatHistory] = useState([
     {
@@ -107,9 +109,18 @@ const ChatBotBox = ({ command, recipeInfo }) => {
             <h2 className="chat__logo-text">CookBot</h2>
           </div>
           <div className="tts-controls">
-            <button className={`AutoTTS ${autoTTSResponse ? "on" : ""}`} onClick={() => setAutoTTSResponse((prev) => !prev)}>
+            <button className={`AutoTTS ${autoTTSResponse ? "on" : ""}`} onClick={() => {
+                setAutoTTSResponse((prev) => !prev)
+                stopTTS()
+              }}>
               <span className="ms-2">Đọc phản hồi</span>
               <i className={`fa-solid ${autoTTSResponse ? "fa-toggle-on" : "fa-toggle-off"}`}></i>
+            </button>
+
+            <button className={`interimResultsMode ${interimResultsMode ? "" : "on"}`} 
+                  onClick={() => {setInterimResultsMode((prev) => !prev); window.stopRecognition(); setTimeout(() => {window.startRecognitionWithInterimOff();}, 3000);}}>
+              <span className="ms-2">dieu khien giong noi</span>
+              <i className={`fa-solid ${interimResultsMode ? "fa-toggle-off" : "fa-toggle-on"}`}></i>
             </button>
           </div>
         </div>

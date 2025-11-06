@@ -18,7 +18,7 @@ const VoiceControlInstruction = () => {
       </div>
 
       <div className="instruction__body">
-        <button onClick={() => window.startRecognition()}>DÙNG MIC</button>
+        <button onClick={() => {window.stopRecognition(); setTimeout(() => {window.startRecognitionWithInterimOn();}, 3000);}}>DÙNG MIC</button>
         <button onClick={() => window.stopRecognition()}>DỪNG MIC</button>
         <div className="instruction">
           <p>Lên đầu trang: "đầu"</p>
