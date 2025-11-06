@@ -143,6 +143,13 @@ const RecipeDetails = () => {
         TTS(ingredientsText);
     };
 
+    const handleSpeakInstruction = () =>{
+        if(!recipe || !recipe.instructions) return;
+        const instructionText = recipe.instructions.map((instruction, index) => `Bước ${index} ${instruction}`)
+        .join(", ");
+        TTS(instructionText);
+    }
+
 
     if (!recipe) {
         return <div>Đang tải....</div>;
@@ -240,6 +247,10 @@ const RecipeDetails = () => {
                 <Card className="instructions-card mt-4" ref={instructionsRef}>
                     <Card.Body>
                         <h4 className="mt-2">Cách làm</h4>
+                        <div className="recipe-ingredients-instructions">
+                                <Button variant="success" className="user__action__button" onClick={handleSpeakInstruction}>Đọc</Button>
+                                <Button variant="danger" className="user__action__button" onClick={stopTTS} >Dừng</Button>
+                        </div>
                         <Form>
                             {recipe.instructions.map((instruction, index) => (
                                 <Form.Check

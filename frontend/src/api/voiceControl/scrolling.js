@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { stopTTS } from "./TTS";
 
 const Scrolling = ({ 
   scrollToInstructions, 
@@ -43,7 +42,7 @@ const Scrolling = ({
     const recognition = new SpeechRecognition();
     recognition.lang = "vi-VN";
     recognition.continuous = true;
-    recognition.interimResults = true;
+    recognition.interimResults = false;
 
     let isRecognitionStarted = false;
 
@@ -62,6 +61,8 @@ const Scrolling = ({
     recognition.onresult = (event) => {
       const command = event.results[event.results.length - 1][0].transcript.trim();
       const currentTime = Date.now();
+      userCommand(command);
+
 
       if (currentTime - lastExecuted > 2000) {
         setCommandLog((prevLog) => [...prevLog, command]);
@@ -100,8 +101,6 @@ const Scrolling = ({
           "giảm": handleRemoveServing,
 
           "đọc": handleSpeakIngredients,
-          "dừng": stopTTS,
-          "rừng": stopTTS,
         };
 
         if (commandMap[command]) {
