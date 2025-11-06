@@ -246,10 +246,12 @@ const RecipeDetails = () => {
 
                 <Card className="instructions-card mt-4" ref={instructionsRef}>
                     <Card.Body>
-                        <h4 className="mt-2">Cách làm</h4>
-                        <div className="recipe-ingredients-instructions">
-                                <Button variant="success" className="user__action__button" onClick={handleSpeakInstruction}>Đọc</Button>
-                                <Button variant="danger" className="user__action__button" onClick={stopTTS} >Dừng</Button>
+                        <div className="info_box">
+                            <h4 className="mt-2">Cách làm</h4>
+                            <div className="recipe-ingredients-instructions">
+                                    <Button variant="success" className="user__action__button" onClick={handleSpeakInstruction}>Đọc</Button>
+                                    <Button variant="danger" className="user__action__button" onClick={stopTTS} >Dừng</Button>
+                            </div>
                         </div>
                         <Form>
                             {recipe.instructions.map((instruction, index) => (
