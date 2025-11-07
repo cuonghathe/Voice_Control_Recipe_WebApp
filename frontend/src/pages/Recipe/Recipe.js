@@ -76,7 +76,6 @@ const RecipeDetails = () => {
     }, [recipe]);
     
     
-    
     const adjustIngredients = (newServings) => {
         const newIngredients = recipe.ingredients.map((ingredient, i) => ({
             ...ingredient,
@@ -340,7 +339,6 @@ const RecipeDetails = () => {
             
             <ChatBotBox recipeInfo = {recipe} command={command}/>
             <VoiceControlInstruction/>
-            {/* <GeminiGenAi/> */}
             
         </Container>
     );
