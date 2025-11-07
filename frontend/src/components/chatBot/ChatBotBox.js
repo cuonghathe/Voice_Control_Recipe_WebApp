@@ -4,21 +4,20 @@ import "./chat.scss";
 import ChatBotForm from "./ChatBotForm.js";
 import ChatBotIcon from "./ChatBotIcon";
 import ChatMessage from "./ChatMessage";
+import formatData from "./formatData.js";
 
 
 
 const ChatBotBox = ({ command, recipeInfo }) => {
   const [showChatBot, setShowChatbot] = useState(false);
   const chatBodyRef = useRef();
-  const [autoTTSResponse, setAutoTTSResponse] = useState(false);
-  const [interimResultsMode, setInterimResultsMode] = useState(true);
-
+  const [vocalCommunication, setVocalCommunication] = useState(false);
 
   const [chatHistory, setChatHistory] = useState([
     {
       hideInChat: true,
       role: "model",
-      text: JSON.stringify(recipeInfo),
+      text: formatData(recipeInfo),
     },
   ]);
 
@@ -70,7 +69,7 @@ const ChatBotBox = ({ command, recipeInfo }) => {
         .replace(/\*\*(.*?)\*\*/g, "s1")
         .trim();
       upadatedHistory(formatBotResponse);
-      if (autoTTSResponse) {
+      if (vocalCommunication) {
         TTS(formatBotResponse);
       }
 
@@ -97,6 +96,21 @@ const ChatBotBox = ({ command, recipeInfo }) => {
     }
   }, [chatHistory]);
 
+  const toggleVocalCommunication = () => {
+    if(!vocalCommunication){
+      setVocalCommunication(true);
+      stopTTS();
+      window.stopRecognition();
+      setTimeout(() => {
+        window.startRecognitionWithInterimOff();
+      }, 3000);
+    } else {
+      setVocalCommunication(false);
+      stopTTS();
+      window.stopRecognition();
+    }
+  }
+
   return (
     <div className={`chat__container ${showChatBot ? "chat__open" : ""}`}>
       <button onClick={() => setShowChatbot((prev) => !prev)} id="chat__toggler">
@@ -109,19 +123,11 @@ const ChatBotBox = ({ command, recipeInfo }) => {
             <h2 className="chat__logo-text">CookBot</h2>
           </div>
           <div className="tts-controls">
-            <button className={`AutoTTS ${autoTTSResponse ? "on" : ""}`} onClick={() => {
-                setAutoTTSResponse((prev) => !prev)
-                stopTTS()
-              }}>
-              <span className="ms-2">Đọc phản hồi</span>
-              <i className={`fa-solid ${autoTTSResponse ? "fa-toggle-on" : "fa-toggle-off"}`}></i>
+            <button className={`AutoTTS ${vocalCommunication ? "on" : ""}`} onClick={() => toggleVocalCommunication()}>
+              <span className="ms-2">Đối thoại</span>
+              <i className={`fa-solid ${vocalCommunication ? "fa-toggle-on" : "fa-toggle-off"}`}></i>
             </button>
 
-            <button className={`interimResultsMode ${interimResultsMode ? "" : "on"}`} 
-                  onClick={() => {setInterimResultsMode((prev) => !prev); window.stopRecognition(); setTimeout(() => {window.startRecognitionWithInterimOff();}, 3000);}}>
-              <span className="ms-2">dieu khien giong noi</span>
-              <i className={`fa-solid ${interimResultsMode ? "fa-toggle-off" : "fa-toggle-on"}`}></i>
-            </button>
           </div>
         </div>
 

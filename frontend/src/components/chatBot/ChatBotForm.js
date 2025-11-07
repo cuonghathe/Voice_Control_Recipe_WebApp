@@ -16,9 +16,9 @@ const ChatBotForm = ({setChatHistory, chatHistory, generateBotResponse}) => {
     setTimeout(()=> {
       setChatHistory((history) => [...history, {role: "model", text: "..."}]);
       generateBotResponse([...chatHistory, {role: "user", text: `Use the info provided above, please address this
-      query in VietNammese, only response with the info when asked else DONT, response in a human readable format. Exclude all IDs and metadata like _id, 
+      query in VietNammese, only response with the info when asked else DONT. Exclude all IDs and metadata like _id, 
       userId, createdAt, updatedAt, recipeImg, and any other MongoDB-specific fields and the JSON syntax. give short and to the point
-      response, dont use symbol (like s1, s2,... or anything execpt line break) to separate different parts of the information: ${userMessage}`}]);
+      response: ${userMessage}`}]);
     },600);
   
   }
