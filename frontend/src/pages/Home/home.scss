@@ -80,17 +80,15 @@
       color: #414141;
       text-decoration: none;
       cursor: pointer;
+      &:hover {
+        color: #ea9c00; 
+        transform: scale(1.15);   
+      }
     }
 
     .hero__more ~ .hero__more{
       margin-left: 20px;
     }
-
-    .hero__more:hover{
-
-      font-weight: 600;
-    }
-
   }
 }
 
@@ -133,13 +131,14 @@
   .top_recipe_container h1, a{
     color: #414141;
     text-decoration: none;
+    &:hover {
+      color: #ea9c00; 
+      transform: scale(1.03);   
+    }
   }
   
 
-  .top_recipe_container h1:hover{
-    font-weight: 700;
 
-  }
 
   .top_user_container {
     display: flex;
@@ -173,13 +172,17 @@
     margin-bottom: 15px;
     box-shadow: 0px 2px 20px #cfd8dc;
     height: auto;
+
+
+    &:hover {
+      border-color: #ea9c00; 
+      transform: scale(1.03); 
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); 
+      background-color: rgba(255, 255, 255, 1);    
+    }
   }
 
-  .top_usercard .card:hover {
-    transform: scale(1.03); 
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); 
-    background-color: rgba(255, 255, 255, 1); 
-  }
+
 
   .user_star, .recipe_star{
     color: #ffd000;
@@ -219,5 +222,15 @@
   }
 
   .social_icon i {
+    font-size: 1.8rem;
+  }
+
+  .social_icon i {
     font-size: 1.5rem;
+    color: #555;
+  
+    &:hover {
+      color: #ea9c00; 
+      transform: scale(1.15);
+    }
   }

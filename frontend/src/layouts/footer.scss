@@ -1,0 +1,36 @@
+.footer {
+  margin-top: 28px !important;
+  a {
+    color: #ddd;
+    text-decoration: none;
+
+    &:hover {
+      color: #ea9c00;
+    }
+  }
+
+  .footer-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .footer-social {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: row;
+    gap:12px;
+    a {
+      color: #ccc;
+      font-size: 1.3rem;
+      margin-right: 12px;
+      transition: color 0.3s;
+      &:hover {
+        color: #ea9c00;
+      }
+    }
+  }
+
+  hr {
+    opacity: 0.3;
+  }
+}
