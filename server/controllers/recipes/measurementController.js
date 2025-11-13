@@ -1,19 +1,3 @@
-// Thay đổi số lượng nguyên liệu theo số suất ăn mới
-const adjustMeasurements = (ingredients, currentServings, newServings) => {
-  if (typeof ingredients === 'string') {
-    ingredients = JSON.parse(ingredients);
-  }
-
-  if (!Array.isArray(ingredients)) {
-    throw new Error("Ingredients must be an array");
-  }
-
-  const adjustmentFactor = newServings / currentServings;
-  return ingredients.map(ingredient => ({
-    ...ingredient,
-    quantity: Math.round(ingredient.quantity * adjustmentFactor * 100) / 100
-  }));
-};
 
 // Lấy định lượng cho công thức từ CSDL
 export const getMeasurementsForRecipe = async (recipeId) => {

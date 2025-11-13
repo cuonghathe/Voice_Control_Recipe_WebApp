@@ -10,7 +10,6 @@ import Scrolling from "../../api/voiceControl/scrolling";
 import TTS, { stopTTS } from "../../api/voiceControl/TTS";
 import ChatBotBox from "../../components/chatBot/ChatBotBox";
 import VoiceControlInstruction from "../../components/voiceControlInstruction";
-// import GeminiGenAi from "../../api/voiceControl/GeminiGenAi";
 import "./Recipe.scss";
 
 const RecipeDetails = () => {

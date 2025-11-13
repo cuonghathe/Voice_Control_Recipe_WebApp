@@ -86,6 +86,7 @@ const Scrolling = ({
     };
 
     recognition.onresult = (event) => {
+      console.log(event.results)
       const command = event.results[event.results.length - 1][0].transcript.trim();
       const currentTime = Date.now();
       if(!recognition.interimResults){
