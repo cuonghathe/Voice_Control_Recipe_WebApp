@@ -92,6 +92,132 @@
     }
 
   }
-
-  
 }
+
+  .top_recipe_container {
+    display: flex;
+    padding: 20px;
+    width: 100%;
+    max-height: 1400px;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 16px;
+    overflow: hidden; 
+    background-color: rgb(255, 255, 255,0.95);
+  }
+
+  .top_recipecard {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 40px;
+    margin-top: 40px;
+  
+    .recipeimg {
+      object-fit: cover;
+    }
+  }
+  
+  .top_recipecard .card {
+    flex: 0 0 auto;
+    max-width: 16rem;
+    width: 100%;
+    margin-bottom: 15px;
+    box-shadow: 0px 2px 20px #cfd8dc;
+    height: 22rem;
+  }
+
+  .top_recipe_container h1, a{
+    color: #414141;
+    text-decoration: none;
+  }
+  
+
+  .top_recipe_container h1:hover{
+    font-weight: 700;
+
+  }
+
+  .top_user_container {
+    display: flex;
+    padding: 20px;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 16px;
+    background-color: rgb(255, 255, 255, 0.95);
+    cursor: pointer;
+    max-height: 404px;
+    overflow: hidden;
+  }
+  
+
+  .top_usercard {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 40px;
+    margin-top: 40px;
+  }
+  
+  .top_usercard .card {
+    flex: 0 0 auto;
+    max-width: 16rem;
+    width: 100%;
+    margin-bottom: 15px;
+    box-shadow: 0px 2px 20px #cfd8dc;
+    height: auto;
+  }
+
+  .top_usercard .card:hover {
+    transform: scale(1.03); 
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); 
+    background-color: rgba(255, 255, 255, 1); 
+  }
+
+  .user_star, .recipe_star{
+    color: #ffd000;
+    margin-left:4px ;
+  }
+
+  .user_star{
+    font-size: 18px;
+  }
+
+  .recipe_star{
+    font-size: 20px;
+  }
+
+  .top_usercard img{
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid #000000;
+    margin-right: 12px;
+  }
+
+  @media (max-width: 940px){
+    .top_user_container{
+      max-height: 1155px;
+    }
+  }
+
+  .social_icon{
+    display: flex;
+    flex-direction: row;
+    margin-top: 36px;
+    gap: 36px;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .social_icon i {
+    font-size: 1.5rem;
+  }

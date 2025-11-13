@@ -2,7 +2,6 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Card, Container, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import RecipeCard from './RecipeCard';
 import '../../src/pages/Dashboard/Dashboard.scss';
 
 
