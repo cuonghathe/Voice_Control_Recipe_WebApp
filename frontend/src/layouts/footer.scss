@@ -3,6 +3,7 @@
   position: relative;
   bottom: 0;
   width: 100%;
+  z-index: -1;
 
   a {
     color: #ddd;
@@ -23,6 +24,7 @@
     display: flex;
     flex-direction: row;
     gap:12px;
+    flex-wrap: wrap;
     a {
       color: #ccc;
       font-size: 1.3rem;

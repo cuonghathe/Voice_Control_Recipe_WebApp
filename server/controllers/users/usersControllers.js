@@ -237,34 +237,43 @@ export const getUser = async (req, res) => {
   const { userId } = req.params;
 
   try {
+    // Fetch user details
     const user = await userDB.findById(userId);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
 
+    // Fetch all recipes uploaded by the user
     const userRecipes = await recipeDB.find({ userId });
 
+    // Calculate total recipes
     const totalRecipes = userRecipes.length;
 
+    // Calculate total reviews and average rating
     let totalReviews = 0;
     let sumOfAverageRatings = 0;
 
     for (const recipe of userRecipes) {
       const reviews = await reviewDB.find({ recipeid: recipe._id });
 
+      // Add the number of reviews for this recipe to the total
       totalReviews += reviews.length;
 
+      // Calculate the average rating for this recipe
       const averageRating =
         reviews.length > 0
           ? reviews.reduce((sum, review) => sum + Number(review.rating), 0) / reviews.length
           : 0;
 
+      // Add the average rating to the sum of average ratings
       sumOfAverageRatings += averageRating;
     }
 
+    // Calculate the average rating across all uploaded recipes
     const averageRatingAcrossRecipes =
       totalRecipes > 0 ? (sumOfAverageRatings / totalRecipes).toFixed(1) : "0.0";
 
+    // Return user details along with stats
     res.status(200).json({
       _id: user._id,
       username: user.username,
