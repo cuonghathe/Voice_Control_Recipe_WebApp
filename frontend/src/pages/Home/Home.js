@@ -54,6 +54,7 @@ const Home = () => {
     navigate(`/UserProfilePublic/${id}`)
   };
 
+
   return (
     <>
       <Hero />

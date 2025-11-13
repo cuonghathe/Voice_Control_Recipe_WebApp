@@ -60,7 +60,7 @@ const RecipeList = () => {
     navigate(`Recipe/${id}`);
   };
 
-  if (loading) return <p>Đang tải danh sách công thức...</p>;
+  if (loading) return <p>Đang tải dữ liệu...</p>;
   if (error) return <p className="error">{error}</p>;
 
   return (

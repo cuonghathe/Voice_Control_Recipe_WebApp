@@ -11,6 +11,8 @@ import "../Recipe/Recipe.scss";
 const AdminRecipeDetails = () => {
     const { id } = useParams();
     const [recipe, setRecipe] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
     const [checkedIngredients, setCheckedIngredients] = useState([]);
     const [servings, setServings] = useState(1);
     const [adjustedIngredients, setAdjustedIngredients] = useState([]);
@@ -28,6 +30,8 @@ const AdminRecipeDetails = () => {
                 setAdjustedIngredients(response.data.ingredients);
             } catch (error) {
                 console.error('Failed to fetch recipe:', error);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -87,9 +91,9 @@ const AdminRecipeDetails = () => {
         return (total / reviews.length).toFixed(1);
     };
 
-    if (!recipe) {
-        return <div>....</div>;
-    }
+    if (loading) return <p>Đang tải dữ liệu...</p>;
+    if (error) return <p className="error">{error}</p>;
+  
 
     return (
         <Container className="recipe-container mt-0">

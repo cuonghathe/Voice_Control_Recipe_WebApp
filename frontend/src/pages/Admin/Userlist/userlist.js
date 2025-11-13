@@ -28,7 +28,7 @@ const UserList = () => {
     } catch (err) {
       setError("lỗi load dữ liệu");
       setLoading(false);
-    }
+    } 
   };
 
   const handleDeleteUser = async (userId) => {
@@ -63,7 +63,7 @@ const UserList = () => {
     navigate(`/admin/userprofile/${id}`);
   };
 
-  if (loading) return <p>Đang tải...</p>;
+  if (loading) return <p>Đang tải dữ liệu...</p>;
   if (error) return <p className="error">{error}</p>;
 
   return (

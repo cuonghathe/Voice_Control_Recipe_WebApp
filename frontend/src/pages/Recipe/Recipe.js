@@ -149,9 +149,7 @@ const RecipeDetails = () => {
     }
 
 
-    if (!recipe) {
-        return <div>Đang tải....</div>;
-    }
+    if (!recipe) return <p>Đang tải dữ liệu...</p>;
 
     return (
 

@@ -7,6 +7,7 @@ import "./TopRecipe.scss";
 const TopRecipe = () => {
   const [recipes, setRecipes] = useState([]);
   const [timeFilter, setTimeFilter] = useState("allTime");
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [nameFilter, setNameFilter] = useState("");
 
@@ -38,6 +39,8 @@ const TopRecipe = () => {
         setRecipes(sortedRecipes);
       } catch (error) {
         console.error("Failed to fetch recipes:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -60,6 +63,7 @@ const TopRecipe = () => {
     navigate(`/recipe/${id}`);
   };
 
+  if (loading) return <p>Đang tải dữ liệu...</p>;
 
   return (
     <div className="TopRecipe_body">
@@ -101,7 +105,13 @@ const TopRecipe = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredRecipe.map((recipe) => {
+            {
+            filteredRecipe.length === 0 ? (
+              <tr>
+                <td colSpan="6" className="text-center">Không có công thức nào</td>
+              </tr>
+            ) : (
+            filteredRecipe.map((recipe) => {
               const originalIndex = recipes.findIndex((r) => r._id === recipe._id);
               return (
                 <tr key={recipe._id}>
@@ -119,7 +129,7 @@ const TopRecipe = () => {
                   <td>{recipe.reviewCount}</td>
                 </tr>
               );
-            })}
+            }))}
           </tbody>
         </Table>
       </Container>

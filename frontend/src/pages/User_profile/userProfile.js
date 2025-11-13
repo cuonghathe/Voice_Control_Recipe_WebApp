@@ -101,7 +101,7 @@ const UserProfile = () => {
 
 
     if (!user) {
-        return <div>Đang tải...</div>;
+        return <div>Đang tải dữ liệu...</div>;
     }
     
     return (

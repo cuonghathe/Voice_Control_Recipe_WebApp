@@ -10,6 +10,7 @@ const Dashboard = () => {
   const [ratingRange] = useState("");
   const [sortOrder, setSortOrder] = useState("highest");
   const [nameFilter, setNameFilter] = useState("");
+  const [loading, setLoading] = useState(true);
   
 
 
@@ -20,6 +21,8 @@ const Dashboard = () => {
         setRecipes(response.data.allRecipeData);
       } catch (error) {
         console.error("Failed to fetch recipes:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -68,6 +71,8 @@ const Dashboard = () => {
     navigate(`/recipe/${id}`);
   };
 
+  if (loading) return <p>Đang tải dữ liệu...</p>;
+
   return (
     <Container className="dashboard_container">
       <div className="recipe_container">
@@ -91,7 +96,13 @@ const Dashboard = () => {
           </select>
         </div>
         <div className="recipecard">
-          {filteredRecipe.map((recipe) => (
+          {
+          filteredRecipe.length === 0 ? (
+            <tr>
+              <td colSpan="6" className="text-center">Không có công thức nào</td>
+            </tr>
+          ) : (
+          filteredRecipe.map((recipe) => (
             <Card key={recipe._id}>
               <Card.Img style={{ width: "100%", height: "190px", maxWidth:"334px" }} variant="top" src={recipe.recipeImg || "/dragondancing_1200x1200.jpg"} />
               <Card.Body>
@@ -111,7 +122,7 @@ const Dashboard = () => {
                 <Button variant="outline-danger" onClick={() => handleNavigateRecipe(recipe._id)}>Xem công thức</Button>
               </Card.Body>
             </Card>
-          ))}
+          )))}
         </div>
       </div>
     </Container>
