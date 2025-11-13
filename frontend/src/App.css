@@ -11,7 +11,7 @@
 }
 
 body{
-  background-image: url("../src/pages/Dashboard/food.jpg");
+  background-color: #fff3f3 !important;
 }
 
 .App {
@@ -31,7 +31,7 @@ body{
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #fff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

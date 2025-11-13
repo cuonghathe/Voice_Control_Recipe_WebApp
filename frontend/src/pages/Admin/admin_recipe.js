@@ -88,7 +88,7 @@ const AdminRecipeDetails = () => {
     };
 
     if (!recipe) {
-        return <div>Loading...</div>;
+        return <div>....</div>;
     }
 
     return (

@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "./pages/Login/Login";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import Home from "./pages/Home/Home";
 import Register from "./pages/Register/Register";
 import RecipeDetails from "./pages/Recipe/Recipe";
 import CreateRecipe from "./pages/Create_recipe/create_recipe";
@@ -38,9 +39,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<UserTemplate />}>
-          <Route index element={<Dashboard />} />
+          <Route index element={<Home />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+          <Route path="Recipes" element={<Dashboard />} />
           <Route path="Recipe/:id" element={<RecipeDetails />} />
           <Route path="Recipe/Create" element={<CreateRecipe />} />
           <Route path="search" element={<SearchResults />} />
