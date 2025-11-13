@@ -124,14 +124,15 @@ const UserProfile = () => {
 
                     </h4>
                     <Card.Title>Email: <span className="mb-4">{user.email}</span></Card.Title>
-                    <Card.Title>Thời gian tạo tài khoản: <span className="mb-4">{new Date(user.createdAt).toLocaleDateString()}</span></Card.Title>
+                    <Card.Title>Ngày tham gia: <span className="mb-4">{new Date(user.createdAt).toLocaleDateString()}</span></Card.Title>
                     <Card.Title>Điểm trung bình:<span className="star"> {user.averageRatingAcrossRecipes}★</span> </Card.Title>
                     <Card.Title>Số bài đăng:<span className="mb-4"> {user.totalRecipes}</span> </Card.Title>
-                    <Card.Title>Số đánh giá:<span className="mb-4"> {reviews.length}</span> </Card.Title>
+                    <Card.Title>Số đánh giá đã nhận:<span className="mb-4"> {user.totalReviews}</span> </Card.Title>
+                    <Card.Title>Số đánh giá đã tạo:<span className="mb-4"> {reviews.length}</span> </Card.Title>
                     <Card.Title>Số lần đăng nhập:<span className="mb-4"> {user.tokens.length}</span>
                     <div className="userprofile__action">
-                        <Button variant="danger" onClick={() => handleDeleteUser(user._id)} >Xóa</Button>
-                        <Button variant="warning" onClick={() => navigate(`/updateprofile/${userId}`)}>Sửa</Button>
+                        <Button variant="warning" onClick={() => navigate(`/updateprofile/${userId}`)}>Sửa tài khoản</Button>
+                        <Button variant="danger" onClick={() => handleDeleteUser(user._id)} >Xóa tài khoán</Button>
                     </div></Card.Title>
                 </div>
             </div>

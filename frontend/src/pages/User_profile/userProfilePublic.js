@@ -75,10 +75,11 @@ const UserProfilePublic = () => {
                         Username: <span className="review">{user.username}</span>
 
                     </h4>
-                    <Card.Title>Thời gian tạo tài khoản: <span className="mb-4">{new Date(user.createdAt).toLocaleDateString()}</span></Card.Title>
+                    <Card.Title>Ngày tham gia: <span className="mb-4">{new Date(user.createdAt).toLocaleDateString()}</span></Card.Title>
                     <Card.Title>Điểm trung bình:<span className="star"> {user.averageRatingAcrossRecipes}★</span> </Card.Title>
                     <Card.Title>Số bài đăng:<span className="mb-4"> {user.totalRecipes}</span> </Card.Title>
-                    <Card.Title>Số đánh giá:<span className="mb-4"> {reviews.length}</span> </Card.Title>
+                    <Card.Title>Số đánh giá đã nhận:<span className="mb-4"> {user.totalReviews}</span> </Card.Title>
+                    <Card.Title>Số đánh giá đã tạo:<span className="mb-4"> {reviews.length}</span> </Card.Title>
                 </div>
             </div>
 

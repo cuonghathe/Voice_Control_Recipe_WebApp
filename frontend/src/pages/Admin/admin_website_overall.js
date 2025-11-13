@@ -129,16 +129,6 @@ const AdminWebsiteOverall = () => {
             </Card>
           </Col>
 
-          <Col md={3} sm={6} className="mb-4">
-            <Card className="stat-card stat-card-rating">
-              <Card.Body>
-                <div className="stat-label-con">
-                  <Card.Text className="stat-label">Điểm trung bình</Card.Text>
-                </div>
-                <Card.Title className="stat-value">{stats.averageRating}</Card.Title>
-              </Card.Body>
-            </Card>
-          </Col>
         </Row>
 
         {/* Recent Data Tables */}

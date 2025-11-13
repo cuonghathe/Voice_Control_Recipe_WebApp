@@ -103,6 +103,16 @@
   transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
+.btn-outline-danger{
+  color: #ea9c00;
+  border-color: #ea9c00;
+
+  &:hover{
+    background-color: #ea9c00;
+    border-color: #ea9c00;
+  }
+}
+
 
 @media (max-width: 1023px) {
   .recipe_container{
