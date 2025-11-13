@@ -7,6 +7,7 @@ import "./TopRecipe.scss";
 const TopUser = () => {
   const [users, setUsers] = useState([]);
   const [sortBy, setSortBy] = useState("averageRating"); 
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [nameFilter, setNameFilter] = useState("");
 
@@ -18,6 +19,8 @@ const TopUser = () => {
         setUsers(response.data);
       } catch (error) {
         console.error("Failed to fetch user stats:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -48,6 +51,8 @@ const filteredUsers = users
   return 0;
 });
 
+if (loading) return <p>Đang tải dữ liệu...</p>;
+
   return (
     <div className="TopRecipe_body">
       <Container className="leaderboard-container">
@@ -59,7 +64,7 @@ const filteredUsers = users
             className="form-select"
           >
             <option value="averageRating">Điểm trung bình</option>
-            <option value="totalRecipes">Số lượng công thức đã đăng</option>
+            <option value="totalRecipes">Số công thức đã đăng</option>
           </select>
         </div>
 
@@ -84,7 +89,13 @@ const filteredUsers = users
             </tr>
           </thead>
           <tbody>
-            {filteredUsers.map((user, index) => (
+            {
+            filteredUsers.length === 0 ? (
+              <tr>
+                <td colSpan="6" className="text-center">Không có người dùng nào</td>
+              </tr>
+            ) : (
+            filteredUsers.map((user, index) => (
               <tr key={user.userId}>
                 <td>{index + 1}</td>
                 <td>
@@ -99,7 +110,7 @@ const filteredUsers = users
                 <td>{user.totalReviews}</td>
                 <td>{user.totalRecipes}</td>
               </tr>
-            ))}
+            )))}
           </tbody>
         </Table>
       </Container>

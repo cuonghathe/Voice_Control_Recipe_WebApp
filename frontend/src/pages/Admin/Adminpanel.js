@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { ListGroup, Container, Form, Nav, Button } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Card, Container, Form, Nav, Table } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
-import '../../layouts/header.scss'
+import './admin.scss';
 
 const RecipeList = () => {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState('');
-
+  const [nameFilter, setNameFilter] = useState("");
+  
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -28,22 +28,6 @@ const RecipeList = () => {
     fetchRecipes();
   }, []);
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-
-    if (!searchTerm.trim()) {
-      console.warn("Search term is empty");
-      return;
-    }
-
-    try {
-      const response = await axios.get(`http://localhost:5000/recipe/api/search/${encodeURIComponent(searchTerm)}`);
-      navigate('admin/search', { state: { results: response.data } });
-    } catch (error) {
-      console.error('Failed to search recipes:', error);
-    }
-  };
-
   const handleDeleteRecipe = async (recipeId) => {
     if (!window.confirm("Bạn có chắc chắn muốn xóa công thức này?")) return;
 
@@ -58,55 +42,83 @@ const RecipeList = () => {
     }
   };
 
+
+  const filteredRecipe = recipes
+  .filter((recipe) => {
+    const matchesName =
+      nameFilter === "" ||
+      (recipe.recipename && recipe.recipename.toLowerCase().includes(nameFilter.toLowerCase()));
+
+    return matchesName;
+  })
+
+  const handleNameFilterChange = (e) => {
+    setNameFilter(e.target.value);
+  };
+
   const handleNavigateRecipe = (id) => {
     navigate(`Recipe/${id}`);
   };
 
-  if (loading) return <p>Đang tải danh sách công thức...</p>;
+  if (loading) return <p>Đang tải dữ liệu...</p>;
   if (error) return <p className="error">{error}</p>;
 
   return (
-    <Container className="recipe-management">
-      <h2 className="mt-4 text-center">Quản lý công thức</h2>
+    <Container>
+      <h2 className="overall-title">Quản lý công thức</h2>
 
-      <Nav className='text-mid'>
-        <Form className='d-flex' style={{ maxWidth: "400px", width: "100%" }} onSubmit={handleSearch}>
+      <Nav className='mb-4'>
+        <Form className='d-flex' style={{ maxWidth: "400px", width: "100%" }}>
           <Form.Control
             type="text"
             placeholder="Tìm kiếm"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            value={nameFilter}
+            onChange={handleNameFilterChange}
           />
-          <button type="submit" style={{ position: "absolute", right: "6px", top: "8px", cursor: "pointer", border: "none", background: "none" }}>
-            <i className="fa-solid fa-search"></i>
-          </button>
         </Form>
       </Nav>
 
-      <ListGroup>
-        {recipes.length === 0 ? <p>Không có công thức nào.</p> : null}
-        {recipes.map((recipe) => (
-          <ListGroup.Item key={recipe._id} className="d-flex justify-content-between align-items-center">
-            <span>
-              <strong>{recipe.recipename}</strong>
-              <small className="ms-2"> |   {new Date(recipe.createdAt).toLocaleDateString()} | review: {recipe.reviewCount} | Điểm: {recipe.averageRating} | Tác giả: {recipe.userData[0].username} |</small>
-            </span>
-            <div>
-              <Button className="btn btn-success btn-sm me-2" onClick={() => handleNavigateRecipe(recipe._id)}>
-                Xem
-              </Button>
-              <Button variant="warning" size='sm' onClick={() => navigate(`/updaterecipe/${recipe._id}`)} >
-                Sửa
-              </Button>
-              <Button className="btn btn-danger btn-sm" onClick={() => handleDeleteRecipe(recipe._id)}>
-                Xóa
-              </Button>
-              
-
-            </div>
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
+      <Card className="recent-card">
+        <Card.Body>
+          <Table hover responsive>
+            <thead>
+              <tr>
+                <th>Tên công thức</th>
+                <th>Tác giả</th>
+                <th>Ngày tạo</th>
+                <th>Review</th>
+                <th>Điểm</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredRecipe.length === 0 ? (
+                <tr>
+                  <td colSpan="6" className="text-center">Không có công thức nào</td>
+                </tr>
+              ) : (
+                filteredRecipe.map((recipe) => (
+                  <tr key={recipe._id}>
+                    <td><strong>{recipe.recipename}</strong></td>
+                    <td>{recipe.userData && recipe.userData[0] ? recipe.userData[0].username : 'N/A'}</td>
+                    <td>{new Date(recipe.createdAt).toLocaleDateString('vi-VN')}</td>
+                    <td>{recipe.reviewCount || 0}</td>
+                    <td>{recipe.averageRating || 0}</td>
+                    <td>
+                      <Button className="btn btn-success btn-sm me-2" onClick={() => handleNavigateRecipe(recipe._id)}>
+                        Xem
+                      </Button>
+                      <Button className="btn btn-danger btn-sm" onClick={() => handleDeleteRecipe(recipe._id)}>
+                        Xóa
+                      </Button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </Table>
+        </Card.Body>
+      </Card>
     </Container>
   );
 };

@@ -8,7 +8,9 @@ const UserTemplate = () => {
   return (
     <div>
       <Header />
-      <Outlet />
+      <div className="outLet">
+        <Outlet />
+      </div>
       <Footer />
     </div>
   );

@@ -14,6 +14,7 @@ import UserTemplate from "./components/user_template";
 import UserList from "./pages/Admin/Userlist/userlist";
 import AdminRecipeDetails from "./pages/Admin/admin_recipe";
 import AdminSearchResults from "./components/admin_searchResult";
+import AdminWebsiteOverall from "./pages/Admin/admin_website_overall";
 import UserProfile from "./pages/User_profile/userProfile";
 import UpdateProfile from "./pages/User_profile/updateUser";
 import UpdateRecipe from "./pages/Create_recipe/update_recipe";
@@ -35,6 +36,7 @@ const PrivateRoute = ({ children }) => {
 };
 
 function App() {
+  
   return (
     <BrowserRouter>
       <Routes>
@@ -57,9 +59,9 @@ function App() {
 
         <Route path="/admin" element={<PrivateRoute><AdminTemplate /></PrivateRoute>}>
           <Route index element={<AdminPanel />} />
+          <Route path="overall" element={<AdminWebsiteOverall />} />
           <Route path="User/Manage" element={<UserList />} />
           <Route path="Recipe/:id" element={<AdminRecipeDetails />} />
-          <Route path="Recipe/Create" element={<CreateRecipe />} />
           <Route path="Home" index element={<Dashboard />} />
           <Route path="admin/search" element={<AdminSearchResults />} />
           <Route path="/admin/userprofile/:userId" element={<UserProfile />} />

@@ -1,50 +1,50 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Navbar, Nav, Container } from 'react-bootstrap';
-import '../../../layouts/header.scss';
+import '../admin.scss';
 
 const Header = () => {
     const navigate = useNavigate();
-    const isLoggedIn = !!localStorage.getItem('authToken');
     const userId = localStorage.getItem('userId');
-
 
     const handleLogout = () => {
         localStorage.removeItem('authToken');
         navigate('/login');
     };
 
-    const handlenav = () => {
-        navigate(`/admin/userprofile/${userId}`);
-    }
-
-
     return (
         <>
-            <header>
-                <Navbar bg="dark" data-bs-theme="dark" style={{ width: "100%" }}>
-                    <Container>
-                        <NavLink to='/admin' className="text-decoration-none text-light mx-2" style={{ fontSize: "24px" }}>AdminPanel</NavLink>
-                        <Nav className="me-auto">
-                            <Nav.Link as={NavLink} to="/admin/Recipe/Create">Tạo công thức</Nav.Link>
-                            <Nav.Link as={NavLink} to="/admin">Quản lý công thức</Nav.Link>
-                            <Nav.Link as={NavLink} to="/admin/User/Manage">Quản lý người dùng</Nav.Link>
-                            <Nav.Link as={NavLink} to="/admin/Home">Trang chủ</Nav.Link>
-                        </Nav>
+            <header className="admin-sidebar">
+                <div className="sidebar-content">
+                    <div className="sidebar-header">
+                        <NavLink to='/admin' className="sidebar-logo">
+                            AdminPanel
+                        </NavLink>
+                    </div>
+                    
+                    <nav className="sidebar-nav">
+                        <NavLink to="/admin/overall" className="nav-item">
+                            <span>Tổng quan</span>
+                        </NavLink>
+                        
+                        <NavLink to="/admin" className="nav-item">
+                            <span>Quản lý công thức</span>
+                        </NavLink>
+                        
+                        <NavLink to="/admin/User/Manage" className="nav-item">
+                            <span>Quản lý người dùng</span>
+                        </NavLink>
 
-
-                        {isLoggedIn ? (
-                            <Nav className="ml-auto">
-                                <Nav.Link onClick={handlenav}>Tài khoản</Nav.Link>
-                                <Nav.Link onClick={handleLogout}>Đăng xuất</Nav.Link>
-                            </Nav>
-                        ) : (
-                            <Nav className="ml-auto">
-                                <Nav.Link href="/login">Đăng nhập</Nav.Link>
-                            </Nav>
-                        )}
-                    </Container>
-                </Navbar>
+                        <NavLink to="/" className="nav-item" target="_blank">
+                            <span>Trang chủ</span>
+                        </NavLink>
+                    </nav>
+                    
+                    <div className="sidebar-footer">
+                        <button onClick={handleLogout} className="logout-btn">
+                            <span>Đăng xuất</span>
+                        </button>
+                    </div>
+                </div>
             </header>
         </>
     );

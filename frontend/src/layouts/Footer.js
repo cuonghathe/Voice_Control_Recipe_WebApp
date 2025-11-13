@@ -33,10 +33,10 @@ const Footer = () => {
             <h5>Liên hệ</h5>
             <p>Email: <a href="mailto:support@tastyecho.com" className="text-light">support@tastyecho.com</a></p>
             <div className="footer-social">
-              <a  href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><i class="ti-facebook"></i></a>
-              <a  href="https://www.instagram.com/"><i class="ti-instagram" rel="noopener noreferrer" target="_blank"></i></a>
-              <a  href="https://www.youtube.com/"><i class="ti-youtube" rel="noopener noreferrer" target="_blank"></i></a>
-              <a  href="https://www.pinterest.com/"><i class="ti-pinterest" rel="noopener noreferrer" target="_blank"></i></a>
+              <a  href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook"></i></a>
+              <a  href="https://www.instagram.com/"><i class="fa-brands fa-instagram" rel="noopener noreferrer" target="_blank"></i></a>
+              <a  href="https://www.youtube.com/"><i class="fa-brands fa-youtube" rel="noopener noreferrer" target="_blank"></i></a>
+              <a  href="https://www.pinterest.com/"><i class="fa-brands fa-pinterest" rel="noopener noreferrer" target="_blank"></i></a>
               <a  href="https://x.com/"><i class="fa-brands fa-x-twitter" rel="noopener noreferrer" target="_blank"></i></a>
               <a  href="https://github.com/cuonghathe/Voice_Control_Recipe_WebApp"><i class="fa-brands fa-github" rel="noopener noreferrer" target="_blank"></i></a>
             </div>

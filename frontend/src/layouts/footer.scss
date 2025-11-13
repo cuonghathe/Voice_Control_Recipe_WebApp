@@ -1,5 +1,9 @@
 .footer {
-  margin-top: 28px !important;
+  margin-top: 0px !important;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+
   a {
     color: #ddd;
     text-decoration: none;
@@ -34,3 +38,5 @@
     opacity: 0.3;
   }
 }
+
+

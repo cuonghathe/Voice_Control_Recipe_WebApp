@@ -7,6 +7,7 @@ import "./Create_recipe.scss";
 const UpdateRecipe = () => {
   const [recipename, setRecipename] = useState('');
   const [description, setDescription] = useState('');
+  const [loading, setLoading] = useState(true);
   const [instructions, setInstructions] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [cookingTime, setCookingTime] = useState('');
@@ -44,6 +45,8 @@ const UpdateRecipe = () => {
         setRecipeImgUrl(recipe.recipeImg || '');
       } catch (err) {
         setError("Không thể tải công thức");
+      } finally {
+        setLoading(false);
       }
     };
     fetchRecipe();
@@ -106,6 +109,9 @@ const UpdateRecipe = () => {
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
+
+  if (loading) return <p>Đang tải dữ liệu...</p>;
+  if (error) return <p className="error">{error}</p>;
 
   return (
     <div className='create_recipe_body'>
