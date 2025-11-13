@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { ListGroup, Container } from "react-bootstrap";
+import { Button, Card, Container, Form, Nav, Table } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
+import '../admin.scss';
 
 
 const UserList = () => {
@@ -9,6 +10,8 @@ const UserList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [nameFilter, setNameFilter] = useState("");
+  
 
   useEffect(() => {
     fetchUsers();
@@ -42,6 +45,20 @@ const UserList = () => {
     }
   };
 
+  const filteredUser = users
+  .filter((user) => {
+    const matchesName =
+      nameFilter === "" ||
+      (user.username && user.username.toLowerCase().includes(nameFilter.toLowerCase()));
+
+    return matchesName;
+  })
+
+  const handleNameFilterChange = (e) => {
+    setNameFilter(e.target.value);
+  };
+
+
   const handleNav = (id) => {
     navigate(`/admin/userprofile/${id}`);
   };
@@ -50,28 +67,60 @@ const UserList = () => {
   if (error) return <p className="error">{error}</p>;
 
   return (
-    <Container className="recipe-management">
-      <h2 className="mt-4 text-center">Quản lý người dùng</h2>
+    <Container>
+      <h2 className="overall-title">Quản lý người dùng</h2>
 
-      <ListGroup>
-        {users.length === 0 ? <p>Không có người dùng nào.</p> : null}
-        {users.map((users) => (
-          <ListGroup.Item key={users._id} className="d-flex justify-content-between align-items-center">
-            <span>
-              <strong>{users.username}</strong>
-              <small className="ms-2">| Số lần đăng nhập {users.tokens.length} | Số bài đăng {users.totalRecipes} | Điểm trung bình {users.averageRatingAcrossRecipes}</small>
-            </span>
-            <div>
-              <button className="btn btn-success btn-sm me-2" onClick={ () => handleNav(users._id)} >
-                Xem
-              </button>
-              <button className="btn btn-danger btn-sm" onClick={() => handleDeleteUser(users._id)}>
-                Xóa
-              </button>
-            </div>
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
+      <Nav className='mb-4'>
+        <Form className='d-flex' style={{ maxWidth: "400px", width: "100%" }}>
+          <Form.Control
+            type="text"
+            placeholder="Tìm kiếm"
+            value={nameFilter}
+            onChange={handleNameFilterChange}
+          />
+        </Form>
+      </Nav>
+
+      <Card className="recent-card">
+
+        <Card.Body>
+          <Table hover responsive>
+            <thead>
+              <tr>
+                <th>Tên người dùng</th>
+                <th>Số lần đăng nhập</th>
+                <th>Số bài đăng</th>
+                <th>Điểm trung bình</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredUser.length === 0 ? (
+                <tr>
+                  <td colSpan="5" className="text-center">Không có người dùng nào</td>
+                </tr>
+              ) : (
+                filteredUser.map((user) => (
+                  <tr key={user._id}>
+                    <td><strong>{user.username}</strong></td>
+                    <td>{user.tokens ? user.tokens.length : 0}</td>
+                    <td>{user.totalRecipes || 0}</td>
+                    <td>{user.averageRatingAcrossRecipes || 0}</td>
+                    <td>
+                      <Button className="btn btn-success btn-sm me-2" onClick={() => handleNav(user._id)}>
+                        Xem
+                      </Button>
+                      <Button className="btn btn-danger btn-sm" onClick={() => handleDeleteUser(user._id)}>
+                        Xóa
+                      </Button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </Table>
+        </Card.Body>
+      </Card>
     </Container>
   );
 };

@@ -59,7 +59,7 @@ const filteredUsers = users
             className="form-select"
           >
             <option value="averageRating">Điểm trung bình</option>
-            <option value="totalRecipes">Số lượng công thức đã đăng</option>
+            <option value="totalRecipes">Số công thức đã đăng</option>
           </select>
         </div>
 

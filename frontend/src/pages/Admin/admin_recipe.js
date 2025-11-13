@@ -92,7 +92,7 @@ const AdminRecipeDetails = () => {
     }
 
     return (
-        <Container className="recipe-container">
+        <Container className="recipe-container mt-0">
             <div className="recipe-header-details-container">
                 <div className="recipe-header-container">
                     <div className="recipe-header">
