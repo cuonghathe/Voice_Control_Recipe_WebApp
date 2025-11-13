@@ -20,6 +20,15 @@ const Hero = () => {
             <a className="hero__more" href="/Recipes">Tìm hiểu thêm</a>
             <a className="hero__more" href="/Recipes">Xem công thức </a>
           </div>
+
+          <div class="social_icon">
+            <a  href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><i class="ti-facebook"></i></a>
+            <a  href="https://www.instagram.com/"><i class="ti-instagram" rel="noopener noreferrer" target="_blank"></i></a>
+            <a  href="https://www.youtube.com/"><i class="ti-youtube" rel="noopener noreferrer" target="_blank"></i></a>
+            <a  href="https://www.pinterest.com/"><i class="ti-pinterest" rel="noopener noreferrer" target="_blank"></i></a>
+            <a  href="https://x.com/"><i class="fa-brands fa-x-twitter" rel="noopener noreferrer" target="_blank"></i></a>
+            <a  href="https://github.com/cuonghathe/Voice_Control_Recipe_WebApp"><i class="fa-brands fa-github" rel="noopener noreferrer" target="_blank"></i></a>
+          </div>
         </div>
       </div>
     </div>
