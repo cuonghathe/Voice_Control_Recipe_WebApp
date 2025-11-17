@@ -22,6 +22,7 @@
   background: #2E8B57; 
   align-items: center;
   justify-content: center;
+  z-index: 2;
 }
 
 .chat__toggler.on, .instruction__toggler.on{
