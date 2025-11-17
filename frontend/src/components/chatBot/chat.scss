@@ -10,7 +10,7 @@
   bottom: 30px;
 }
 
-#chat__toggler, #instruction__toggler {
+.chat__toggler, .instruction__toggler {
   position: fixed;
   border: none;
   right: 24px;
@@ -19,10 +19,15 @@
   display: flex;
   cursor: pointer;
   border-radius: 50%;
-  background: #2E8B57; /* xanh lá chính */
+  background: #2E8B57; 
   align-items: center;
   justify-content: center;
 }
+
+.chat__toggler.on, .instruction__toggler.on{
+  background: #cd1f00;
+}
+
 
 #chat__toggler span {
   position: absolute;
@@ -76,7 +81,19 @@
   padding: 15px 22px;
   align-items: center;
   justify-content: space-between;
-  background: #2E8B57; /* header */
+  background: #2E8B57;
+}
+
+.instruction__header__info, .instruction__header{
+  width: 100%;
+}
+
+.chat__header.on, .instruction__header.on {
+  background: #cd1f00
+}
+
+.chat__header.on svg{
+  fill: #cd1f00;
 }
 
 .chat__header__info, .chat__instruction__info {
@@ -84,6 +101,8 @@
   gap: 10;
   align-items: center;
 }
+
+
 
 .chat__header__info svg, .instruction__header__info svg {
   height: 35px;
@@ -111,7 +130,7 @@
   opacity: 0.75;
 }
 
-.chat__header .tts-controls i{
+.chat__header .tts-controls i, .v-controls i{
   margin-left: 8px;
   font-size: 16px;
 }
@@ -119,6 +138,25 @@
 .chat__header .tts-controls .AutoTTS.on,.chat__header .tts-controls .interimResultsMode.on{
   opacity: 1;
   font-weight: 600;
+}
+
+button.AutoTTS {
+  border: none;
+  padding: 0px;
+  background: none;
+}
+
+.v-controls .AutoTTS{
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.v-controls i{
+  font-size: 1.4em;
+  margin-top: 3px;
 }
 
 .chat__body, .instruction__body {

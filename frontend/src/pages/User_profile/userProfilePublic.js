@@ -97,7 +97,7 @@ const UserProfilePublic = () => {
                                                 <p>Ngày tạo: <span className="mb-4">{new Date(recipe.createdAt).toLocaleDateString()}   </span></p>
                                             </h5>
                                             <div className="recipe-ingredients-instructions">
-                                                <Button variant="success" size="sm" href={`/recipe/${recipe._id}`}>Xem</Button>
+                                                <Button className="user_recipe_btn" variant="success" size="sm" href={`/recipe/${recipe._id}`}>Xem</Button>
                                             </div>
                                         </div>
                                     </Card.Body>

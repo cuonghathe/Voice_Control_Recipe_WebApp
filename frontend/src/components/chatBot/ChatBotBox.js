@@ -12,6 +12,7 @@ const ChatBotBox = ({ command, recipeInfo }) => {
   const [showChatBot, setShowChatbot] = useState(false);
   const chatBodyRef = useRef();
   const [vocalCommunication, setVocalCommunication] = useState(false);
+  const [vocalCommunicationIndicator, setVocalCommunicationIndicator] = useState(false);
 
   const [chatHistory, setChatHistory] = useState([
     {
@@ -103,21 +104,24 @@ const ChatBotBox = ({ command, recipeInfo }) => {
       window.stopRecognition();
       setTimeout(() => {
         window.startRecognitionWithInterimOff();
+        setVocalCommunicationIndicator(true);
       }, 3000);
     } else {
       setVocalCommunication(false);
+      setVocalCommunicationIndicator(false);
       stopTTS();
       window.stopRecognition();
     }
   }
 
+
   return (
     <div className={`chat__container ${showChatBot ? "chat__open" : ""}`}>
-      <button onClick={() => setShowChatbot((prev) => !prev)} id="chat__toggler">
+      <button onClick={() => setShowChatbot((prev) => !prev)} id="chat__toggler" className={`chat__toggler ${vocalCommunicationIndicator ? "on" : ""}`}>
         <ChatBotIcon />
       </button>
       <div className="chat__popup">
-        <div className="chat__header">
+        <div className= {`chat__header ${vocalCommunicationIndicator ? "on":""}`}>
           <div className="chat__header__info">
             <ChatBotIcon />
             <h2 className="chat__logo-text">CookBot</h2>

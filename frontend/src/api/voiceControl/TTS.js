@@ -21,9 +21,8 @@ const TTS = (text, rate = 0.69) => {
     toSpeak.voice = voices[3];
   }
 
-  
-  toSpeak.onend = () => {
-    if (window.startRecognition) {
+  if (window.startRecognition) {
+    toSpeak.onend = () => {
         window.startRecognition();
     }
   };
