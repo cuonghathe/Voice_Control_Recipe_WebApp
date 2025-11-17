@@ -3,23 +3,44 @@ import { useState } from "react";
 
 const VoiceControlInstruction = () => {
   const [showChatBot, setShowInstruction] = useState(false);
+  const [voiceControl, setVoiceControl] = useState(false);
+  const [voiceControlIndicator, setVoiceControlIndicator] = useState(false);
   
+  const toggleVoiceControl = () => {
+    if(!voiceControl){
+      setVoiceControl(true);
+      window.stopRecognition();
+      setTimeout(() => {
+        window.startRecognitionWithInterimOn()
+        setVoiceControlIndicator(true);
+      }, 3000);
+    } else {
+      setVoiceControl(false);
+      setVoiceControlIndicator(false);
+      window.stopRecognition();
+    }
+  }
+
   return (
     
     <div className={`chat__container ${showChatBot ? "instruction__open" : ""}`}>
-    <button onClick={() => setShowInstruction((prev) => !prev)} id="instruction__toggler">
+    <button onClick={() => setShowInstruction((prev) => !prev)} id="instruction__toggler" className={`instruction__toggler ${voiceControlIndicator ? "on" : ""}`}>
       <i className="fa-solid fa-microphone"></i>
     </button>
     <div className="instruction__popup">
-      <div className="instruction__header">
+      <div className={`instruction__header ${voiceControlIndicator ? "on" : "" }`}>
         <div className="instruction__header__info">
-          <h2 className="instruction__logo-text">Các lệnh điều khiển giọng nói</h2>
-        </div>
+          <div className="v-controls">
+            <button className={`AutoTTS ${voiceControl ? "on" : ""}`} onClick={() => toggleVoiceControl()}>
+              <h2 className="instruction__logo-text">Điều khiển bằng giọng nói</h2>
+              <i className={`fa-solid ${voiceControl ? "fa-toggle-on" : "fa-toggle-off"}`}></i>
+            </button>
+          </div>
+        </div>  
       </div>
 
       <div className="instruction__body">
-        <button onClick={() => {window.stopRecognition(); setTimeout(() => {window.startRecognitionWithInterimOn();}, 3000);}}>DÙNG MIC</button>
-        <button onClick={() => window.stopRecognition()}>DỪNG MIC</button>
+        <h5 className="ms-2">Các câu lệnh điều khiển</h5>
         <div className="instruction">
           <p>Lên đầu trang: "đầu"</p>
           <p>Xuống cuối trang: "cuối"</p>
