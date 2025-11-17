@@ -22,12 +22,12 @@ const Hero = () => {
           </div>
 
           <div class="social_icon">
-            <a  href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook"></i></a>
-            <a  href="https://www.instagram.com/"><i class="fa-brands fa-instagram" rel="noopener noreferrer" target="_blank"></i></a>
-            <a  href="https://www.youtube.com/"><i class="fa-brands fa-youtube" rel="noopener noreferrer" target="_blank"></i></a>
-            <a  href="https://www.pinterest.com/"><i class="fa-brands fa-pinterest" rel="noopener noreferrer" target="_blank"></i></a>
-            <a  href="https://x.com/"><i class="fa-brands fa-x-twitter" rel="noopener noreferrer" target="_blank"></i></a>
-            <a  href="https://github.com/cuonghathe/Voice_Control_Recipe_WebApp"><i class="fa-brands fa-github" rel="noopener noreferrer" target="_blank"></i></a>
+            <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/" ><i class="fa-brands fa-facebook"></i></a>
+            <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/"><i class="fa-brands fa-instagram"></i></a>
+            <a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/"><i class="fa-brands fa-youtube"></i></a>
+            <a target="_blank" rel="noopener noreferrer" href="https://www.pinterest.com/"><i class="fa-brands fa-pinterest"></i></a>
+            <a target="_blank" rel="noopener noreferrer" href="https://x.com/"><i class="fa-brands fa-x-twitter"></i></a>
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/cuonghathe/Voice_Control_Recipe_WebApp"><i class="fa-brands fa-github" rel="noopener noreferrer"></i></a>
           </div>
         </div>
       </div>

@@ -8,7 +8,6 @@ const Footer = () => {
     <footer className="footer bg-dark text-light mt-5 pt-4 pb-2">
       <Container>
         <Row>
-          {/* Cột 1 - Giới thiệu */}
           <Col md={4} sm={12} className="mb-3">
             <h4 className="footer-title">TastyEcho</h4>
             <p className="footer-description">
@@ -16,7 +15,6 @@ const Footer = () => {
             </p>
           </Col>
 
-          {/* Cột 2 - Liên kết nhanh */}
           <Col md={4} sm={12} className="mb-3">
             <h5>Trang web</h5>
             <ul className="footer-links list-unstyled">
@@ -28,24 +26,23 @@ const Footer = () => {
             </ul>
           </Col>
 
-          {/* Cột 3 - Liên hệ */}
           <Col md={4} sm={12} className="mb-3">
             <h5>Liên hệ</h5>
             <p>Email: <a href="mailto:support@tastyecho.com" className="text-light">support@tastyecho.com</a></p>
             <div className="footer-social">
-              <a  href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook"></i></a>
-              <a  href="https://www.instagram.com/"><i class="fa-brands fa-instagram" rel="noopener noreferrer" target="_blank"></i></a>
-              <a  href="https://www.youtube.com/"><i class="fa-brands fa-youtube" rel="noopener noreferrer" target="_blank"></i></a>
-              <a  href="https://www.pinterest.com/"><i class="fa-brands fa-pinterest" rel="noopener noreferrer" target="_blank"></i></a>
-              <a  href="https://x.com/"><i class="fa-brands fa-x-twitter" rel="noopener noreferrer" target="_blank"></i></a>
-              <a  href="https://github.com/cuonghathe/Voice_Control_Recipe_WebApp"><i class="fa-brands fa-github" rel="noopener noreferrer" target="_blank"></i></a>
+              <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/"><i className="fa-brands fa-facebook"></i></a>
+              <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/"><i className="fa-brands fa-instagram"></i></a>
+              <a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/"><i className="fa-brands fa-youtube"></i></a>
+              <a target="_blank" rel="noopener noreferrer" href="https://www.pinterest.com/"><i className="fa-brands fa-pinterest"></i></a>
+              <a target="_blank" rel="noopener noreferrer" href="https://x.com/"><i className="fa-brands fa-x-twitter"></i></a>
+              <a target="_blank" rel="noopener noreferrer" href="https://github.com/cuonghathe/Voice_Control_Recipe_WebApp"><i className="fa-brands fa-github"></i></a>
             </div>
           </Col>
         </Row>
 
         <hr className="bg-secondary" />
         <div className="text-center">
-          <small>© {new Date().getFullYear()} TastyEcho. All rights reserved.</small>
+          <small>@ {new Date().getFullYear()} TastyEcho</small>
         </div>
       </Container>
     </footer>
