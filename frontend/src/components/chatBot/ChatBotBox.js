@@ -5,6 +5,7 @@ import ChatBotForm from "./ChatBotForm.js";
 import ChatBotIcon from "./ChatBotIcon";
 import ChatMessage from "./ChatMessage";
 import formatData from "./formatData.js";
+import DescriptionBox from "../DescriptionBox/DescriptionBox.js";
 
 
 
@@ -14,6 +15,9 @@ const ChatBotBox = ({ command, recipeInfo }) => {
   const [vocalCommunication, setVocalCommunication] = useState(false);
   const [vocalCommunicationIndicator, setVocalCommunicationIndicator] = useState(false);
 
+
+  const description = `Tính năng Đối thoại cho phép CookBot nói và lắng nghe bạn theo thời gian thực.
+   Khi bật lên, trợ lý sẽ tự động đọc câu trả lời và nhận diện giọng nói của bạn để tiếp tục cuộc trò chuyện.`;
   const [chatHistory, setChatHistory] = useState([
     {
       hideInChat: true,
@@ -105,10 +109,12 @@ const ChatBotBox = ({ command, recipeInfo }) => {
       setTimeout(() => {
         window.startRecognitionWithInterimOff();
         setVocalCommunicationIndicator(true);
-      }, 3000);
+      }, 1500);
     } else {
       setVocalCommunication(false);
-      setVocalCommunicationIndicator(false);
+      setTimeout(()=>{
+        setVocalCommunicationIndicator(false);
+      },1500)
       stopTTS();
       window.stopRecognition();
     }
@@ -131,7 +137,9 @@ const ChatBotBox = ({ command, recipeInfo }) => {
               <span className="ms-2">Đối thoại</span>
               <i className={`fa-solid ${vocalCommunication ? "fa-toggle-on" : "fa-toggle-off"}`}></i>
             </button>
-
+            <div className="description_con">
+              <DescriptionBox description = {description}/>
+            </div>
           </div>
         </div>
 

@@ -131,12 +131,30 @@
   opacity: 0.75;
 }
 
-.chat__header .tts-controls i, .v-controls i{
-  margin-left: 8px;
-  font-size: 16px;
+.tts-controls, .v-controls{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
 }
 
-.chat__header .tts-controls .AutoTTS.on,.chat__header .tts-controls .interimResultsMode.on{
+.v-controls .description_icon i{
+  margin-top: 18px;
+}
+
+.v-controls i {
+  opacity: 0.75;
+  font-size: 18px !important;
+}
+
+.chat__header .tts-controls i, .v-controls i{
+  margin-left: 8px;
+  font-size: 18px;
+}
+
+.chat__header .tts-controls .AutoTTS.on,
+.chat__header .tts-controls .interimResultsMode.on,
+.instruction__header .v-controls .AutoTTS.on i{
   opacity: 1;
   font-weight: 600;
 }
