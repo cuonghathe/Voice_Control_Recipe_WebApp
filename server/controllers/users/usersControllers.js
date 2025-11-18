@@ -344,7 +344,7 @@ export const getUserRecipeStats = async (req, res) => {
         }
 
         const averageRatingAcrossRecipes =
-          totalRecipes > 0 ? (sumOfAverageRatings / totalRecipes).toFixed(1) : "0.0";
+          totalRecipes > 0 && totalReviews > 2? (sumOfAverageRatings / totalRecipes).toFixed(1) : "0.0";
 
         return {
           ...user.toObject(), 

@@ -84,15 +84,17 @@ const RecipeDetails = () => {
     };    
 
     const handleServingsChange = (newServings) => {
-        if (newServings > 0) {
-            adjustIngredients(newServings);
-            setServings(newServings);
-            setRecipe(prev => ({
-                ...prev,
-                ingredients: adjustedIngredients,
-                servingSize: newServings,
-            }));
+        if (newServings <= 0){
+            newServings = 1;
         }
+        adjustIngredients(newServings);
+        setServings(newServings);
+        setRecipe(prev => ({
+            ...prev,
+            ingredients: adjustedIngredients,
+            servingSize: newServings,
+        }));
+        
     };
 
 
@@ -188,11 +190,15 @@ const RecipeDetails = () => {
                     </Card.Title>
                     <Card.Title>Suất ăn</Card.Title>
                     <div className="mb-4">
-                        <div className="d-flex align-items-center button-group-outline mt-2">
-                            <ButtonGroup>
-                                <Button variant="outline-secondary" onClick={() => handleServingsChange(servings - 1)}>-</Button>
+                        <div className="d-flex align-items-center button-group-outline mt-2 serving_container">
+                            <ButtonGroup className="serving_change">
+                                <Button variant="outline-secondary" onClick={() => handleServingsChange(servings - 10)}>-10</Button>
+                                <Button variant="outline-secondary" onClick={() => handleServingsChange(servings - 5)}>-5</Button>
+                                <Button variant="outline-secondary" onClick={() => handleServingsChange(servings - 1)}>-1</Button>
                                 <p className="mx-2 my-0 servings-display">{servings}</p>
-                                <Button variant="outline-secondary" onClick={() => handleServingsChange(servings + 1)}>+</Button>
+                                <Button variant="outline-secondary" onClick={() => handleServingsChange(servings + 1)}>+1</Button>
+                                <Button variant="outline-secondary" onClick={() => handleServingsChange(servings + 5)}>+5</Button>
+                                <Button variant="outline-secondary" onClick={() => handleServingsChange(servings + 10)}>+10</Button>
                             </ButtonGroup>
 
                             <Button variant="primary" className="navBtn" onClick={scrollToInstructions}>
