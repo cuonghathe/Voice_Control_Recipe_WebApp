@@ -18,7 +18,15 @@
 }
 
 
+.description_container a{
+  cursor: pointer;
+  float: inline-end;
 
+  &:hover{
+    color: #0000EE;
+    text-decoration: underline; 
+  }
+}
 
 .description_container {
   display: none;

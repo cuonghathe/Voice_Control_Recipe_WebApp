@@ -10,6 +10,7 @@ import Scrolling from "../../api/voiceControl/scrolling";
 import TTS, { stopTTS } from "../../api/voiceControl/TTS";
 import ChatBotBox from "../../components/chatBot/ChatBotBox";
 import VoiceControlInstruction from "../../components/voiceControlInstruction";
+import DescriptionBox from "../../components/DescriptionBox/DescriptionBox";
 import "./Recipe.scss";
 
 const RecipeDetails = () => {
@@ -188,7 +189,11 @@ const RecipeDetails = () => {
                     </div>
                     <Card.Title>Thời gian nấu: <span className="mb-4">{recipe.cookingTime}</span>
                     </Card.Title>
-                    <Card.Title>Suất ăn</Card.Title>
+                    <div className="title_with_des">
+                        <DescriptionBox/>
+                        <Card.Title>Suất ăn</Card.Title>
+                    </div>
+                    
                     <div className="mb-4">
                         <div className="d-flex align-items-center button-group-outline mt-2 serving_container">
                             <ButtonGroup className="serving_change">
@@ -223,7 +228,10 @@ const RecipeDetails = () => {
                 <Card className="ingredients-card" ref={ingredientsRef}>
                     <Card.Body>
                         <div className="info_box">
-                            <h4 className="mt-2">Nguyên liệu</h4>
+                            <div className="ingredients-card-title">
+                                <DescriptionBox/>
+                                <h4 className="mt-2">Nguyên liệu</h4>
+                            </div>
                             <div className="recipe-ingredients-instructions">
                                 <Button variant="success" className="user__action__button" onClick={handleSpeakIngredients}>Đọc</Button>
                                 <Button variant="danger" className="user__action__button" onClick={stopTTS} >Dừng</Button>

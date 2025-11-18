@@ -21,6 +21,7 @@ import UpdateRecipe from "./pages/Create_recipe/update_recipe";
 import TopRecipe from "./pages/Leaderboard/TopRecipe";
 import TopUser from "./pages/Leaderboard/TopUser";
 import UserProfilePublic from "./pages/User_profile/userProfilePublic";
+import InfoPage from "./pages/InfoPage/InfoPage";
 
 const PrivateRoute = ({ children }) => {
   const token = localStorage.getItem("authToken");
@@ -54,6 +55,7 @@ function App() {
           <Route path="recipes/leaderboard" element={<TopRecipe />} />
           <Route path="users/leaderboard" element={<TopUser />} />
           <Route path="UserProfilePublic/:userId" element={<UserProfilePublic />} />
+          <Route path="Info" element={<InfoPage />} />
         </Route>
 
 
