@@ -37,7 +37,7 @@ export const createReview = async (req, res) => {
 
 }
 
-//tim review
+//lay review cua cong thưc
 export const getRecipeReview = async (req, res) => {
   const{recipeid} = req.params;
   try {
