@@ -1,4 +1,5 @@
 import { useState } from "react";
+import DescriptionBox from "./DescriptionBox/DescriptionBox";
 
 
 const VoiceControlInstruction = () => {
@@ -6,6 +7,11 @@ const VoiceControlInstruction = () => {
   const [voiceControl, setVoiceControl] = useState(false);
   const [voiceControlIndicator, setVoiceControlIndicator] = useState(false);
   
+
+  const description = `Chế độ Điều khiển bằng giọng nói cho phép bạn thao tác trang mà không cần chạm tay.
+  Khi bật lên, hệ thống sẽ lắng nghe giọng nói của bạn và thực hiện các thao tác tương ứng.
+  Lưu ý: bạn cần nói đúng theo các câu lệnh được liệt kê bên dưới để hệ thống nhận diện và phản hồi chính xác.`;
+
   const toggleVoiceControl = () => {
     if(!voiceControl){
       setVoiceControl(true);
@@ -13,10 +19,12 @@ const VoiceControlInstruction = () => {
       setTimeout(() => {
         window.startRecognitionWithInterimOn()
         setVoiceControlIndicator(true);
-      }, 3000);
+      }, 1500);
     } else {
       setVoiceControl(false);
-      setVoiceControlIndicator(false);
+      setTimeout(() => {
+        setVoiceControlIndicator(false);
+      }, 1500);
       window.stopRecognition();
     }
   }
@@ -35,6 +43,7 @@ const VoiceControlInstruction = () => {
               <h2 className="instruction__logo-text">Điều khiển bằng giọng nói</h2>
               <i className={`fa-solid ${voiceControl ? "fa-toggle-on" : "fa-toggle-off"}`}></i>
             </button>
+            <DescriptionBox description = {description}/>
           </div>
         </div>  
       </div>

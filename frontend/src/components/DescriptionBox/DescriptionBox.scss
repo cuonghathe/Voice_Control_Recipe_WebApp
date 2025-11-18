@@ -1,0 +1,41 @@
+.description_icon i{
+  margin-top: 18px;
+  opacity: 0.75;
+  padding: 4px;
+}
+
+.description{
+  &:hover{
+    .description_container{
+      display: block;
+    }
+
+    .description_icon i{
+      opacity: 1;
+      font-weight: 800px;
+    }
+  }
+}
+
+
+
+
+.description_container {
+  display: none;
+  background-color: #fff;
+  padding: 12px;
+  position: absolute;
+  width: 306px;
+  min-height: 160px;
+  max-width: 600px;
+  z-index: 4;
+  right: 30px;
+  border-radius: 4px;
+  box-shadow: 0px 2px 16px #373737;
+}
+
+@media (max-width: 1023px){
+  .description_container{
+    width: 277px;
+  }
+}
