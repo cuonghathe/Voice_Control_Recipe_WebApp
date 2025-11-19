@@ -90,3 +90,63 @@ th, td {
   background-color: rgb(255, 255, 255,0.95);
 }
 
+
+.leaderBoard_unit_container{
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+
+  .rating_stat, .unit_stat{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rating_stat{
+    margin-top: 7px;
+  }
+
+  .unit_stat{
+    align-items: start;
+
+    p{
+      margin-bottom: 0;
+    }
+  }
+
+  &:hover{
+    background-color: #ddd;
+  }
+}
+
+
+
+@media (max-width: 640px){
+  .leaderBoard_unit_container{
+    display: flex;
+    padding: 8px 12px;
+  }
+
+  .leaderBoard_table{
+    display: none;
+  }
+
+  .leaderboard-container{
+    padding-left: 0;
+    padding-right: 0;
+
+    .form-select, .search_input{
+      margin-left: 20px;
+    }
+
+    .form-select{
+      margin-top: 12px;
+    }
+    .search_input{
+      margin-bottom: 12px;
+    }
+  }
+}

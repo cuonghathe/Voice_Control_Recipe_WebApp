@@ -120,7 +120,7 @@ const Header = () => {
                                     <a href="/Recipe/Create">Tạo công thức</a>
                                 </li>
                                 <li className="nav">
-                                    <a href="recipes/leaderboard">Bảng xếp hạng công thức</a>
+                                    <a href="/recipes/leaderboard">Bảng xếp hạng công thức</a>
                                 </li>
                                 <li className="nav">
                                     <a href="/users/leaderboard">Bảng xếp hạng người dùng</a>

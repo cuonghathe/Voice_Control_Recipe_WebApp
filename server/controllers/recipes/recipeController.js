@@ -149,12 +149,13 @@ export const getAllRecipes = async (req, res) => {
       }
     ]);
 
-    const recipesWithReviewCount = await Promise.all(
+    const recipesWithReviewCount = await Promise.all( 
       allRecipeData.map(async (recipe) => {
+        const minimumQuantity = 2;
         const reviews = await reviewDB.find({ recipeid: recipe._id });
 
         const calculateAverageRating = () => {
-          if (reviews.length < 2) return 0;
+          if (reviews.length < minimumQuantity) return "0.0";
           const total = reviews.reduce((sum, review) => sum + Number(review.rating), 0);
           return (total / reviews.length).toFixed(1);
         };

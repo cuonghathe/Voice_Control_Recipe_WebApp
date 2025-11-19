@@ -60,7 +60,8 @@ const TopRecipe = () => {
     })
 
   const handleNavigateRecipe = (id) => {
-    navigate(`/recipe/${id}`);
+    window.open(`/recipe/${id}`, '_blank', 'noopener,noreferrer');
+
   };
 
   if (loading) return <p>Đang tải dữ liệu...</p>;
@@ -93,7 +94,7 @@ const TopRecipe = () => {
           />
         </div>
 
-        <Table striped bordered hover responsive className="mt-4">
+        <Table striped bordered hover responsive className="mt-4 leaderBoard_table">
           <thead>
             <tr>
               <th>#</th>
@@ -132,6 +133,40 @@ const TopRecipe = () => {
             }))}
           </tbody>
         </Table>
+
+
+        {/* responsive design */}
+        
+        {
+          filteredRecipe.length === 0 ? (
+            <div>
+              <td colSpan="6" className="text-center">Không có công thức nào</td>
+            </div>
+          ) : (
+          filteredRecipe.map((recipe) => {
+            const originalIndex = recipes.findIndex((r) => r._id === recipe._id);
+          return (
+            <div className="leaderBoard_unit_container" key={recipe._id} onClick={() => handleNavigateRecipe(recipe._id)}>
+              <div className="rating_stat">
+                <h5>#{originalIndex + 1}</h5>
+                <p>{recipe.averageRating}★</p>
+                <p>{recipe.reviewCount}</p>
+              </div>
+              <div className="rating_picture">
+                <img
+                  src={recipe.recipeImg || "/default-image.png"}
+                  alt={recipe.recipename}
+                  style={{ width: "85px", height: "112px", objectFit: "cover", borderRadius: "5px" }}
+                />
+              </div>
+              <div className="unit_stat">
+                <h5>{recipe.recipename}</h5>
+                <p>{new Date(recipe.createdAt).toLocaleDateString()}</p>
+                <p>Tác giả: {recipe.userData[0]?.username}</p>
+              </div>
+            </div>
+            );
+          }))}
       </Container>
     </div>
   );
