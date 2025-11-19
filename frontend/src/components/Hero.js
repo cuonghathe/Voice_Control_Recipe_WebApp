@@ -17,7 +17,7 @@ const Hero = () => {
           </h1>
 
           <div className="hero__cta">
-            <a className="hero__more" href="/Recipes">Tìm hiểu thêm</a>
+            <a className="hero__more" href="/Info">Tìm hiểu thêm</a>
             <a className="hero__more" href="/Recipes">Xem công thức </a>
           </div>
 

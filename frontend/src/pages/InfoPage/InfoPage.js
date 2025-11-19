@@ -18,7 +18,7 @@ const InfoPage = () => {
          màn hình để mở menu điều khiển giọng nói` },
       { key: "picture", data: require("./Pictures/VoiceControl1.png") },
       { key: "paragraph", data: `Bước 2: Lần đầu tiên sử dụng, hệ thống sẽ yêu cầu cấp quyền truy cập micro; 
-        người dùng chỉ cần chọn “Cho phép” để tiếp tục.` },
+        bạn chỉ cần chọn “Cho phép” để tiếp tục.` },
       { key: "picture", data: require("./Pictures/VoiceControl2.png") },
       { key: "picture", data: require("./Pictures/VoiceControl3.png") },
       { key: "paragraph", data: `Bước 3: Sau khi được kích hoạt, website sẽ tự động lắng nghe và nhận diện câu 
@@ -26,21 +26,21 @@ const InfoPage = () => {
         suất ăn, hoặc cuộn trang. Lưu ý: bạn cần nói đúng theo các câu lệnh được liệt kê bên dưới để hệ thống 
         nhận diện và phản hồi chính xác.`},
       { key: "picture", data: require("./Pictures/VoiceControl4.png") },
-      { key: "paragraph", data: `Khi không muốn sử dụng nữa, người dùng có thể nhấn nút tắt điều khiển giọng
+      { key: "paragraph", data: `Khi không muốn sử dụng nữa, bạn có thể nhấn nút tắt điều khiển giọng
         nói để dừng hệ thống.`},
       { key: "paragraph", data: `Tính năng TTS (tường thuật văn bản) cho phép website tường thuật các phần 
         văn bản được hỗ trợ`},
-      { key: "paragraph", data: `Để sử dụng tính năng tường thuật văn bản, người dùng chỉ cần nhấn vào nút 
+      { key: "paragraph", data: `Để sử dụng tính năng tường thuật văn bản, bạn chỉ cần nhấn vào nút 
         “Đọc” được đặt tại các phần nội dung được hỗ trợ trong trang chi tiết công thức. 
-        Trong quá trình tường thuật, nếu người dùng không muốn tiếp tục nghe, chỉ cần nhấn nút “Dừng”,
+        Trong quá trình tường thuật, nếu bạn không muốn tiếp tục nghe, chỉ cần nhấn nút “Dừng”,
          hệ thống sẽ dừng phát âm ngay lập tức.`},
       { key: "picture", data: require("./Pictures/TTS1.png") },
       { key: "paragraph", data: `Tính năng Đối thoại cho phép CookBot nói và lắng nghe bạn theo thời gian thực.
       Khi bật lên, CookBot sẽ tự động đọc câu trả lời và nhận diện giọng nói của bạn để tiếp tục cuộc trò chuyện.`},
-      { key: "paragraph", data: `Để sử dụng tính năng đối thoại bằng giọng nói với CookBot, người dùng mở khung CookBot 
+      { key: "paragraph", data: `Để sử dụng tính năng đối thoại bằng giọng nói với CookBot, bạn mở khung CookBot 
         ở góc dưới màn hình và nhấn vào nút “Bật đối thoại”. 
-        Khi tính năng được kích hoạt, hệ thống sẽ bật chế độ nhận diện giọng nói và lắng nghe câu hỏi của người dùng. 
-        Khi người dùng dừng nói trong một khoảng thời gian ngắn, 
+        Khi tính năng được kích hoạt, hệ thống sẽ bật chế độ nhận diện giọng nói và lắng nghe câu hỏi của bạn. 
+        Khi bạn dừng nói trong một khoảng thời gian ngắn, 
         hệ thống sẽ tự động chuyển câu nói thành văn bản và gửi câu hỏi đó vào CookBot để xử lý.`},
       { key: "picture", data: require("./Pictures/VocalCom1.png") },
       { key: "picture", data: require("./Pictures/VocalCom2.png") },

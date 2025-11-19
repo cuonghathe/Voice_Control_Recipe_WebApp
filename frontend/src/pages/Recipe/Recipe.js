@@ -30,6 +30,12 @@ const RecipeDetails = () => {
     const [command, setCommand] = useState("");
     const [adjustmentFactor, setAdjustmentFactor] = useState([]);
 
+    const servingDes = "Số lượng nguyên liệu sẽ được thay đổi trực tiếp khi số lượng suất ăn được thay đổi"
+    const ttsDes = `Tính năng TTS (tường thuật văn bản) cho phép website tường thuật các phần 
+        văn bản được hỗ trợ. Để sử dụng tính năng tường thuật văn bản, bạn chỉ cần nhấn vào nút 
+        “Đọc” được đặt tại các phần nội dung được hỗ trợ trong trang chi tiết công thức.
+        Trong quá trình tường thuật, nếu bạn không muốn tiếp tục nghe, chỉ cần nhấn nút “Dừng”.`
+    const ttsDesHelpLink = `/Info`;
 
     useEffect(() => {
         const fetchRecipe = async () => {
@@ -190,8 +196,8 @@ const RecipeDetails = () => {
                     <Card.Title>Thời gian nấu: <span className="mb-4">{recipe.cookingTime}</span>
                     </Card.Title>
                     <div className="title_with_des">
-                        <DescriptionBox/>
                         <Card.Title>Suất ăn</Card.Title>
+                        <DescriptionBox description = {servingDes}/>
                     </div>
                     
                     <div className="mb-4">
@@ -229,8 +235,8 @@ const RecipeDetails = () => {
                     <Card.Body>
                         <div className="info_box">
                             <div className="ingredients-card-title">
-                                <DescriptionBox/>
                                 <h4 className="mt-2">Nguyên liệu</h4>
+                                <DescriptionBox description={ttsDes} link={ttsDesHelpLink}/>
                             </div>
                             <div className="recipe-ingredients-instructions">
                                 <Button variant="success" className="user__action__button" onClick={handleSpeakIngredients}>Đọc</Button>
