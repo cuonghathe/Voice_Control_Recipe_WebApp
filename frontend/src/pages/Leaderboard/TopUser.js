@@ -28,8 +28,8 @@ const TopUser = () => {
   }, []);
 
   const handlenav = (id) => {
-    navigate(`/UserProfilePublic/${id}`);
-}
+    window.open(`/UserProfilePublic/${id}`, '_blank', 'noopener,noreferrer');
+  }
 
 const handleNameFilterChange = (e) => {
   setNameFilter(e.target.value);
@@ -77,7 +77,7 @@ if (loading) return <p>Đang tải dữ liệu...</p>;
           />
         </div>
 
-        <Table striped bordered hover responsive className="mt-4">
+        <Table striped bordered hover responsive className="mt-4 leaderBoard_table">
           <thead>
             <tr>
               <th>#</th>
@@ -113,6 +113,38 @@ if (loading) return <p>Đang tải dữ liệu...</p>;
             )))}
           </tbody>
         </Table>
+
+        {/* responsive design */}
+        
+        {
+          filteredUsers.length === 0 ? (
+            <div>
+              <td colSpan="6" className="text-center">Không có công thức nào</td>
+            </div>
+          ) : (
+            filteredUsers.map((user, index) => {
+          return (
+            <div className="leaderBoard_unit_container" key={user.userId} onClick={() => handlenav(user._id)}>
+              <div className="rating_stat">
+                <h5>#{index + 1}</h5>
+              </div>
+              <div className="rating_picture">
+                <img
+                  src={user.userprofile || "/dragondancing_1200x1200.jpg"}
+                  alt={user.username}
+                  style={{ width: "85px", height: "112px", objectFit: "cover", borderRadius: "5px" }}
+                />
+              </div>
+              <div className="unit_stat">
+                <h5>Tên người dùng: {user.username}</h5>
+                <p>Điểm trung bình: {user.averageRatingAcrossRecipes}</p>
+                <p>Lượng đánh giá đã nhận: {user.totalReviews}</p>
+                <p>Lượng công thức đã đăng: {user.totalRecipes}</p>
+              </div>
+            </div>
+            );
+          }))}
+
       </Container>
     </div>
   );
