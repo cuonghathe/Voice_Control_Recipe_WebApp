@@ -33,7 +33,36 @@
   background-color: #ffd000;
 }
 
+.title_with_des{
+  display: flex;
+  flex-direction: row;
 
+  .description_icon i{
+    margin-top: 28px;
+    margin-left: 8px;
+    opacity: 0.45;
+  }
+
+  .description_container {
+    left: 343px;
+  }
+}
+
+.ingredients-card-title{
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: row;
+
+  .description_icon i{
+    margin-top: 28px;
+    margin-left: 8px;
+    opacity: 0.45;
+  }
+
+  .description_container {
+    left: 169px;
+  }
+}
 
 .recipe-header {
   text-align: left;

@@ -18,6 +18,8 @@ const ChatBotBox = ({ command, recipeInfo }) => {
 
   const description = `Tính năng Đối thoại cho phép CookBot nói và lắng nghe bạn theo thời gian thực.
    Khi bật lên, trợ lý sẽ tự động đọc câu trả lời và nhận diện giọng nói của bạn để tiếp tục cuộc trò chuyện.`;
+  const descriptionHelpLink = `/Info`;
+  
   const [chatHistory, setChatHistory] = useState([
     {
       hideInChat: true,
@@ -138,7 +140,7 @@ const ChatBotBox = ({ command, recipeInfo }) => {
               <i className={`fa-solid ${vocalCommunication ? "fa-toggle-on" : "fa-toggle-off"}`}></i>
             </button>
             <div className="description_con">
-              <DescriptionBox description = {description}/>
+              <DescriptionBox description = {description} link = {descriptionHelpLink}/>
             </div>
           </div>
         </div>

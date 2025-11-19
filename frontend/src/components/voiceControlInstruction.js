@@ -11,6 +11,8 @@ const VoiceControlInstruction = () => {
   const description = `Chế độ Điều khiển bằng giọng nói cho phép bạn thao tác trang mà không cần chạm tay.
   Khi bật lên, hệ thống sẽ lắng nghe giọng nói của bạn và thực hiện các thao tác tương ứng.
   Lưu ý: bạn cần nói đúng theo các câu lệnh được liệt kê bên dưới để hệ thống nhận diện và phản hồi chính xác.`;
+  const descriptionHelpLink = `/Info`;
+
 
   const toggleVoiceControl = () => {
     if(!voiceControl){
@@ -43,7 +45,7 @@ const VoiceControlInstruction = () => {
               <h2 className="instruction__logo-text">Điều khiển bằng giọng nói</h2>
               <i className={`fa-solid ${voiceControl ? "fa-toggle-on" : "fa-toggle-off"}`}></i>
             </button>
-            <DescriptionBox description = {description}/>
+            <DescriptionBox description = {description} link = {descriptionHelpLink}/>
           </div>
         </div>  
       </div>
