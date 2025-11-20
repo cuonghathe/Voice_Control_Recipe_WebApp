@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Button, Container } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
+import LoadingPopup from '../../components/LoadingPopup';
 import "./Create_recipe.scss";
 
 const UpdateRecipe = () => {
@@ -18,6 +19,8 @@ const UpdateRecipe = () => {
   const [token, setToken] = useState('');
   const { recipeid } = useParams();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -28,11 +31,9 @@ const UpdateRecipe = () => {
         const recipe = res.data;
         setRecipename(recipe.recipename || '');
         setDescription(recipe.description || '');
-        // Ensure instructions is always an array of strings
         setInstructions(Array.isArray(recipe.instructions) ?
           recipe.instructions.map(inst => String(inst)) :
           []);
-        // Ensure ingredients is always an array of objects with the right structure
         setIngredients(Array.isArray(recipe.ingredients) ?
           recipe.ingredients.map(ing => ({
             name: ing.name || '',
@@ -54,6 +55,7 @@ const UpdateRecipe = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const formData = new FormData();
     formData.append('recipename', recipename);
     formData.append('description', description);
@@ -75,6 +77,8 @@ const UpdateRecipe = () => {
       navigate('/');
     } catch (err) {
       setError(err.response?.data?.error || "Cập nhật thất bại");
+    } finally {
+      setIsLoading(false)
     }
   };
 
@@ -115,6 +119,8 @@ const UpdateRecipe = () => {
 
   return (
     <div className='create_recipe_body'>
+      <LoadingPopup isLoading={isLoading} />
+
       <section>
         <Container className='form_container'>
           <div className="form_data">

@@ -159,6 +159,19 @@ section .form_data form .btn-danger {
         }
     }
 
+
+    .description_container{
+        display: none;
+        right: inherit;
+
+        p{
+            color: #000;
+            text-align: start;
+            margin: 0px;
+        }
+    }
+
+
     div {
         display: flex;
         align-items: center;

@@ -14,6 +14,30 @@ header {
   margin: auto;
 }
 
+.nav-item{
+  padding: 12px 8px;
+  font-weight: 400;
+
+  &:hover{
+    background-color: transparent;
+  }
+
+  .dropdown-menu{
+    border: none;
+    border-radius: unset;
+
+    .dropdown-item.active, .dropdown-item.active{
+      color: var(--bs-dropdown-link-active-color);
+      text-decoration: none;
+      background-color: transparent;
+    }
+
+    .dropdown-item:hover{
+      background-color: transparent;
+    }
+  }
+}
+
 .profile__picture__container {
   display: flex;
   align-items: center;
