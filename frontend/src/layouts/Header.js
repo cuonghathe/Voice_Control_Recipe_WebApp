@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Container, Form, Nav, Navbar } from "react-bootstrap";
+import { Container, Form, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./header.scss";
 
@@ -57,8 +57,11 @@ const Header = () => {
                             <Nav className="me-auto nav__option">
                                 <Nav.Link as={NavLink} to="/Recipes">Công thức</Nav.Link>
                                 <Nav.Link as={NavLink} to="/Recipe/Create">Tạo công thức</Nav.Link>
-                                <Nav.Link as={NavLink} to="recipes/leaderboard">Bảng xếp hạng công thức</Nav.Link>
-                                <Nav.Link as={NavLink} to="/users/leaderboard">Bảng xếp hạng người dùng</Nav.Link>
+                                <NavDropdown title="Bảng xếp hạng" id="leaderboard-dropdown">
+                                    <NavDropdown.Item as={NavLink} to="recipes/leaderboard">Bảng xếp hạng công thức</NavDropdown.Item>
+                                    <NavDropdown.Item as={NavLink} to="/users/leaderboard">Bảng xếp hạng người dùng</NavDropdown.Item>
+                                </NavDropdown>
+                                <Nav.Link as={NavLink} to="/Info">Các tính năng mới</Nav.Link>
                             </Nav>
                         </Nav>
 
@@ -124,6 +127,9 @@ const Header = () => {
                                 </li>
                                 <li className="nav">
                                     <a href="/users/leaderboard">Bảng xếp hạng người dùng</a>
+                                </li>
+                                <li className="nav">
+                                    <a href="/Info">Các tính năng mới</a>
                                 </li>
                             </ul>
                         </div>

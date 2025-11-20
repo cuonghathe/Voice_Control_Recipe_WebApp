@@ -82,7 +82,7 @@ const CreateRecipe = () => {
           "Content-Type": "multipart/form-data"
         }
       });
-      navigate("/");
+      navigate("/Recipes");
     } catch (error) {
       console.error("Lỗi tạo công thức:", error);
       setError(error.response?.data?.error || "Lỗi tạo công thức");
