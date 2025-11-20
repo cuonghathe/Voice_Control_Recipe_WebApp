@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import LoadingPopup from "../../components/LoadingPopup";
 import "../Login/Login.scss";
 
 const UpdateProfile = () => {
@@ -12,6 +13,7 @@ const UpdateProfile = () => {
     const [file, setFile] = useState(null);
     const [userprofile, setUserprofile] = useState("");
     const [passShow, setPassShow] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
 
     useEffect(() => {
@@ -32,6 +34,7 @@ const UpdateProfile = () => {
 
     const handleUpdate = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
         const formData = new FormData();
         formData.append("username", username);
         formData.append("email", email);
@@ -48,17 +51,18 @@ const UpdateProfile = () => {
                     "Content-Type": "multipart/form-data"
                 }
             });
-
-            console.log(res.data);
             navigate(`/userprofile/${userId}`);
         } catch (err) {
-            console.error("Cập nhật thất bại:", err);
             setError(err.response?.data?.error || "Cập nhật thất bại");
+        } finally {
+            setIsLoading(false);
         }
     };
 
     return (
         <div className="login_body">
+          <LoadingPopup isLoading={isLoading} />
+
             <section>
                 <div className="form_data">
                     <div className="form_heading">

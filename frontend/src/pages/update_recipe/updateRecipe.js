@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container, Button } from "react-bootstrap";
+import LoadingPopup from "../../components/LoadingPopup";
 import "../Create_recipe/Create_recipe.scss";
 
 const UpdateRecipe = () => {
@@ -15,6 +16,7 @@ const UpdateRecipe = () => {
   const [file, setFile] = useState(null);
   const [error, setError] = useState("");
   const [token, ] = useState("");
+  const [isLoading, setIsLoading] = useState(false);  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,6 +50,7 @@ const UpdateRecipe = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const formData = new FormData();
     formData.append("recipename", recipename);
     formData.append("description", description);
@@ -71,12 +74,16 @@ const UpdateRecipe = () => {
     } catch (error) {
       console.error("Lỗi cập nhật công thức:", error);
       setError(error.response?.data?.error || "Lỗi cập nhật công thức");
+    } finally {
+      setIsLoading(false);
     }
   };
 
 
   return (
     <div className="create_recipe_body">
+      <LoadingPopup isLoading={isLoading} />
+
       <section>
         <Container className="form_container">
           <div className="form_data">

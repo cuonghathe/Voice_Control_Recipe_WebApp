@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { Container, Button } from "react-bootstrap";
+import DescriptionBox from "../../components/DescriptionBox/DescriptionBox";
+import LoadingPopup from "../../components/LoadingPopup";
 import "./Create_recipe.scss";
 
 const CreateRecipe = () => {
@@ -13,8 +15,12 @@ const CreateRecipe = () => {
   const [servingSize, setServingSize] = useState(1);
   const [file, setFile] = useState(null);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [token, setToken] = useState("");
   const navigate = useNavigate();
+
+  const ingredientDes = `Bạn cần nhập đủ thông tin về nguyên liệu để có thể tạo công thức, nhấn nút thêm để thêm mới nguyên liệu muốn nhập
+  hoắc nhấn nút X nếu muốn loại bỏ nguyên liệu đó`
 
   useEffect(() => {
     const storedToken = localStorage.getItem("authToken");
@@ -55,6 +61,9 @@ const CreateRecipe = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError("");
+
     const formData = new FormData();
     formData.append("recipename", recipename);
     formData.append("description", description);
@@ -67,22 +76,25 @@ const CreateRecipe = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/recipe/api/create", formData, {
+      await axios.post("http://localhost:5000/recipe/api/create", formData, {
         headers: {
           "Authorization": `${token}`,
           "Content-Type": "multipart/form-data"
         }
       });
-      console.log(response.data);
       navigate("/");
     } catch (error) {
       console.error("Lỗi tạo công thức:", error);
       setError(error.response?.data?.error || "Lỗi tạo công thức");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="create_recipe_body">
+      <LoadingPopup isLoading={isLoading} />
+      
       <section>
         <Container className="form_container">
           <div className="form_data">
@@ -115,7 +127,10 @@ const CreateRecipe = () => {
               </div>
 
               <div className="form_input">
-                <label htmlFor="ingredients">Nguyên liệu</label>
+                <div className="label_with_des">
+                  <label htmlFor="ingredients">Nguyên liệu</label>
+                  <DescriptionBox description={ingredientDes}/>
+                </div>
                 {ingredients.map((ingredient, index) => (
                   <div key={index} className="ingredient-row">
                     <input
@@ -136,8 +151,8 @@ const CreateRecipe = () => {
                       value={ingredient.measurement}
                       onChange={(e) => handleIngredientChange(index, "measurement", e.target.value)}
                       className="mr-2"
+                      placeholder="Đơn vị"
                     >
-                      <option value="Gram">Đơn vị</option>
                       <option value="Gram">g</option>
                       <option value="Kilo gram">kg</option>
                       <option value="Lit">L</option>
