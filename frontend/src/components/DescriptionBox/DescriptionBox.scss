@@ -34,13 +34,15 @@
 
 .description_container {
   display: none;
+  color: #000;
+  text-align: start;
   background-color: #fff;
   padding: 12px;
   position: absolute;
   top: 100%;      
   left: 0;  
   width: 306px;
-  min-height: 160px;
+  min-height: 130px;
   max-width: 600px;
   z-index: 4;
   border-radius: 4px;

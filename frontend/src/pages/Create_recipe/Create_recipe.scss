@@ -38,6 +38,7 @@ section .form_data form .btn-danger {
     background-position: center;
     background-repeat: no-repeat;
     display: flex;
+
 }
 
 
@@ -102,6 +103,17 @@ section .form_data form .btn-danger {
         }
     }
 
+    .description_container{
+        display: none;
+        right: inherit;
+
+        p{
+            color: #000;
+            text-align: start;
+            margin: 0px;
+        }
+    }
+
     div {
         display: flex;
         align-items: center;
@@ -126,6 +138,25 @@ section .form_data form .btn-danger {
             }
         }
     }
+}
+
+.form_input_instructions{
+
+    .instruction-column{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form_input_img{
+        margin-top: 12px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    } 
+
+    button.btn.btn-danger {
+        width: 100% !important;
+    }   
 }
 
 .form_input {
@@ -226,11 +257,7 @@ section .form_data form .btn-danger {
 
     section .form_data form .form_input input{
         margin: 0;
-    }
-
-    section .form_data{
-
-    }     
+    } 
 
 
   }
