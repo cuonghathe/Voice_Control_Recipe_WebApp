@@ -2,7 +2,16 @@ import { useState } from "react";
 import DescriptionBox from "./DescriptionBox/DescriptionBox";
 
 
-const VoiceControlInstruction = () => {
+const VoiceControlInstruction = (
+  {
+    scrollToInstructions, 
+    scrollToReviews, 
+    scrollToIngredients,
+    handleAddServing,
+    handleRemoveServing,
+    handleSpeakIngredients,
+    userCommand 
+  }) => {
   const [showChatBot, setShowInstruction] = useState(false);
   const [voiceControl, setVoiceControl] = useState(false);
   const [voiceControlIndicator, setVoiceControlIndicator] = useState(false);
@@ -12,6 +21,7 @@ const VoiceControlInstruction = () => {
   Khi bật lên, hệ thống sẽ lắng nghe giọng nói của bạn và thực hiện các thao tác tương ứng.
   Lưu ý: bạn cần nói đúng theo các câu lệnh được liệt kê bên dưới để hệ thống nhận diện và phản hồi chính xác.`;
   const descriptionHelpLink = `/Info`;
+  const maxScroll = document.documentElement.scrollHeight - document.documentElement.clientHeight;
 
 
   const toggleVoiceControl = () => {
@@ -53,14 +63,14 @@ const VoiceControlInstruction = () => {
       <div className="instruction__body">
         <h5 className="ms-2">Các câu lệnh điều khiển</h5>
         <div className="instruction">
-          <p>Lên đầu trang: "đầu"</p>
-          <p>Xuống cuối trang: "cuối"</p>
-          <p>Cuộn lên xuống: "lên", "xuống"</p>
-          <p>Cuộn xuống giữa trang: "nửa"</p>
-          <p>Đi đến phần nguyên liệu: "1"</p>
-          <p>Đi đến phần hướng dẫn: "2"</p>
-          <p>Đi đến phần đánh giá: "3"</p>
-          <p>Tăng giảm suất ăn: "tăng", "giảm"</p>
+          <p  onClick={()=>window.scrollTo(0, 0)}>Lên đầu trang: "đầu"</p>
+          <p  onClick={()=>window.scrollTo(0, maxScroll)}>Xuống cuối trang: "cuối"</p>
+          <p  onClick={()=>window.scrollBy(0, 150)}>Cuộn lên xuống: "lên", "xuống"</p>
+          <p  onClick={()=>window.scrollBy(0, document.body.scrollHeight / 2)}>Cuộn xuống giữa trang: "nửa"</p>
+          <p  onClick={()=>scrollToIngredients()}>Đi đến phần nguyên liệu: "1"</p>
+          <p  onClick={()=>scrollToInstructions()}>Đi đến phần hướng dẫn: "2"</p>
+          <p  onClick={()=>scrollToReviews()}>Đi đến phần đánh giá: "3"</p>
+          <p  onClick={()=>handleAddServing()}>Tăng giảm suất ăn: "tăng", "giảm"</p>
         </div>
       </div>
 

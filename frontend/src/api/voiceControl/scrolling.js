@@ -111,7 +111,7 @@ const Scrolling = ({
           "xuống cuối": () => window.scrollTo(0, maxScroll),
           "cuối": () => window.scrollTo(0, maxScroll),
           "cuối trang": () => window.scrollTo(0, maxScroll),
-
+          
           "lên đầu": () => window.scrollTo(0, 0),
           "đầu": () => window.scrollTo(0, 0),
           "đầu trang": () => window.scrollTo(0, 0),

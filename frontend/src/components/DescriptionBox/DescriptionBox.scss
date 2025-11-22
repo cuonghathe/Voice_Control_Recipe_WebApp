@@ -2,9 +2,12 @@
   margin-top: 18px;
   opacity: 0.75;
   padding: 4px;
+
 }
 
 .description{
+  position: relative; 
+
   &:hover{
     .description_container{
       display: block;
@@ -34,11 +37,12 @@
   background-color: #fff;
   padding: 12px;
   position: absolute;
+  top: 100%;      
+  left: 0;  
   width: 306px;
   min-height: 160px;
   max-width: 600px;
   z-index: 4;
-  right: 30px;
   border-radius: 4px;
   box-shadow: 0px 2px 16px #373737;
 }
@@ -91,4 +95,13 @@
     
   }
 
+}
+
+.instruction__body .instruction p{
+  cursor: pointer;
+
+  &:hover{
+    color: #ea9c00;
+    font-weight: 700;
+  }
 }
