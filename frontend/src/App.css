@@ -3,6 +3,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+
 }
 
 .error{
@@ -12,6 +13,10 @@
 
 body{
   background-color: #fdfafa !important;
+}
+
+.outLet{
+  min-height: 100vh;
 }
 
 .App {

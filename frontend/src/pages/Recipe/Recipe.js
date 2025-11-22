@@ -9,8 +9,8 @@ import { useParams } from "react-router-dom";
 import Scrolling from "../../api/voiceControl/scrolling";
 import TTS, { stopTTS } from "../../api/voiceControl/TTS";
 import ChatBotBox from "../../components/chatBot/ChatBotBox";
-import VoiceControlInstruction from "../../components/voiceControlInstruction";
 import DescriptionBox from "../../components/DescriptionBox/DescriptionBox";
+import VoiceControlInstruction from "../../components/voiceControlInstruction";
 import "./Recipe.scss";
 
 const RecipeDetails = () => {
@@ -355,7 +355,16 @@ const RecipeDetails = () => {
             </div>
             
             <ChatBotBox recipeInfo = {recipe} command={command}/>
-            <VoiceControlInstruction/>
+            <VoiceControlInstruction
+                scrollToInstructions={scrollToInstructions}
+                scrollToReviews={scrollToReviews}
+                scrollToIngredients={scrollToIngredients}
+                handleAddServing={() =>handleServingsChange(servings + 1)}
+                handleRemoveServing={() =>handleServingsChange(servings - 1)}
+                handleSpeakIngredients={handleSpeakIngredients}
+                handleAddReview={handleAddReview}
+                userCommand={setCommand}
+            />
             
         </Container>
     );
