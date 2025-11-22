@@ -13,23 +13,66 @@ const adjustMeasurements = (ingredients, originalServings, newServings) => {
 
 // Tao cong thuc
 export const createRecipe = async (req, res) => {
-  const file = req.file ? req.file.path : "";
+  // Xử lý files từ multer fields
+  const recipeImgFile = req.files && req.files.recipeImg ? req.files.recipeImg[0] : null;
+  const instructionImgFiles = req.files && req.files.instructionImg ? req.files.instructionImg : [];
+  
   const { recipename, description, instructions, ingredients, cookingTime, servingSize } = req.body;
 
   if (!recipename || !description || !instructions || !ingredients || !cookingTime || !servingSize) {
     return res.status(400).json({ error: "Vui lòng điền đầy đủ thông tin" });
   }
 
-  const upload = await cloudinary.uploader.upload(file);
+  let recipeImgUrl = "";
+  if (recipeImgFile) {
+    const recipeImgUpload = await cloudinary.uploader.upload(recipeImgFile.path);
+    recipeImgUrl = recipeImgUpload.secure_url;
+  }
+
+  const parsedInstructions = JSON.parse(instructions);
+
+  // Upload instruction images to Cloudinary and map to instructions
+  const formattedInstructions = await Promise.all(
+    parsedInstructions.map(async (item, index) => {
+      let instructionImgUrl = "";
+      
+      // Nếu item là string, chuyển thành object
+      if (typeof item === "string") {
+        // Nếu có ảnh tương ứng ở index này
+        if (instructionImgFiles[index]) {
+          const instructionUpload = await cloudinary.uploader.upload(instructionImgFiles[index].path);
+          instructionImgUrl = instructionUpload.secure_url;
+        }
+        return { name: item, instructionImg: instructionImgUrl };
+      }
+      
+      // Nếu item đã là object và có instructionImg field
+      // Nhưng nếu có file mới upload, dùng file mới
+      if (instructionImgFiles[index]) {
+        const instructionUpload = await cloudinary.uploader.upload(instructionImgFiles[index].path);
+        instructionImgUrl = instructionUpload.secure_url;
+      } else if (item.instructionImg) {
+        // Giữ lại ảnh cũ nếu không có file mới
+        instructionImgUrl = item.instructionImg;
+      }
+      
+      return { 
+        name: item.name || item, 
+        instructionImg: instructionImgUrl 
+      };
+    })
+  );
+
+  
   try {
     const recipeData = new recipeDB({
       userId: req.userId,
       recipename,
       description,
-      instructions: JSON.parse(instructions),
+      instructions: formattedInstructions,
       ingredients: JSON.parse(ingredients),
       cookingTime,
-      recipeImg: upload.secure_url,
+      recipeImg: recipeImgUrl,
       servingSize
     });
 
@@ -44,19 +87,20 @@ export const createRecipe = async (req, res) => {
 // sua cong thuc
 export const updateRecipe = async (req, res) => {
   const { recipeid } = req.params;
-  const file = req.file ? req.file.path : "";
+  
+  // Xử lý files từ multer fields
+  const recipeImgFile = req.files && req.files.recipeImg ? req.files.recipeImg[0] : null;
+  const instructionImgFiles = req.files && req.files.instructionImg ? req.files.instructionImg : [];
+  
   const { recipename, description, instructions, ingredients, cookingTime, servingSize } = req.body;
 
-  let parsedIngredients;
+  let parsedIngredients, parsedInstructions;
+
   try {
     parsedIngredients = typeof ingredients === "string" ? JSON.parse(ingredients) : ingredients;
+    parsedInstructions = typeof instructions === "string" ? JSON.parse(instructions) : instructions;
   } catch (error) {
-    return res.status(400).json({ error: "Invalid ingredients format" });
-  }
-
-  let upload;
-  if (file) {
-    upload = await cloudinary.uploader.upload(file);
+    return res.status(400).json({ error: "Invalid JSON format" });
   }
 
   try {
@@ -65,17 +109,58 @@ export const updateRecipe = async (req, res) => {
       return res.status(404).json({ error: "Recipe not found" });
     }
 
-    const adjustedIngredients = adjustMeasurements(parsedIngredients, existingRecipe.servingSize, servingSize);
+    // Upload recipe image nếu có file mới
+    let recipeImgUrl = existingRecipe.recipeImg;
+    if (recipeImgFile) {
+      const recipeImgUpload = await cloudinary.uploader.upload(recipeImgFile.path);
+      recipeImgUrl = recipeImgUpload.secure_url;
+    }
+
+    // Upload instruction images và map với instructions
+    const formattedInstructions = await Promise.all(
+      parsedInstructions.map(async (item, index) => {
+        let instructionImgUrl = "";
+        
+        // Nếu có file mới upload ở index này
+        if (instructionImgFiles[index]) {
+          const instructionUpload = await cloudinary.uploader.upload(instructionImgFiles[index].path);
+          instructionImgUrl = instructionUpload.secure_url;
+        } else {
+          // Không có file mới
+          if (typeof item === "string") {
+            // Nếu item là string, kiểm tra xem instruction cũ có ảnh không
+            instructionImgUrl = existingRecipe.instructions[index]?.instructionImg || "";
+          } else if (item.instructionImg) {
+            // Nếu item đã có instructionImg, giữ lại
+            instructionImgUrl = item.instructionImg;
+          } else if (existingRecipe.instructions[index]?.instructionImg) {
+            // Giữ lại ảnh cũ từ recipe hiện tại
+            instructionImgUrl = existingRecipe.instructions[index].instructionImg;
+          }
+        }
+        
+        return {
+          name: typeof item === "string" ? item : item.name,
+          instructionImg: instructionImgUrl
+        };
+      })
+    );
+
+    const adjustedIngredients = adjustMeasurements(
+      parsedIngredients,
+      existingRecipe.servingSize,
+      servingSize
+    );
 
     const updateRecipe = await recipeDB.findByIdAndUpdate(
       { _id: recipeid },
       {
         recipename,
         description,
-        instructions,
+        instructions: formattedInstructions,
         ingredients: adjustedIngredients,
         cookingTime,
-        recipeImg: upload && upload.secure_url,
+        recipeImg: recipeImgUrl,
         servingSize,
       },
       { new: true }
@@ -88,6 +173,7 @@ export const updateRecipe = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 //xoa cong thuc
 export const deleteRecipe = async (req, res) => {
