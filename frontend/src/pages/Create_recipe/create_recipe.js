@@ -48,7 +48,7 @@ const CreateRecipe = () => {
   };
 
   const handleAddIngredient = () => {
-    setIngredients([...ingredients, { name: "", measurement: "", quantity: 1 }]);
+    setIngredients([...ingredients, { name: "", measurement: "", quantity: 0 }]);
   };
 
   const handleIngredientChange = (index, field, value) => {
