@@ -47,9 +47,6 @@ const UserProfile = () => {
         };
 
 
-
-
-
         fetchUserData();
         fetchUserRecipes();
         fetchUserReviews();

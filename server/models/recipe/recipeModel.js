@@ -17,6 +17,17 @@ const ingredientSchema = new mongoose.Schema({
     }
 });
 
+const instructionsSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+
+    instructionImg: {
+        type: String,
+    }
+});
+
 const RecipeSchema = new mongoose.Schema({
     userId: {
         type: Schema.Types.ObjectId,
@@ -35,10 +46,7 @@ const RecipeSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    instructions: {
-        type: Array,
-        required: true
-    },
+    instructions: [instructionsSchema],
     ingredients: [ingredientSchema],
     cookingTime: {
         type: String,

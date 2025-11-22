@@ -12,6 +12,7 @@ import ChatBotBox from "../../components/chatBot/ChatBotBox";
 import DescriptionBox from "../../components/DescriptionBox/DescriptionBox";
 import VoiceControlInstruction from "../../components/voiceControlInstruction";
 import "./Recipe.scss";
+import { Fade } from "react-bootstrap";
 
 const RecipeDetails = () => {
     const { id } = useParams();
@@ -152,7 +153,7 @@ const RecipeDetails = () => {
 
     const handleSpeakInstruction = () =>{
         if(!recipe || !recipe.instructions) return;
-        const instructionText = recipe.instructions.map((instruction, index) => `Bước ${index} ${instruction}`)
+        const instructionText = recipe.instructions.map((instruction, index) => `Bước ${index + 1} ${instruction.name}`)
         .join(", ");
         TTS(instructionText);
     }
@@ -271,15 +272,23 @@ const RecipeDetails = () => {
                         </div>
                         <Form>
                             {recipe.instructions.map((instruction, index) => (
-                                <Form.Check
-                                key={index}
-                                type="checkbox"
-                                id={`instruction-${index}`}
-                                label={instruction}
-                                checked={checked.includes(instruction)}
-                                onChange={() => handleCheck(instruction)}
-                                className={checked.includes(instruction) ? "checked" : ""}
-                            />
+                                <div key={index} className={checked.includes(instruction) ? "instruction_checked" : ""}>
+                                    <Form.Check
+                                    type="checkbox"
+                                    id={`instruction-${index}`}
+                                    label={instruction.name}
+                                    checked={checked.includes(instruction)}
+                                    onChange={() => handleCheck(instruction)}
+                                    />
+                                    {instruction.instructionImg?
+                                        <div className="instruction_pic">
+                                            <Card.Img variant="top" src={instruction.instructionImg} />
+                                        </div>
+                                        :<div/>    
+                                    }
+                                    
+
+                                </div>
                             ))}
                         </Form>
                     </Card.Body>

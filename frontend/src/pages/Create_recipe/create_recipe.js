@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Button, Container } from "react-bootstrap";
+import { Button, Container, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import DescriptionBox from "../../components/DescriptionBox/DescriptionBox";
 import LoadingPopup from "../../components/LoadingPopup";
@@ -14,6 +14,7 @@ const CreateRecipe = () => {
   const [cookingTime, setCookingTime] = useState("");
   const [servingSize, setServingSize] = useState(1);
   const [file, setFile] = useState(null);
+  const [instructionFiles, setInstructionFiles] = useState([]);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [token, setToken] = useState("");
@@ -21,6 +22,9 @@ const CreateRecipe = () => {
 
   const ingredientDes = `Bạn cần nhập đủ thông tin về nguyên liệu để có thể tạo công thức, nhấn nút thêm để thêm mới nguyên liệu muốn nhập
   hoắc nhấn nút X nếu muốn loại bỏ nguyên liệu đó`
+
+  const instructionDes = `Bạn chỉ cần nhập bước làm để có thể tạo công thức, nếu muốn thêm hình ảnh về bước làm hãy đảm bảo chúng là định
+  dạng .jpg, .jpeg, .png`
 
   useEffect(() => {
     const storedToken = localStorage.getItem("authToken");
@@ -37,8 +41,14 @@ const CreateRecipe = () => {
     setInstructions(newInstructions);
   };
 
+  const handleInstructionFileChange = (index, file) => {
+    const newFiles = [...instructionFiles];
+    newFiles[index] = file;
+    setInstructionFiles(newFiles);
+  };
+
   const handleAddIngredient = () => {
-    setIngredients([...ingredients, { name: "", measurement: "", quantity: 1 }]);
+    setIngredients([...ingredients, { name: "", measurement: "", quantity: 0 }]);
   };
 
   const handleIngredientChange = (index, field, value) => {
@@ -74,6 +84,10 @@ const CreateRecipe = () => {
     if (file) {
       formData.append("recipeImg", file);
     }
+
+    instructionFiles.forEach(file => {
+      if (file) formData.append("instructionImg", file);
+    });
 
     try {
       await axios.post("http://localhost:5000/recipe/api/create", formData, {
@@ -117,8 +131,10 @@ const CreateRecipe = () => {
 
               <div className="form_input">
                 <label htmlFor="description">Mô tả</label>
-                <textarea
+                <Form.Control
                   name="description"
+                  rows={3}
+                  as="textarea"
                   id="description"
                   placeholder="Mô tả"
                   value={description}
@@ -156,14 +172,14 @@ const CreateRecipe = () => {
                       <option value="Gram">g</option>
                       <option value="Kilo gram">kg</option>
                       <option value="Lit">L</option>
-                      <option value="mililit">ml</option>
-                      <option value="cái">cái</option>
-                      <option value="gói">gói</option>
-                      <option value="củ">củ</option>
-                      <option value="quả">quả</option>
-                      <option value="lon">lon</option>
-                      <option value="thìa bột canh">thìa bột canh</option>
-                      <option value="muỗng">muỗng</option>
+                      <option value="Mililit">ml</option>
+                      <option value="Cái">cái</option>
+                      <option value="Gói">gói</option>
+                      <option value="Củ">củ</option>
+                      <option value="Quả">quả</option>
+                      <option value="Lon">lon</option>
+                      <option value="Thìa bột canh">thìa bột canh</option>
+                      <option value="Muỗng">muỗng</option>
                     </select>
                     <Button variant="danger" onClick={() => handleRemoveIngredient(index)}>X</Button>
                   </div>
@@ -174,15 +190,26 @@ const CreateRecipe = () => {
               </div>
 
               <div className="form_input_instructions">
-                <label htmlFor="instructions">Hướng dẫn</label>
+                <div className="label_with_des">
+                  <label htmlFor="instructions">Hướng dẫn bước làm</label>
+                  <DescriptionBox description={instructionDes}/>
+                </div>
                 {instructions.map((instruction, index) => (
-                  <div key={index} className="instruction-row">
-                    <input
+                  <div key={index} className="instruction-column">
+                    <Form.Control
                       type="text"
+                      as="textarea"
                       placeholder="Nhập hướng dẫn"
                       value={instruction}
                       onChange={(e) => handleInstructionChange(index, e.target.value)}
                     />
+                    <div className="form_input_img">
+                      <input
+                        type="file"
+                        name={`instructionImg`}
+                        onChange={(e) => handleInstructionFileChange(index, e.target.files[0])}
+                      />
+                    </div>
                     <Button variant="danger" onClick={() => handleRemoveInstruction(index)}>X</Button>
                   </div>
                 ))}
