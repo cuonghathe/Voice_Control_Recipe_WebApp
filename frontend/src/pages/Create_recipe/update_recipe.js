@@ -66,10 +66,20 @@ const UpdateRecipe = () => {
     const formData = new FormData();
     formData.append('recipename', recipename);
     formData.append('description', description);
-    formData.append('instructions', JSON.stringify(instructions));
-    formData.append('ingredients', JSON.stringify(ingredients));
+    // Format instructions to match backend expectations: { name, instructionImg }
+    const formattedInstructions = instructions.map(instruction => ({
+      name: instruction.name || '',
+      instructionImg: instruction.image || ''
+    }));
+    formData.append('instructions', JSON.stringify(formattedInstructions));
+    // Ensure quantity is a number
+    const formattedIngredients = ingredients.map(ing => ({
+      ...ing,
+      quantity: parseFloat(ing.quantity) || 0
+    }));
+    formData.append('ingredients', JSON.stringify(formattedIngredients));
     formData.append('cookingTime', cookingTime);
-    formData.append('servingSize', servingSize);
+    formData.append('servingSize', parseFloat(servingSize) || 1);
     if (file) {
       formData.append('recipeImg', file);
     }
@@ -85,7 +95,7 @@ const UpdateRecipe = () => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      navigate('/');
+      navigate(`/recipe/${recipeid}`);
     } catch (err) {
       setError(err.response?.data?.error || "Cập nhật thất bại");
     } finally {
@@ -94,12 +104,12 @@ const UpdateRecipe = () => {
   };
 
   const handleAddInstruction = () => {
-    setInstructions([...instructions, '']);
+    setInstructions([...instructions, { name: '', image: '' }]);
   };
 
   const handleInstructionChange = (index, value) => {
     const newInstructions = [...instructions];
-    newInstructions[index] = value;
+    newInstructions[index] = { ...newInstructions[index], name: value };
     setInstructions(newInstructions);
   };
 
@@ -125,10 +135,13 @@ const UpdateRecipe = () => {
     setFile(e.target.files[0]);
   };
 
-  const handleInstructionFileChange = (index, file) => {
-    const newFiles = [...instructionFiles];
-    newFiles[index] = file;
-    setInstructionFiles(newFiles);
+  const handleInstructionFileChange = (index, e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const newFiles = [...instructionFiles];
+      newFiles[index] = file;
+      setInstructionFiles(newFiles);
+    }
   };
 
   if (loading) return <p>Đang tải dữ liệu...</p>;
@@ -221,20 +234,24 @@ const UpdateRecipe = () => {
                     <input
                       type="text"
                       placeholder="Nhập hướng dẫn"
-                      value={instruction.name}
+                      value={instruction.name || ''}
                       onChange={(e) => handleInstructionChange(index, e.target.value)}
                     />
                     
                     <div className="form_input">
-                      <img
-                        src={instruction.image}
-                        alt="Ảnh bước làm hiện tại"
-                        style={{ maxWidth: '200px', marginBottom: '10px', display: 'block' }}/>
+                      {instruction.image && (
+                        <img
+                          src={instruction.image}
+                          alt="Ảnh bước làm hiện tại"
+                          style={{ maxWidth: '200px', marginBottom: '10px', display: 'block' }}
+                        />
+                      )}
 
                       <input
                         type="file"
                         name={`instructionImg`}
-                        onChange={handleInstructionFileChange }/>
+                        onChange={(e) => handleInstructionFileChange(index, e)}
+                      />
                     </div>
                   
                     <Button variant="danger" onClick={() => handleRemoveInstruction(index)}>X</Button>
