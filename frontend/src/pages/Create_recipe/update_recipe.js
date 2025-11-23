@@ -14,6 +14,7 @@ const UpdateRecipe = () => {
   const [cookingTime, setCookingTime] = useState('');
   const [servingSize, setServingSize] = useState(1);
   const [file, setFile] = useState(null);
+  const [instructionFiles, setInstructionFiles] = useState([]);
   const [recipeImgUrl, setRecipeImgUrl] = useState('');
   const [error, setError] = useState('');
   const [token, setToken] = useState('');
@@ -31,9 +32,14 @@ const UpdateRecipe = () => {
         const recipe = res.data;
         setRecipename(recipe.recipename || '');
         setDescription(recipe.description || '');
+
         setInstructions(Array.isArray(recipe.instructions) ?
-          recipe.instructions.map(inst => String(inst)) :
-          []);
+        recipe.instructions.map(instruction => ({
+          name: instruction.name || '',
+          image: instruction.instructionImg || '',
+        })) :
+        []);
+
         setIngredients(Array.isArray(recipe.ingredients) ?
           recipe.ingredients.map(ing => ({
             name: ing.name || '',
@@ -53,6 +59,7 @@ const UpdateRecipe = () => {
     fetchRecipe();
   }, [recipeid]);
 
+
   const handleUpdate = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -66,6 +73,10 @@ const UpdateRecipe = () => {
     if (file) {
       formData.append('recipeImg', file);
     }
+
+    instructionFiles.forEach(file => {
+      if (file) formData.append("instructionImg", file);
+    });
 
     try {
       await axios.put(`http://localhost:5000/recipe/api/update/${recipeid}`, formData, {
@@ -112,6 +123,12 @@ const UpdateRecipe = () => {
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
+  };
+
+  const handleInstructionFileChange = (index, file) => {
+    const newFiles = [...instructionFiles];
+    newFiles[index] = file;
+    setInstructionFiles(newFiles);
   };
 
   if (loading) return <p>Đang tải dữ liệu...</p>;
@@ -175,17 +192,17 @@ const UpdateRecipe = () => {
                       onChange={(e) => handleIngredientChange(index, 'measurement', e.target.value)}
                       className="mr-2"
                     >
-                      <option value="">Đơn vị</option>
-                      <option value="g">g</option>
-                      <option value="kg">kg</option>
-                      <option value="L">L</option>
-                      <option value="ml">ml</option>
-                      <option value="cái">cái</option>
-                      <option value="củ">củ</option>
-                      <option value="quả">quả</option>
-                      <option value="lon">lon</option>
-                      <option value="thìa bột canh">thìa bột canh</option>
-                      <option value="muỗng">muỗng</option>
+                      <option value="Gram">g</option>
+                      <option value="Kilo gram">kg</option>
+                      <option value="Lit">L</option>
+                      <option value="Mililit">ml</option>
+                      <option value="Cái">cái</option>
+                      <option value="Gói">gói</option>
+                      <option value="Củ">củ</option>
+                      <option value="Quả">quả</option>
+                      <option value="Lon">lon</option>
+                      <option value="Thìa bột canh">thìa bột canh</option>
+                      <option value="Muỗng">muỗng</option>
                     </select>
                     <Button variant="danger" onClick={() => handleRemoveIngredient(index)}>X</Button>
                   </div>
@@ -199,12 +216,27 @@ const UpdateRecipe = () => {
                 <label htmlFor="instructions">Hướng dẫn</label>
                 {instructions.map((instruction, index) => (
                   <div key={index} className="instruction-row">
+                    <br/>
+                    <label>Bước {index + 1}</label>
                     <input
                       type="text"
                       placeholder="Nhập hướng dẫn"
-                      value={instruction}
+                      value={instruction.name}
                       onChange={(e) => handleInstructionChange(index, e.target.value)}
                     />
+                    
+                    <div className="form_input">
+                      <img
+                        src={instruction.image}
+                        alt="Ảnh bước làm hiện tại"
+                        style={{ maxWidth: '200px', marginBottom: '10px', display: 'block' }}/>
+
+                      <input
+                        type="file"
+                        name={`instructionImg`}
+                        onChange={handleInstructionFileChange }/>
+                    </div>
+                  
                     <Button variant="danger" onClick={() => handleRemoveInstruction(index)}>X</Button>
                   </div>
                 ))}
@@ -237,25 +269,24 @@ const UpdateRecipe = () => {
                 />
               </div>
 
-              {recipeImgUrl && typeof recipeImgUrl === 'string' && (
-                <div className="form_input">
-                  <label>Ảnh hiện tại</label>
-                  <img
-                    src={recipeImgUrl}
-                    alt="Ảnh công thức hiện tại"
-                    style={{ maxWidth: '200px', marginBottom: '10px', display: 'block' }}
-                  />
-                </div>
-              )}
+
 
               <div className="form_input">
-                <label htmlFor="file">Ảnh công thức (chọn nếu muốn đổi)</label>
+                <label htmlFor="file">Ảnh công thức</label>
+                  {recipeImgUrl && typeof recipeImgUrl === 'string' && (
+                  <div className="form_input_img_preview">
+                    <img
+                      src={recipeImgUrl}
+                      alt="Ảnh công thức hiện tại"
+                      style={{ maxWidth: '200px', marginBottom: '10px', display: 'block' }}
+                    />
+                  </div>
+                  )}
                 <input
                   type="file"
                   name="file"
                   id="file"
-                  onChange={handleFileChange}
-                />
+                  onChange={handleFileChange}/>
               </div>
 
               {error && (
