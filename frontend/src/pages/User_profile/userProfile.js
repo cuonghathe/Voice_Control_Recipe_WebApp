@@ -13,6 +13,9 @@ const UserProfile = () => {
     const [user, setUser] = useState(null);
     const [recipes, setRecipes] = useState([]);
     const [reviews, setReviews] = useState([]);
+    const [ratingRange] = useState("");
+    const [sortOrder, setSortOrder] = useState("highest");
+    const [nameFilter, setNameFilter] = useState("");
     const navigate = useNavigate();
     const token = localStorage.getItem("authToken");
 
@@ -94,7 +97,37 @@ const UserProfile = () => {
         }
     };
 
-
+    const handleNameFilterChange = (e) => {
+        setNameFilter(e.target.value);
+      };
+    
+    
+      const handleSortOrderChange = (e) => {
+        setSortOrder(e.target.value);
+      };
+    
+      const filteredRecipe = recipes
+      .filter((recipe) => {
+        const matchesName =
+          nameFilter === "" ||
+          (recipe.recipename && recipe.recipename.toLowerCase().includes(nameFilter.toLowerCase()));
+    
+        const matchesRating =
+          ratingRange === "" ||
+          ratingRange === "Điểm" ||
+          (ratingRange === "Review" && recipe.reviewCount) ||
+          (ratingRange === "Ngày tạo" && recipe.createdAt);
+    
+        return matchesRating && matchesName;
+      })
+    
+        .sort((a, b) => {
+          if (sortOrder === "date↓") return new Date(a.createdAt) - new Date(b.createdAt);
+          if (sortOrder === "date↑") return new Date(b.createdAt) - new Date(a.createdAt);
+          return new Date(b.createdAt) - new Date(a.createdAt);
+    
+    });
+    
 
 
     if (!user) {
@@ -139,8 +172,26 @@ const UserProfile = () => {
                 <Card className="ingredients-card">
                     <Card.Body>
                         <h4 className="mt-2">Công thức đã đăng ({recipes.length}) </h4>
-                        <Form>
-                            {recipes.map(recipe => (
+                        <div className="filters">
+                            <input className="search_input"
+                                type="text"
+                                placeholder="Tìm kiếm"
+                                value={nameFilter}
+                                onChange={handleNameFilterChange}
+                            />
+                            <select className="form-select" onChange={handleSortOrderChange} value={sortOrder}>
+                                <option value="date↑">Mới nhất</option>
+                                <option value="date↓">Cũ nhất</option>
+                            </select>
+                        </div>
+                        <Form>                                      
+                        {
+                        filteredRecipe.length === 0 ? (
+                            <tr>
+                            <td colSpan="6" className="text-center">Không có công thức nào</td>
+                            </tr>
+                        ) : (
+                            filteredRecipe.map(recipe => (
                                 <Card key={recipe._id} className="recipe-card">
                                     <Card.Body>
                                         <div className="info_box">
@@ -156,7 +207,7 @@ const UserProfile = () => {
                                     </Card.Body>
                                 </Card>
 
-                            ))}
+                            )))}
                         </Form>
                     </Card.Body>
                 </Card>
@@ -166,7 +217,7 @@ const UserProfile = () => {
 
 
             <div className="reviewdetails mt-4">
-                <h2>Reviews ({reviews.length})</h2>
+                <h2>Đánh giá đã tạo ({reviews.length})</h2>
                 <div className="user_review mt-4">
                     {reviews.map((review) => (
                         <Card key={review._id} className="mb-3">
