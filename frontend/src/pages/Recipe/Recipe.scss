@@ -181,6 +181,22 @@
   align-items: center;
 }
 
+.recipe-ingredients-instructions .ingredients-card .filters{
+  justify-content: flex-start;
+  width: 80%;
+  margin-bottom: 12px;  
+
+}
+
+.recipe-ingredients-instructions .ingredients-card .filters .search_input{
+  width: 100%;
+}
+
+.recipe-ingredients-instructions .ingredients-card .filters .form-select{
+  width: 168px;
+}
+
+
 .recipe-ingredients-instructions .user__action__button{
   font-size: 12px;
   min-width: 64px;  

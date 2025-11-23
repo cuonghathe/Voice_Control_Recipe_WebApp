@@ -5,9 +5,16 @@ import reviewDB from "../../models/review/reviewModel.js";
 const ITEM_PER_PAGE = 9;
 
 const adjustMeasurements = (ingredients, originalServings, newServings) => {
+  const original = parseFloat(originalServings) || 1;
+  const newServing = parseFloat(newServings) || 1;
+  
   return ingredients.map(ingredient => {
-    const adjustedMeasurement = (parseFloat(ingredient.measurement) * newServings) / originalServings;
-    return { ...ingredient, measurement: adjustedMeasurement.toString() };
+    const currentQuantity = parseFloat(ingredient.quantity) || 0;
+    const adjustedQuantity = (currentQuantity * newServing) / original;
+    return { 
+      ...ingredient, 
+      quantity: adjustedQuantity 
+    };
   });
 };
 
@@ -146,10 +153,12 @@ export const updateRecipe = async (req, res) => {
       })
     );
 
+    const servingSizeNum = parseFloat(servingSize) || existingRecipe.servingSize;
+    
     const adjustedIngredients = adjustMeasurements(
       parsedIngredients,
       existingRecipe.servingSize,
-      servingSize
+      servingSizeNum
     );
 
     const updateRecipe = await recipeDB.findByIdAndUpdate(
@@ -161,7 +170,7 @@ export const updateRecipe = async (req, res) => {
         ingredients: adjustedIngredients,
         cookingTime,
         recipeImg: recipeImgUrl,
-        servingSize,
+        servingSize: servingSizeNum,
       },
       { new: true }
     );

@@ -108,6 +108,7 @@ const UpdateRecipe = () => {
                   <div key={index} className="ingredient-row">
                     <input type="text" placeholder="Nhập nguyên liệu" value={ingredient.name} onChange={(e) => handleIngredientChange(index, "name", e.target.value)} />
                     <input type="number" placeholder="Số lượng" value={ingredient.quantity} onChange={(e) => handleIngredientChange(index, "quantity", e.target.value)} />
+                    <input value={ingredient.measurement} onChange={(e) => handleIngredientChange(index, "measurement", e.target.value)} />
                     <Button variant="danger" onClick={() => handleRemoveIngredient(index)}>X</Button>
                   </div>
                 ))}
