@@ -12,7 +12,9 @@ const UserProfilePublic = () => {
     const [user, setUser] = useState(null);
     const [recipes, setRecipes] = useState([]);
     const [reviews, setReviews] = useState([]);
-
+    const [ratingRange] = useState("");
+    const [sortOrder, setSortOrder] = useState("highest");
+    const [nameFilter, setNameFilter] = useState("");
 
 
     useEffect(() => {
@@ -50,6 +52,36 @@ const UserProfilePublic = () => {
     }, [userId]);
 
 
+    const handleNameFilterChange = (e) => {
+        setNameFilter(e.target.value);
+      };
+    
+    
+      const handleSortOrderChange = (e) => {
+        setSortOrder(e.target.value);
+      };
+    
+      const filteredRecipe = recipes
+      .filter((recipe) => {
+        const matchesName =
+          nameFilter === "" ||
+          (recipe.recipename && recipe.recipename.toLowerCase().includes(nameFilter.toLowerCase()));
+    
+        const matchesRating =
+          ratingRange === "" ||
+          ratingRange === "Điểm" ||
+          (ratingRange === "Review" && recipe.reviewCount) ||
+          (ratingRange === "Ngày tạo" && recipe.createdAt);
+    
+        return matchesRating && matchesName;
+      })
+    
+        .sort((a, b) => {
+          if (sortOrder === "date↓") return new Date(a.createdAt) - new Date(b.createdAt);
+          if (sortOrder === "date↑") return new Date(b.createdAt) - new Date(a.createdAt);
+          return new Date(b.createdAt) - new Date(a.createdAt);
+    
+    });
 
 
     if (!user) {
@@ -88,22 +120,40 @@ const UserProfilePublic = () => {
                 <Card className="ingredients-card">
                     <Card.Body>
                         <h4 className="mt-2">Công thức đã đăng ({recipes.length}) </h4>
+                        <div className="filters">
+                            <input className="search_input"
+                                type="text"
+                                placeholder="Tìm kiếm"
+                                value={nameFilter}
+                                onChange={handleNameFilterChange}
+                            />
+                            <select className="form-select" onChange={handleSortOrderChange} value={sortOrder}>
+                                <option value="date↑">Mới nhất</option>
+                                <option value="date↓">Cũ nhất</option>
+                            </select>
+                        </div>
                         <Form>
-                            {recipes.map(recipe => (
-                                <Card key={recipe._id} className="recipe-card">
-                                    <Card.Body>
-                                        <div className="info_box">
-                                            <h5>{recipe.recipename}
-                                                <p>Ngày tạo: <span className="mb-4">{new Date(recipe.createdAt).toLocaleDateString()}   </span></p>
-                                            </h5>
-                                            <div className="recipe-ingredients-instructions">
-                                                <Button className="user_recipe_btn" variant="success" size="sm" href={`/recipe/${recipe._id}`}>Xem</Button>
+                            {
+                            filteredRecipe.length === 0 ? (
+                                <tr>
+                                <td colSpan="6" className="text-center">Không có công thức nào</td>
+                                </tr>
+                            ) : (
+                                filteredRecipe.map(recipe => (
+                                    <Card key={recipe._id} className="recipe-card">
+                                        <Card.Body>
+                                            <div className="info_box">
+                                                <h5>{recipe.recipename}
+                                                    <p>Ngày tạo: <span className="mb-4">{new Date(recipe.createdAt).toLocaleDateString()}   </span></p>
+                                                </h5>
+                                                <div className="recipe-ingredients-instructions">
+                                                    <Button className="user_recipe_btn" variant="success" size="sm" href={`/recipe/${recipe._id}`}>Xem</Button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </Card.Body>
-                                </Card>
+                                        </Card.Body>
+                                    </Card>
 
-                            ))}
+                            )))}
                         </Form>
                     </Card.Body>
                 </Card>
