@@ -10,7 +10,7 @@ const CreateRecipe = () => {
   const [recipename, setRecipename] = useState("");
   const [description, setDescription] = useState("");
   const [instructions, setInstructions] = useState([""]);
-  const [ingredients, setIngredients] = useState([{ name: "", measurement: "", quantity: 1 }]);
+  const [ingredients, setIngredients] = useState([{ name: "", measurement: "", quantity: 0 }]);
   const [cookingTime, setCookingTime] = useState("");
   const [servingSize, setServingSize] = useState(1);
   const [file, setFile] = useState(null);
@@ -196,6 +196,8 @@ const CreateRecipe = () => {
                 </div>
                 {instructions.map((instruction, index) => (
                   <div key={index} className="instruction-column">
+                    <br></br>
+                    <label>Bước {index + 1}</label>
                     <Form.Control
                       type="text"
                       as="textarea"

@@ -131,7 +131,9 @@
 }
 
 .instruction_pic{
-  padding: 36px;
+  width: 75%;
+  justify-self: center;
+  margin-top: 12px;
 }
 
 .user-details{
@@ -335,7 +337,6 @@
   }
 
   .instruction_pic{
-    padding: 0px;
-    
+    width: 100%;
   }
 }

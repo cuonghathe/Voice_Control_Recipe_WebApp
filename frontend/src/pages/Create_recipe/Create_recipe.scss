@@ -79,6 +79,10 @@ section .form_data form .btn-danger {
     width: 100%;
     margin-bottom: 10px;
 
+    .instruction-column{
+        display: flex;
+        flex-direction: column;
+    }
 
     label {
         font-weight: 600;
@@ -115,9 +119,6 @@ section .form_data form .btn-danger {
     }
 
     div {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
 
         input {
             width: 100%;
@@ -141,6 +142,15 @@ section .form_data form .btn-danger {
 }
 
 .form_input_instructions{
+
+    .label_with_des{
+        display: flex;
+        flex-direction: row;
+    
+        i{
+            margin-top: 10px;
+        }
+    }
 
     .instruction-column{
         display: flex;
