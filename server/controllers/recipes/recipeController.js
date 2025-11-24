@@ -3,6 +3,8 @@ import recipeDB from "../../models/recipe/recipeModel.js";
 import reviewDB from "../../models/review/reviewModel.js";
 
 const ITEM_PER_PAGE = 9;
+const appendiceLengthLimit = 600;
+
 
 const adjustMeasurements = (ingredients, originalServings, newServings) => {
   const original = parseFloat(originalServings) || 1;
@@ -24,12 +26,15 @@ export const createRecipe = async (req, res) => {
   const recipeImgFile = req.files && req.files.recipeImg ? req.files.recipeImg[0] : null;
   const instructionImgFiles = req.files && req.files.instructionImg ? req.files.instructionImg : [];
   
-  const { recipename, description, instructions, ingredients, cookingTime, servingSize } = req.body;
-
+  
+  const { recipename, description, instructions, ingredients, cookingTime, servingSize, appendices} = req.body;
+  
   if (!recipename || !description || !instructions || !ingredients || !cookingTime || !servingSize) {
     return res.status(400).json({ error: "Vui lòng điền đầy đủ thông tin" });
   }
 
+  let parsedAppendices = appendices ? JSON.parse(appendices) : [];
+  
   let recipeImgUrl = "";
   if (recipeImgFile) {
     const recipeImgUpload = await cloudinary.uploader.upload(recipeImgFile.path);
@@ -38,14 +43,11 @@ export const createRecipe = async (req, res) => {
 
   const parsedInstructions = JSON.parse(instructions);
 
-  // Upload instruction images to Cloudinary and map to instructions
   const formattedInstructions = await Promise.all(
     parsedInstructions.map(async (item, index) => {
       let instructionImgUrl = "";
       
-      // Nếu item là string, chuyển thành object
       if (typeof item === "string") {
-        // Nếu có ảnh tương ứng ở index này
         if (instructionImgFiles[index]) {
           const instructionUpload = await cloudinary.uploader.upload(instructionImgFiles[index].path);
           instructionImgUrl = instructionUpload.secure_url;
@@ -53,13 +55,11 @@ export const createRecipe = async (req, res) => {
         return { name: item, instructionImg: instructionImgUrl };
       }
       
-      // Nếu item đã là object và có instructionImg field
-      // Nhưng nếu có file mới upload, dùng file mới
+
       if (instructionImgFiles[index]) {
         const instructionUpload = await cloudinary.uploader.upload(instructionImgFiles[index].path);
         instructionImgUrl = instructionUpload.secure_url;
       } else if (item.instructionImg) {
-        // Giữ lại ảnh cũ nếu không có file mới
         instructionImgUrl = item.instructionImg;
       }
       
@@ -80,7 +80,8 @@ export const createRecipe = async (req, res) => {
       ingredients: JSON.parse(ingredients),
       cookingTime,
       recipeImg: recipeImgUrl,
-      servingSize
+      servingSize,
+      appendices: parsedAppendices
     });
 
     await recipeData.save();
@@ -95,17 +96,18 @@ export const createRecipe = async (req, res) => {
 export const updateRecipe = async (req, res) => {
   const { recipeid } = req.params;
   
-  // Xử lý files từ multer fields
   const recipeImgFile = req.files && req.files.recipeImg ? req.files.recipeImg[0] : null;
   const instructionImgFiles = req.files && req.files.instructionImg ? req.files.instructionImg : [];
   
-  const { recipename, description, instructions, ingredients, cookingTime, servingSize } = req.body;
+  const { recipename, description, instructions, ingredients, cookingTime, servingSize, appendices } = req.body;
 
-  let parsedIngredients, parsedInstructions;
+
+  let parsedIngredients, parsedInstructions, parsedAppendices;
 
   try {
     parsedIngredients = typeof ingredients === "string" ? JSON.parse(ingredients) : ingredients;
     parsedInstructions = typeof instructions === "string" ? JSON.parse(instructions) : instructions;
+    parsedInstructions = appendices ? JSON.parse(appendices) : [];
   } catch (error) {
     return res.status(400).json({ error: "Invalid JSON format" });
   }
@@ -171,6 +173,7 @@ export const updateRecipe = async (req, res) => {
         cookingTime,
         recipeImg: recipeImgUrl,
         servingSize: servingSizeNum,
+        appendices: JSON.parse(appendices)
       },
       { new: true }
     );
