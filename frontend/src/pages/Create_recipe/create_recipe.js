@@ -27,6 +27,10 @@ const CreateRecipe = () => {
   const instructionDes = `Bạn chỉ cần nhập bước làm để có thể tạo công thức, nếu muốn thêm hình ảnh về bước làm hãy đảm bảo chúng là định
   dạng .jpg, .jpeg, .png`
 
+  const appendixDes = `Nếu công thức có những thuật ngữ, nguyên liệu 
+  hoặc kỹ thuật có thể gây khó hiểu, bạn có thể thêm vào đây một từ khóa và phần giải thích tương ứng. Các phụ lục bạn tạo sẽ được tự động 
+  liên kết với công thức và hiển thị dưới dạng chú thích trong phần nguyên liệu và hướng dẫn nấu.`;
+
   useEffect(() => {
     const storedToken = localStorage.getItem("authToken");
     setToken(storedToken);
@@ -269,7 +273,7 @@ const CreateRecipe = () => {
               <div className="form_input_appendices">
                 <div className="label_with_des">
                   <label htmlFor="appendices">Phụ lục</label>
-                  <DescriptionBox description={instructionDes}/>
+                  <DescriptionBox description={appendixDes}/>
                 </div>
                 {appendices.map((appendix, index) => (
                   <div key={index} className="instruction-column">
