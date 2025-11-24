@@ -3,6 +3,8 @@ import recipeDB from "../../models/recipe/recipeModel.js";
 import reviewDB from "../../models/review/reviewModel.js";
 
 const ITEM_PER_PAGE = 9;
+const appendiceLengthLimit = 600;
+
 
 const adjustMeasurements = (ingredients, originalServings, newServings) => {
   const original = parseFloat(originalServings) || 1;
@@ -24,12 +26,15 @@ export const createRecipe = async (req, res) => {
   const recipeImgFile = req.files && req.files.recipeImg ? req.files.recipeImg[0] : null;
   const instructionImgFiles = req.files && req.files.instructionImg ? req.files.instructionImg : [];
   
-  const { recipename, description, instructions, ingredients, cookingTime, servingSize } = req.body;
-
+  
+  const { recipename, description, instructions, ingredients, cookingTime, servingSize, appendices} = req.body;
+  
   if (!recipename || !description || !instructions || !ingredients || !cookingTime || !servingSize) {
     return res.status(400).json({ error: "Vui lòng điền đầy đủ thông tin" });
   }
 
+  let parsedAppendices = appendices ? JSON.parse(appendices) : [];
+  
   let recipeImgUrl = "";
   if (recipeImgFile) {
     const recipeImgUpload = await cloudinary.uploader.upload(recipeImgFile.path);
@@ -76,7 +81,7 @@ export const createRecipe = async (req, res) => {
       cookingTime,
       recipeImg: recipeImgUrl,
       servingSize,
-      appendices
+      appendices: parsedAppendices
     });
 
     await recipeData.save();
@@ -94,13 +99,15 @@ export const updateRecipe = async (req, res) => {
   const recipeImgFile = req.files && req.files.recipeImg ? req.files.recipeImg[0] : null;
   const instructionImgFiles = req.files && req.files.instructionImg ? req.files.instructionImg : [];
   
-  const { recipename, description, instructions, ingredients, cookingTime, servingSize } = req.body;
+  const { recipename, description, instructions, ingredients, cookingTime, servingSize, appendices } = req.body;
 
-  let parsedIngredients, parsedInstructions;
+
+  let parsedIngredients, parsedInstructions, parsedAppendices;
 
   try {
     parsedIngredients = typeof ingredients === "string" ? JSON.parse(ingredients) : ingredients;
     parsedInstructions = typeof instructions === "string" ? JSON.parse(instructions) : instructions;
+    parsedInstructions = appendices ? JSON.parse(appendices) : [];
   } catch (error) {
     return res.status(400).json({ error: "Invalid JSON format" });
   }
@@ -166,7 +173,7 @@ export const updateRecipe = async (req, res) => {
         cookingTime,
         recipeImg: recipeImgUrl,
         servingSize: servingSizeNum,
-        appendices
+        appendices: JSON.parse(appendices)
       },
       { new: true }
     );
