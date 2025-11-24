@@ -38,14 +38,11 @@ export const createRecipe = async (req, res) => {
 
   const parsedInstructions = JSON.parse(instructions);
 
-  // Upload instruction images to Cloudinary and map to instructions
   const formattedInstructions = await Promise.all(
     parsedInstructions.map(async (item, index) => {
       let instructionImgUrl = "";
       
-      // Nếu item là string, chuyển thành object
       if (typeof item === "string") {
-        // Nếu có ảnh tương ứng ở index này
         if (instructionImgFiles[index]) {
           const instructionUpload = await cloudinary.uploader.upload(instructionImgFiles[index].path);
           instructionImgUrl = instructionUpload.secure_url;
@@ -53,13 +50,11 @@ export const createRecipe = async (req, res) => {
         return { name: item, instructionImg: instructionImgUrl };
       }
       
-      // Nếu item đã là object và có instructionImg field
-      // Nhưng nếu có file mới upload, dùng file mới
+
       if (instructionImgFiles[index]) {
         const instructionUpload = await cloudinary.uploader.upload(instructionImgFiles[index].path);
         instructionImgUrl = instructionUpload.secure_url;
       } else if (item.instructionImg) {
-        // Giữ lại ảnh cũ nếu không có file mới
         instructionImgUrl = item.instructionImg;
       }
       
@@ -80,7 +75,8 @@ export const createRecipe = async (req, res) => {
       ingredients: JSON.parse(ingredients),
       cookingTime,
       recipeImg: recipeImgUrl,
-      servingSize
+      servingSize,
+      appendices
     });
 
     await recipeData.save();
@@ -95,7 +91,6 @@ export const createRecipe = async (req, res) => {
 export const updateRecipe = async (req, res) => {
   const { recipeid } = req.params;
   
-  // Xử lý files từ multer fields
   const recipeImgFile = req.files && req.files.recipeImg ? req.files.recipeImg[0] : null;
   const instructionImgFiles = req.files && req.files.instructionImg ? req.files.instructionImg : [];
   
@@ -171,6 +166,7 @@ export const updateRecipe = async (req, res) => {
         cookingTime,
         recipeImg: recipeImgUrl,
         servingSize: servingSizeNum,
+        appendices
       },
       { new: true }
     );

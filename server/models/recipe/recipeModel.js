@@ -28,6 +28,16 @@ const instructionsSchema = new mongoose.Schema({
     }
 });
 
+const appendicesSchema = new mongoose.Schema({
+    keyWord: {
+        type: String
+    },
+
+    defintion: {
+        type: String
+    }
+})
+
 const RecipeSchema = new mongoose.Schema({
     userId: {
         type: Schema.Types.ObjectId,
@@ -39,24 +49,30 @@ const RecipeSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+
     recipeImg: {
         type: String,
     },
+
     description: {
         type: String,
         required: true
     },
+
     instructions: [instructionsSchema],
     ingredients: [ingredientSchema],
     cookingTime: {
         type: String,
         required: true
     },
+    
     servingSize: {
         type: Number,
         required: true
-    }
-    
+    },
+
+    appendices: [appendicesSchema]   
+
 }, { timestamps: true });
 
 const recipeModel = mongoose.model("recipes", RecipeSchema);
