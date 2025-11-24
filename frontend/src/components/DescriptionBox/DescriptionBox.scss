@@ -2,7 +2,6 @@
   margin-top: 18px;
   opacity: 0.75;
   padding: 4px;
-
 }
 
 .description{
@@ -106,4 +105,21 @@
     color: #ea9c00;
     font-weight: 700;
   }
+}
+
+.appendices{
+  position: relative; 
+
+  .appendices_keyWord{
+    margin: 0 4px;
+    color: #0000EE;
+  }
+
+  &:hover{
+    .description_container{
+      display: block;
+    }
+  }
+
+  
 }

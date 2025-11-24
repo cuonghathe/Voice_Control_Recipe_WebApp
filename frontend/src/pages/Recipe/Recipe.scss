@@ -122,7 +122,6 @@
 }
 
 .instruction_checked {
-
   .instruction_pic{
     display: none;
   }
@@ -134,7 +133,7 @@
   }
 }
 
-.appendix_checked, .instruction_checked, .instruction_checked{
+.appendix_checked label, .instruction_checked label, .ingredient_checked label{
   opacity: 0.5;
   font-size: 16px;
 }
@@ -233,8 +232,8 @@
 }
 
 .recipe-ingredients-instructions label:hover{
-  color: #ea9c00;
   font-weight: 700;
+  cursor: pointer;
 }
 
 .review {
@@ -311,6 +310,12 @@
 .serving_change button{
   padding: 9px;
   color: #000000;
+}
+
+.data_with_apperndices{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 }
 
 @media (max-width: 1023px) {

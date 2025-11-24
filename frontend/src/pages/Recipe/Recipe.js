@@ -11,8 +11,8 @@ import TTS, { stopTTS } from "../../api/voiceControl/TTS";
 import ChatBotBox from "../../components/chatBot/ChatBotBox";
 import DescriptionBox from "../../components/DescriptionBox/DescriptionBox";
 import VoiceControlInstruction from "../../components/voiceControlInstruction";
+import dataWithAppendices from "./dataWithApendices";
 import "./Recipe.scss";
-import { Fade } from "react-bootstrap";
 
 const RecipeDetails = () => {
     const { id } = useParams();
@@ -251,7 +251,8 @@ const RecipeDetails = () => {
                                     key={index}
                                     type="checkbox"
                                     id={`ingredient-${index}`}
-                                    label={`${ingredient.name}: ${ingredient.quantity} (${ingredient.measurement})`}
+                                    label={<div className="data_with_apperndices">{dataWithAppendices(ingredient.name, recipe.appendices)} {": "} 
+                                    {ingredient.quantity} ({ingredient.measurement})</div>}                                   
                                     checked={checked.includes(ingredient)}
                                     onChange={() => handleCheck(ingredient)}
                                     className={checked.includes(ingredient) ? "ingredient_checked" : ""}
@@ -276,7 +277,7 @@ const RecipeDetails = () => {
                                     <Form.Check
                                     type="checkbox"
                                     id={`instruction-${index}`}
-                                    label={instruction.name}
+                                    label={<div className="data_with_apperndices">{dataWithAppendices(instruction.name, recipe.appendices)}</div>}
                                     checked={checked.includes(instruction)}
                                     onChange={() => handleCheck(instruction)}
                                     />
