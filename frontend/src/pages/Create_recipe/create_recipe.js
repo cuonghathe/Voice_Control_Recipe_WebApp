@@ -11,6 +11,7 @@ const CreateRecipe = () => {
   const [description, setDescription] = useState("");
   const [instructions, setInstructions] = useState([""]);
   const [ingredients, setIngredients] = useState([{ name: "", measurement: "", quantity: 0 }]);
+  const [appendices, setAppendices] = useState([{ keyWord: "", defintion: "" }]);
   const [cookingTime, setCookingTime] = useState("");
   const [servingSize, setServingSize] = useState(1);
   const [file, setFile] = useState(null);
@@ -57,12 +58,26 @@ const CreateRecipe = () => {
     setIngredients(newIngredients);
   };
 
+  const handleAddAppendix = () => {
+    setAppendices([...appendices, { keyWord: "", defintion: "" }]);
+  };
+
+  const handleAppendixChange = (index, field, value) => {
+    const newAppendix = [...appendices];
+    newAppendix[index][field] = value;
+    setAppendices(newAppendix);
+  };
+
   const handleRemoveIngredient = (index) => {
     setIngredients(ingredients.filter((_, i) => i !== index));
   };
 
   const handleRemoveInstruction = (index) => {
     setInstructions(instructions.filter((_, i) => i !== index));
+  };
+
+  const handleRemoveAppendix = (index) => {
+    setAppendices(appendices.filter((_, i) => i !== index));
   };
 
   const handleFileChange = (e) => {
@@ -81,6 +96,7 @@ const CreateRecipe = () => {
     formData.append("ingredients", JSON.stringify(ingredients));
     formData.append("cookingTime", cookingTime);
     formData.append("servingSize", servingSize);
+    formData.append("appendices", JSON.stringify(appendices))
     if (file) {
       formData.append("recipeImg", file);
     }
@@ -98,7 +114,6 @@ const CreateRecipe = () => {
       });
       navigate("/Recipes");
     } catch (error) {
-      console.error("Lỗi tạo công thức:", error);
       setError(error.response?.data?.error || "Lỗi tạo công thức");
     } finally {
       setIsLoading(false);
@@ -159,12 +174,10 @@ const CreateRecipe = () => {
                     <input
                       type="number"
                       placeholder="Số lượng"
-                      value={ingredient.quantity}
                       onChange={(e) => handleIngredientChange(index, "quantity", e.target.value)}
                       className="mr-2"
                     />
                     <select
-                      value={ingredient.measurement}
                       onChange={(e) => handleIngredientChange(index, "measurement", e.target.value)}
                       className="mr-2"
                       placeholder="Đơn vị"
@@ -196,7 +209,6 @@ const CreateRecipe = () => {
                 </div>
                 {instructions.map((instruction, index) => (
                   <div key={index} className="instruction-column">
-                    <br></br>
                     <label>Bước {index + 1}</label>
                     <Form.Control
                       type="text"
@@ -252,6 +264,34 @@ const CreateRecipe = () => {
                   id="file"
                   onChange={handleFileChange}
                 />
+              </div>
+
+              <div className="form_input_appendices">
+                <div className="label_with_des">
+                  <label htmlFor="appendices">Phụ lục</label>
+                  <DescriptionBox description={instructionDes}/>
+                </div>
+                {appendices.map((appendix, index) => (
+                  <div key={index} className="instruction-column">
+                    
+                    <label>Phụ lục {index + 1}</label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Nhập keyWord"
+                      onChange={(e) => handleAppendixChange(index, "keyWord", e.target.value)}/>
+                    
+                    <Form.Control
+                      type="text"
+                      as="textarea"
+                      placeholder="Nhập giải thích"
+                      onChange={(e) => handleAppendixChange(index, "defintion", e.target.value)}/>
+                    
+                    <Button variant="danger" onClick={() => handleRemoveAppendix(index)}>X</Button>
+                  </div>
+                ))}
+                <Button variant="secondary" onClick={handleAddAppendix} className="button">
+                  Thêm
+                </Button>
               </div>
 
               {typeof error === "object" ? <p className="error">{error.message}</p> : <p className="error">{error}</p>}
