@@ -36,7 +36,11 @@ const RecipeDetails = () => {
         văn bản được hỗ trợ. Để sử dụng tính năng tường thuật văn bản, bạn chỉ cần nhấn vào nút 
         “Đọc” được đặt tại các phần nội dung được hỗ trợ trong trang chi tiết công thức.
         Trong quá trình tường thuật, nếu bạn không muốn tiếp tục nghe, chỉ cần nhấn nút “Dừng”.`
-    const ttsDesHelpLink = `/Info`;
+        const ttsDesHelpLink = `/Info`;
+    const instuctionDes = `Các bước thực hiện món ăn được trình bày theo thứ tự. 
+        Bạn có thể đánh dấu bước đã làm để ẩn hình ảnh (nếu có) hoặc dùng tính năng tường thuật để nghe hướng dẫn.`;
+    const appendixDes = `Phần phụ lục cung cấp giải thích cho các thuật ngữ và nguyên liệu có thể gây nhầm lẫn trong công thức. 
+        Khi gặp một từ khóa được đánh dấu, bạn có thể di chuột vào chúng xem ngay giải thích`;
 
     useEffect(() => {
         const fetchRecipe = async () => {
@@ -265,7 +269,10 @@ const RecipeDetails = () => {
                 <Card className="instructions-card mt-4" ref={instructionsRef}>
                     <Card.Body>
                         <div className="info_box">
-                            <h4 className="mt-2">Cách làm</h4>
+                            <div className="ingredients-card-title">
+                                <h4 className="mt-2">Cách làm</h4>
+                                <DescriptionBox description={instuctionDes}/>
+                            </div>
                             <div className="recipe-ingredients-instructions">
                                     <Button variant="success" className="user__action__button" onClick={handleSpeakInstruction}>Đọc</Button>
                                     <Button variant="danger" className="user__action__button" onClick={stopTTS} >Dừng</Button>
@@ -296,7 +303,10 @@ const RecipeDetails = () => {
                 <Card className="instructions-card mt-4" ref={instructionsRef}>
                     <Card.Body>
                         <div className="info_box">
-                            <h4 className="mt-2">Phụ lục</h4>
+                            <div className="ingredients-card-title">
+                                <h4 className="mt-2">Phụ lục</h4>
+                                <DescriptionBox description={appendixDes}/>
+                            </div>
                             <div className="recipe-ingredients-instructions">
                                     <Button variant="success" className="user__action__button" onClick={handleSpeakInstruction}>Đọc</Button>
                                     <Button variant="danger" className="user__action__button" onClick={stopTTS} >Dừng</Button>

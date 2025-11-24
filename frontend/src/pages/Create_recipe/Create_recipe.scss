@@ -260,6 +260,19 @@ section .form_data form .btn-danger {
         flex-direction: column;
         gap: 8px;
         margin-top: 20px;
+
+
+    }
+
+    .description_container{
+        display: none;
+        right: inherit;
+
+        .description_text{
+            color: #000;
+            text-align: start;
+            margin: 0px;
+        }
     }
 
     .form_input_img{
@@ -319,9 +332,6 @@ section .form_data form .btn-danger {
 
 
     div {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
 
         input {
             flex: 1;
