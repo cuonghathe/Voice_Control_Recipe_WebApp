@@ -104,19 +104,26 @@ const Dashboard = () => {
           filteredRecipe.map((recipe) => (
             <Card key={recipe._id}>
               <Card.Img style={{ width: "100%", height: "190px", maxWidth:"334px", objectFit: "cover"}} variant="top" src={recipe.recipeImg || "/dragondancing_1200x1200.jpg"} />
-              <Card.Body>
-                <Card.Title style={{height: "50px"}}>{recipe.recipename.length > 24 
-                    ? recipe.recipename.slice(0,24) + "..."
-                    : recipe.recipename} <small style={{ fontweight: "100px" }}>
-                    ({new Date(recipe.createdAt).toLocaleDateString()})</small></Card.Title>
+              <Card.Body style={{paddingTop: "4px"}}>
+                <div className="card_title_area">
+                  <Card.Title>{recipe.recipename.length > 40 
+                      ? recipe.recipename.slice(0,40) + "..."
+                      : recipe.recipename}
+                  </Card.Title>
 
-                <Card.Text className="card_text">
-                  {recipe.description.length > 100
-                    ? recipe.description.slice(0, 100) + "..."
-                    : recipe.description}
-                </Card.Text>
+                  <Card.Text className="card_info">
+                    Tác giả: {recipe.userData[0].username}                
+                    <p style={{float: "inline-end"}}>
+                      Ngày tạo: {new Date(recipe.createdAt).toLocaleDateString()}
+                    </p>
+                  </Card.Text>
+              
+                  <Card.Text className="card_info">
+                  </Card.Text>
+
+                </div>
                 <Card.Text>
-                  Điểm: <small className="star">{recipe.averageRating}★ </small><small>({recipe.reviewCount})</small>
+                  <small className="star">{recipe.averageRating}★ </small><small className="review_num">Số đánh giá: ({recipe.reviewCount})</small>
                 </Card.Text>
                 <Button variant="outline-danger" onClick={() => handleNavigateRecipe(recipe._id)}>Xem công thức</Button>
               </Card.Body>
