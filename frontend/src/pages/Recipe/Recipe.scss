@@ -141,9 +141,11 @@
 .appendix{
   display: flex;
   flex-direction: row;
+  
   p{
     margin-bottom: 0;
     line-height: 42px;
+    word-break: break-word;
     font-size: 18px;
   }
 }
@@ -315,8 +317,12 @@
 .data_with_apperndices{
   display: flex;
   flex-direction: row;
-  width: 100%;
+  word-break: break-word;
+
 }
+
+
+
 
 @media (max-width: 1023px) {
   .recipe-header-details-container{
