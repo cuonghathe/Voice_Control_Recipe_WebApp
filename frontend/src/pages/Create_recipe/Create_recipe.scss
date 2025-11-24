@@ -73,7 +73,7 @@ section .form_data form .btn-danger {
     width: 100%;
 }
 
-.form_input_instructions {
+.form_input_instructions{
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -155,6 +155,111 @@ section .form_data form .btn-danger {
     .instruction-column{
         display: flex;
         flex-direction: column;
+    }
+
+    .form_input_img{
+        margin-top: 12px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    } 
+
+    button.btn.btn-danger {
+        width: 100% !important;
+    }   
+}
+
+.form_input_instructions{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+
+    .instruction-column{
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 20px;
+    }
+
+    label {
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px 10px;
+        background-color: #4299e1;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 15px;
+        margin-top: 10px;
+
+        &:hover {
+            background-color: #2b6cb0;
+        }
+    }
+
+    .description_container{
+        display: none;
+        right: inherit;
+
+        p{
+            color: #000;
+            text-align: start;
+            margin: 0px;
+        }
+    }
+
+    div {
+
+        input {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #d4d0d0;
+            border-radius: 5px;
+            outline: none;
+            font-size: 14px;
+
+            &::placeholder {
+                color: #8694a8;
+                letter-spacing: 0.5px;
+                font-size: 14px;
+            }
+
+            &:focus {
+                border: 2px solid rgba(66, 153, 225, 0.6);
+            }
+        }
+    }
+}
+
+.form_input_appendices{
+    width: 100%;
+    
+    .label_with_des{
+        display: flex;
+        flex-direction: row;
+    
+        i{
+            margin-top: 10px;
+        }
+    }
+
+    label {
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .instruction-column{
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 20px;
     }
 
     .form_input_img{

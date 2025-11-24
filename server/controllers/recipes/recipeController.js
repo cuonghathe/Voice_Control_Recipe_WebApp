@@ -101,13 +101,16 @@ export const updateRecipe = async (req, res) => {
   
   const { recipename, description, instructions, ingredients, cookingTime, servingSize, appendices } = req.body;
 
+  if (!recipename || !description || !instructions || !ingredients || !cookingTime || !servingSize) {
+    return res.status(400).json({ error: "Vui lòng điền đầy đủ thông tin" });
+  }
 
   let parsedIngredients, parsedInstructions, parsedAppendices;
 
   try {
     parsedIngredients = typeof ingredients === "string" ? JSON.parse(ingredients) : ingredients;
     parsedInstructions = typeof instructions === "string" ? JSON.parse(instructions) : instructions;
-    parsedInstructions = appendices ? JSON.parse(appendices) : [];
+    parsedAppendices =  typeof appendices === "string" ? JSON.parse(appendices) : appendices;
   } catch (error) {
     return res.status(400).json({ error: "Invalid JSON format" });
   }
@@ -173,7 +176,7 @@ export const updateRecipe = async (req, res) => {
         cookingTime,
         recipeImg: recipeImgUrl,
         servingSize: servingSizeNum,
-        appendices: JSON.parse(appendices)
+        appendices: parsedAppendices,
       },
       { new: true }
     );
