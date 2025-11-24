@@ -252,9 +252,9 @@ const RecipeDetails = () => {
                                     type="checkbox"
                                     id={`ingredient-${index}`}
                                     label={`${ingredient.name}: ${ingredient.quantity} (${ingredient.measurement})`}
-                                    checked={checked.includes(ingredient.name)}
-                                    onChange={() => handleCheck(ingredient.name)}
-                                    className={checked.includes(ingredient.name) ? "checked" : ""}
+                                    checked={checked.includes(ingredient)}
+                                    onChange={() => handleCheck(ingredient)}
+                                    className={checked.includes(ingredient) ? "ingredient_checked" : ""}
                                 />
                             ))}
                         </Form>
@@ -286,8 +286,35 @@ const RecipeDetails = () => {
                                         </div>
                                         :<div/>    
                                     }
-                                    
+                                </div>
+                            ))}
+                        </Form>
+                    </Card.Body>
+                </Card>
 
+                <Card className="instructions-card mt-4" ref={instructionsRef}>
+                    <Card.Body>
+                        <div className="info_box">
+                            <h4 className="mt-2">Phụ lục</h4>
+                            <div className="recipe-ingredients-instructions">
+                                    <Button variant="success" className="user__action__button" onClick={handleSpeakInstruction}>Đọc</Button>
+                                    <Button variant="danger" className="user__action__button" onClick={stopTTS} >Dừng</Button>
+                            </div>
+                        </div>
+                        <Form>
+                            {recipe.appendices.map((appendix, index) => (
+                                <div key={index} className={checked.includes(appendix) ? "appendix_checked" : "appendix"}>
+                                    <Form.Check
+                                    type="checkbox"
+                                    id={`appendix-${index}`}
+                                    label={appendix.keyWord}
+                                    checked={checked.includes(appendix)}
+                                    onChange={() => handleCheck(appendix)}
+                                    />
+                                    
+                                    <div className="appendix_def">
+                                        <p>: {appendix.defintion}</p>
+                                    </div>
                                 </div>
                             ))}
                         </Form>
