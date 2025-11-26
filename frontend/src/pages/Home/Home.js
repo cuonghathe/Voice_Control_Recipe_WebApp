@@ -3,14 +3,15 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, Button } from 'react-bootstrap';   
 import Hero from '../../components/Hero';
+import DeviseRecipeHistory from "../../components/DeviseRecipeHistory/DeviseRecipeHistory";
 import './home.scss';
 
 
 const Home = () => {
   const [recipes, setRecipes] = useState([]);
+  const [recipesViewingHistory, setRecipesViewingHistory] = useState([])
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
-  const recipeHistoryInfoStr = localStorage.getItem("recipeHistoryInfo");
 
 
   useEffect(() => {
@@ -35,8 +36,12 @@ const Home = () => {
           recipesIdArr = recipesIdArr.filter(id => 
             response.data.allRecipeData.some(recipe => recipe._id === id)
           );
+          const recipesViewingHistory = response.data.allRecipeData
+          .filter(recipe => recipesIdArr.includes(recipe._id))
+          setRecipesViewingHistory(recipesViewingHistory)
           localStorage.setItem("recipeHistoryInfo", JSON.stringify(recipesIdArr));
         }
+
       } catch (error) {
         console.error("Failed to fetch recipes:", error);
       } 
@@ -65,10 +70,13 @@ const Home = () => {
     navigate(`/UserProfilePublic/${id}`)
   };
 
-
   return (
     <>
       <Hero />
+      {recipesViewingHistory ?
+        <DeviseRecipeHistory recipes ={recipesViewingHistory} />
+        :<></>
+      }
       <div className="top_recipe_container">
       <a href="/Recipes"><h1 className="text-center mt-5">Công thức nổi bật trong tháng qua</h1></a>
         <div className="top_recipecard">
@@ -80,7 +88,7 @@ const Home = () => {
                     ? recipe.recipename.slice(0,26) + "..."
                     : recipe.recipename}</Card.Title>
                 <Card.Text>
-                  Điểm: {recipe.averageRating}<small className="recipe_star">★ </small><small>( {recipe.reviewCount} )</small>
+                <small className="star">{recipe.averageRating}★ </small><small className="review_num">Số đánh giá: ({recipe.reviewCount})</small>
                 </Card.Text>
                 <Button variant="outline-danger" onClick={() => handleNavigateRecipe(recipe._id)}>Xem công thức</Button>
               </Card.Body>

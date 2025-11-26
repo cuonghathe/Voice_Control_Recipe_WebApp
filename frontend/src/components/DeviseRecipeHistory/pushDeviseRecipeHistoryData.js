@@ -1,5 +1,5 @@
 export default function pushDeviseRecipeHistoryData (recipeId){
-  const recipeHistoryLimit = 10;
+  const recipeHistoryLimit = 20;
   const recipeHistoryInfoStr = localStorage.getItem("recipeHistoryInfo");
   if(!recipeHistoryInfoStr){
     localStorage.setItem("recipeHistoryInfo", JSON.stringify([recipeId]));
