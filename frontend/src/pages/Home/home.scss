@@ -104,6 +104,44 @@
     background-color: rgb(255, 255, 255,0.95);
   }
 
+  .history_recipe_container{
+    width: 100%;
+    margin-top: 16px;
+    overflow: hidden;
+    padding: 0px 15px 20px 15px; 
+    background-color: rgb(255, 255, 255,0.95);
+    margin-bottom: 12px;
+    .text_style_button{
+      position: absolute;
+      right: 20px;
+      margin-top: 20px;
+      cursor: pointer;
+
+      &:hover{
+        text-decoration: underline;
+      }
+    }
+
+
+    .history_recipecard{
+      width: 100%;
+      margin-top: 40px;
+    
+      .recipeimg {
+        object-fit: cover;
+      }
+
+      .card {
+        max-width: 16rem;
+    
+        box-shadow: 0px 2px 8px #cfd8dc;
+        height: 22rem;
+      }
+    }
+  }
+
+
+
   .top_recipecard {
     width: 100%;
     display: flex;
@@ -234,4 +272,45 @@
       color: #ea9c00; 
       transform: scale(1.15);
     }
+
   }
+
+  .slick-slider .slick-list {
+    margin-left: 45px;;
+  }
+
+  // slider arrows
+  @media (min-width: 1268px){
+    .slick-slide {
+      width: 270px !important;
+    }
+    .slick-slider .slick-list {
+      margin-left: 66px;
+      margin-right: 66px;
+    }
+  }
+
+
+
+  .slick-prev, .slick-next {
+    color: #ea9c00;
+    z-index: 1; 
+  }
+  
+  .slick-prev:before, .slick-next:before {
+    color: #ea9c00; 
+  }
+
+  
+  .slick-prev, .slick-next {
+    display: block !important;
+  }
+  
+  .slick-prev {
+    left: 20px; 
+  }
+  
+  .slick-next {
+    right: 20px; 
+  }
+  

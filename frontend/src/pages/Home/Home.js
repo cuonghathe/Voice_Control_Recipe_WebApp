@@ -36,9 +36,12 @@ const Home = () => {
           recipesIdArr = recipesIdArr.filter(id => 
             response.data.allRecipeData.some(recipe => recipe._id === id)
           );
-          const recipesViewingHistory = response.data.allRecipeData
-          .filter(recipe => recipesIdArr.includes(recipe._id))
-          setRecipesViewingHistory(recipesViewingHistory)
+          
+          const recipesViewingHistory = recipesIdArr
+          .map(id => response.data.allRecipeData.find(recipe => recipe._id === id))
+        
+  
+          setRecipesViewingHistory(recipesViewingHistory);
           localStorage.setItem("recipeHistoryInfo", JSON.stringify(recipesIdArr));
         }
 

@@ -6,7 +6,7 @@ export default function pushDeviseRecipeHistoryData (recipeId){
   } else {
     let recipesIdArr = JSON.parse(recipeHistoryInfoStr);
     if(recipesIdArr.includes(recipeId)){
-      recipesIdArr = recipesIdArr.filter(Id => Id != recipeId)
+      recipesIdArr = recipesIdArr.filter(Id => Id !== recipeId)
     }
 
     if(recipesIdArr.length > recipeHistoryLimit){
