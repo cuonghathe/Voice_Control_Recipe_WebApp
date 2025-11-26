@@ -2,11 +2,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button, Card, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import DeviseRecipeHistory from "../../components/DeviseRecipeHistory/DeviseRecipeHistory";
 import "./Dashboard.scss";
 
 const Dashboard = () => {
   const [recipes, setRecipes] = useState([]);
   const navigate = useNavigate();
+  const [recipesViewingHistory, setRecipesViewingHistory] = useState([])  
   const [ratingRange] = useState("");
   const [sortOrder, setSortOrder] = useState("highest");
   const [nameFilter, setNameFilter] = useState("");
@@ -19,6 +21,18 @@ const Dashboard = () => {
       try {
         const response = await axios.get("http://localhost:5000/recipe/api/getRecipes");
         setRecipes(response.data.allRecipeData);
+        const recipeHistoryInfoStr = localStorage.getItem("recipeHistoryInfo");
+        if (recipeHistoryInfoStr) {
+          let recipesIdArr = JSON.parse(recipeHistoryInfoStr);
+          recipesIdArr = recipesIdArr.filter(id => 
+            response.data.allRecipeData.some(recipe => recipe._id === id)
+          );
+          const recipesViewingHistory = response.data.allRecipeData
+          .filter(recipe => recipesIdArr.includes(recipe._id))
+          setRecipesViewingHistory(recipesViewingHistory)
+          localStorage.setItem("recipeHistoryInfo", JSON.stringify(recipesIdArr));
+        }
+
       } catch (error) {
         console.error("Failed to fetch recipes:", error);
       } finally {
@@ -131,6 +145,8 @@ const Dashboard = () => {
           )))}
         </div>
       </div>
+      <DeviseRecipeHistory recipes={recipesViewingHistory}/>
+
     </Container>
   );
 };

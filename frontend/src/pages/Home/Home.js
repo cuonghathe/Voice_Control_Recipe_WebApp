@@ -3,13 +3,16 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, Button } from 'react-bootstrap';   
 import Hero from '../../components/Hero';
+import DeviseRecipeHistory from "../../components/DeviseRecipeHistory/DeviseRecipeHistory";
 import './home.scss';
 
 
 const Home = () => {
   const [recipes, setRecipes] = useState([]);
+  const [recipesViewingHistory, setRecipesViewingHistory] = useState([])
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -26,16 +29,32 @@ const Home = () => {
           })
           .sort((a, b) => b.averageRating - a.averageRating).slice(0, 10);
         setRecipes(sortedRecipes);
+
+        const recipeHistoryInfoStr = localStorage.getItem("recipeHistoryInfo");
+        if (recipeHistoryInfoStr) {
+          let recipesIdArr = JSON.parse(recipeHistoryInfoStr);
+          recipesIdArr = recipesIdArr.filter(id => 
+            response.data.allRecipeData.some(recipe => recipe._id === id)
+          );
+          
+          const recipesViewingHistory = recipesIdArr
+          .map(id => response.data.allRecipeData.find(recipe => recipe._id === id))
+        
+  
+          setRecipesViewingHistory(recipesViewingHistory);
+          localStorage.setItem("recipeHistoryInfo", JSON.stringify(recipesIdArr));
+        }
+
       } catch (error) {
         console.error("Failed to fetch recipes:", error);
-      }
+      } 
     };
     const fetchUsers = async () => {
       try {
         const response = await axios.get("http://localhost:5000/user/api/alluserstats");
         const sortedUsers = response.data
-          .sort((a, b) => b.totalRecipes - a.totalRecipes) // Sort by total recipes
-          .slice(0, 10); // Take top 10 users
+          .sort((a, b) => b.totalRecipes - a.totalRecipes) 
+          .slice(0, 10); 
         setUsers(sortedUsers);
       } catch (error) {
         console.error("Failed to fetch user stats:", error);
@@ -43,7 +62,7 @@ const Home = () => {
     };
 
     fetchRecipes();
-    fetchUsers();  // Fetch user data as well if needed
+    fetchUsers();
   }, []);
 
   const handleNavigateRecipe = (id) => {
@@ -54,10 +73,13 @@ const Home = () => {
     navigate(`/UserProfilePublic/${id}`)
   };
 
-
   return (
     <>
       <Hero />
+      {recipesViewingHistory ?
+        <DeviseRecipeHistory recipes ={recipesViewingHistory} />
+        :<></>
+      }
       <div className="top_recipe_container">
       <a href="/Recipes"><h1 className="text-center mt-5">Công thức nổi bật trong tháng qua</h1></a>
         <div className="top_recipecard">
@@ -69,7 +91,7 @@ const Home = () => {
                     ? recipe.recipename.slice(0,26) + "..."
                     : recipe.recipename}</Card.Title>
                 <Card.Text>
-                  Điểm: {recipe.averageRating}<small className="recipe_star">★ </small><small>( {recipe.reviewCount} )</small>
+                <small className="star">{recipe.averageRating}★ </small><small className="review_num">Số đánh giá: ({recipe.reviewCount})</small>
                 </Card.Text>
                 <Button variant="outline-danger" onClick={() => handleNavigateRecipe(recipe._id)}>Xem công thức</Button>
               </Card.Body>
