@@ -12,6 +12,7 @@ import ChatBotBox from "../../components/chatBot/ChatBotBox";
 import DescriptionBox from "../../components/DescriptionBox/DescriptionBox";
 import VoiceControlInstruction from "../../components/voiceControlInstruction";
 import dataWithAppendices from "./dataWithApendices";
+import pushDeviseRecipeHistoryData from "../../components/DeviseRecipeHistory/pushDeviseRecipeHistoryData";
 import "./Recipe.scss";
 
 const RecipeDetails = () => {
@@ -52,6 +53,8 @@ const RecipeDetails = () => {
                 
             } catch (error) {
                 console.error("Failed to fetch recipe:", error);
+            } finally {
+                pushDeviseRecipeHistoryData(id)
             }
         };
 
