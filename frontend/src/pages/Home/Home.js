@@ -10,6 +10,8 @@ const Home = () => {
   const [recipes, setRecipes] = useState([]);
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
+  const recipeHistoryInfoStr = localStorage.getItem("recipeHistoryInfo");
+
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -26,16 +28,25 @@ const Home = () => {
           })
           .sort((a, b) => b.averageRating - a.averageRating).slice(0, 10);
         setRecipes(sortedRecipes);
+
+        const recipeHistoryInfoStr = localStorage.getItem("recipeHistoryInfo");
+        if (recipeHistoryInfoStr) {
+          let recipesIdArr = JSON.parse(recipeHistoryInfoStr);
+          recipesIdArr = recipesIdArr.filter(id => 
+            response.data.allRecipeData.some(recipe => recipe._id === id)
+          );
+          localStorage.setItem("recipeHistoryInfo", JSON.stringify(recipesIdArr));
+        }
       } catch (error) {
         console.error("Failed to fetch recipes:", error);
-      }
+      } 
     };
     const fetchUsers = async () => {
       try {
         const response = await axios.get("http://localhost:5000/user/api/alluserstats");
         const sortedUsers = response.data
-          .sort((a, b) => b.totalRecipes - a.totalRecipes) // Sort by total recipes
-          .slice(0, 10); // Take top 10 users
+          .sort((a, b) => b.totalRecipes - a.totalRecipes) 
+          .slice(0, 10); 
         setUsers(sortedUsers);
       } catch (error) {
         console.error("Failed to fetch user stats:", error);
@@ -43,7 +54,7 @@ const Home = () => {
     };
 
     fetchRecipes();
-    fetchUsers();  // Fetch user data as well if needed
+    fetchUsers();
   }, []);
 
   const handleNavigateRecipe = (id) => {
