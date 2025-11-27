@@ -236,6 +236,8 @@ const UpdateRecipe = () => {
                       onChange={(e) => handleIngredientChange(index, 'measurement', e.target.value)}
                       className="mr-2"
                     >
+                      <option value="">Đơn vị</option>
+                    
                       <option value="Gram">g</option>
                       <option value="Kilo gram">kg</option>
                       <option value="Lit">L</option>

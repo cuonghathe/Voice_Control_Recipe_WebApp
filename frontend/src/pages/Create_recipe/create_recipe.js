@@ -186,6 +186,7 @@ const CreateRecipe = () => {
                       className="mr-2"
                       placeholder="Đơn vị"
                     >
+                      <option value="Gram">Đơn vị</option>
                       <option value="Gram">g</option>
                       <option value="Kilo gram">kg</option>
                       <option value="Lit">L</option>

@@ -111,8 +111,8 @@ const Home = () => {
                   {user.username}
                 </Card.Title>
                 <Card.Text>
-                  Tổng công thức: {user.totalRecipes} <br />
-                  Tổng đánh giá: {user.totalReviews} <br />
+                  Công thức đã tạo: {user.totalRecipes} <br />
+                  Đánh giá đã tạo: {user.totalReviews} <br />
                   Điểm trung bình: {user.averageRatingAcrossRecipes}<small className="user_star">★</small>
                 </Card.Text>
               </Card.Body>

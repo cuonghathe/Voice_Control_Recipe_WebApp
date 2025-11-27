@@ -9,14 +9,16 @@ export default function dataWithAppendices(text, appendices) {
 
     result.forEach((part) => {
       if (typeof part === "string") {
-        const splitParts = part.split(new RegExp(`\\b${appendix.keyWord}\\b`, "gi"));
+        const escapedKeyWord = appendix.keyWord.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const splitParts = part.split(new RegExp(`(${escapedKeyWord})`, "gi"));
 
         splitParts.forEach((p, index) => {
-          newResult.push(p);
-          if (index < splitParts.length - 1) {
+          if (p.toLowerCase() === appendix.keyWord.toLowerCase()) {
             newResult.push(
-              <AppendixDesBox keyWord={appendix.keyWord} defintion={appendix.defintion}/>
+              <AppendixDesBox keyWord={appendix.keyWord} defintion={appendix.defintion} />
             );
+          } else {
+            newResult.push(p);
           }
         });
       } else {
