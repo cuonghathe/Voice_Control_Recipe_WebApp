@@ -50,11 +50,10 @@ const RecipeDetails = () => {
                 setRecipe(response.data);
                 setServings(response.data.servingSize);
                 setAdjustedIngredients(response.data.ingredients);
+                pushDeviseRecipeHistoryData(id)
                 
             } catch (error) {
                 console.error("Failed to fetch recipe:", error);
-            } finally {
-                pushDeviseRecipeHistoryData(id)
             }
         };
 
@@ -303,7 +302,7 @@ const RecipeDetails = () => {
                     </Card.Body>
                 </Card>
 
-                <Card className="instructions-card mt-4" ref={instructionsRef}>
+                <Card className="instructions-card mt-4">
                     <Card.Body>
                         <div className="info_box">
                             <div className="ingredients-card-title">

@@ -234,7 +234,6 @@
 }
 
 .recipe-ingredients-instructions label:hover{
-  font-weight: 700;
   cursor: pointer;
 }
 
@@ -315,10 +314,14 @@
 }
 
 .data_with_apperndices{
-  display: flex;
-  flex-direction: row;
+  display: ruby;
   word-break: break-word;
 
+  .appendices_keyWord{
+    p{
+      margin-bottom: 0;
+    }
+  }
 }
 
 
