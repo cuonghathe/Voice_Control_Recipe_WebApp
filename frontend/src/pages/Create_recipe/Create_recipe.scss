@@ -147,9 +147,6 @@ section .form_data form .btn-danger {
         display: flex;
         flex-direction: row;
     
-        i{
-            margin-top: 10px;
-        }
     }
 
     .instruction-column{
@@ -244,10 +241,7 @@ section .form_data form .btn-danger {
     .label_with_des{
         display: flex;
         flex-direction: row;
-    
-        i{
-            margin-top: 10px;
-        }
+
     }
 
     label {
@@ -369,9 +363,20 @@ section .form_data form .btn-danger {
     }
 }
 
+.label_with_des{
+    display: flex;
+    flex-direction: row;
+
+    .description_icon{
+        margin-top: -6px;
+    }
+}
+
 .ingredient-row{
     display: flex;
     flex-direction: row;
+
+    
 
     select.mr-2{
         width: 100px;

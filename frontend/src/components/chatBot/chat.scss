@@ -192,7 +192,13 @@ button.AutoTTS {
 }
 
 .instruction__body {
-  gap: 8px;
+  gap: 2px;
+
+  .instruction{
+    p{
+      margin-bottom: 4px;
+    }
+  }
 }
 
 .chat__body {

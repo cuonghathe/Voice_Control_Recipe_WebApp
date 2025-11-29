@@ -1,4 +1,5 @@
 import reviewDB from "../../models/review/reviewModel.js";
+import recipeDB from "../../models/recipe/recipeModel.js";
 
 //tao review
 export const createReview = async (req, res) => {
@@ -14,15 +15,27 @@ export const createReview = async (req, res) => {
       recipeid:recipeid,      
       userId:req.userId
     });
+
     const preUsername = await reviewDB.findOne({
       recipeid:recipeid,      
       username:username
     });
+
+    const isOwner = await recipeDB.findOne({
+      _id:recipeid,
+      userId:req.userId
+    }) 
+
     if (preUser) {
       return res.status(400).json({ error: "Bạn chỉ được viết review một lần cho một công thức" });
-    } else if (preUsername) {
+    } 
+    if (preUsername) {
       return res.status(400).json({ error: "Tên này đã tồn tại" })
-    } {
+    } 
+    if (isOwner){
+      return res.status(400).json({ error: "Bạn không thể đánh giá công thức của chính mình" }) 
+    }
+    {
       const addReview = new reviewDB({
         userId:req.userId,recipeid,username,rating,description
       });

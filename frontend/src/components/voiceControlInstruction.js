@@ -7,10 +7,13 @@ const VoiceControlInstruction = (
     scrollToInstructions, 
     scrollToReviews, 
     scrollToIngredients,
+    scrollToAppendices,
     handleAddServing,
     handleRemoveServing,
     handleSpeakIngredients,
-    userCommand 
+    handleSpeakInstruction,
+    handleSpeakAppendices,
+ 
   }) => {
   const [showChatBot, setShowInstruction] = useState(false);
   const [voiceControl, setVoiceControl] = useState(false);
@@ -67,9 +70,13 @@ const VoiceControlInstruction = (
           <p  onClick={()=>window.scrollTo(0, maxScroll)}>Xuống cuối trang: "cuối"</p>
           <p  onClick={()=>window.scrollBy(0, 150)}>Cuộn lên xuống: "lên", "xuống"</p>
           <p  onClick={()=>window.scrollBy(0, document.body.scrollHeight / 2)}>Cuộn xuống giữa trang: "nửa"</p>
-          <p  onClick={()=>scrollToIngredients()}>Đi đến phần nguyên liệu: "1"</p>
-          <p  onClick={()=>scrollToInstructions()}>Đi đến phần hướng dẫn: "2"</p>
-          <p  onClick={()=>scrollToReviews()}>Đi đến phần đánh giá: "3"</p>
+          <p  onClick={()=>scrollToIngredients()}>Đi đến phần nguyên liệu: "nguyên liệu"</p>
+          <p  onClick={()=>scrollToInstructions()}>Đi đến phần bước làm: "bước làm", "hướng dẫn"</p>
+          <p  onClick={()=>scrollToAppendices()}>Đi đến phần phụ lục: "phụ lục"</p>
+          <p  onClick={()=>scrollToReviews()}>Đi đến phần đánh giá: "đánh giá"</p>
+          <p  onClick={()=>handleSpeakIngredients()}>Đọc phần nguyên liệu: "đọc nguyên liệu"</p>
+          <p  onClick={()=>handleSpeakInstruction()}>Đọc phần bước làm: "đọc bước làm"</p>
+          <p  onClick={()=>handleSpeakAppendices()}>Đọc phần phụ lục: "đọc phụ lục"</p>
           <p  onClick={()=>handleAddServing()}>Tăng giảm suất ăn: "tăng", "giảm"</p>
         </div>
       </div>

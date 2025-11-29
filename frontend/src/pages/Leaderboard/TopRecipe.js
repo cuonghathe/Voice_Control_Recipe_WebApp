@@ -119,7 +119,7 @@ const TopRecipe = () => {
                   <td>{originalIndex + 1}</td> { }
                   <td>
                     <img
-                      src={recipe.recipeImg || "/default-image.png"}
+                      src={recipe.recipeImg || "/dragondancing_1200x1200.jpg"}
                       alt={recipe.recipename}
                       style={{ width: "75px", height: "75px", objectFit: "cover", borderRadius: "5px" }}
                     />
@@ -154,7 +154,7 @@ const TopRecipe = () => {
               </div>
               <div className="rating_picture">
                 <img
-                  src={recipe.recipeImg || "/default-image.png"}
+                  src={recipe.recipeImg || "/dragondancing_1200x1200.jpg"}
                   alt={recipe.recipename}
                   style={{ width: "85px", height: "112px", objectFit: "cover", borderRadius: "5px" }}
                 />

@@ -15,7 +15,7 @@ export default function dataWithAppendices(text, appendices) {
         splitParts.forEach((p, index) => {
           if (p.toLowerCase() === appendix.keyWord.toLowerCase()) {
             newResult.push(
-              <AppendixDesBox keyWord={appendix.keyWord} defintion={appendix.defintion} />
+              <AppendixDesBox keyWord={p} defintion={appendix.defintion} />
             );
           } else {
             newResult.push(p);

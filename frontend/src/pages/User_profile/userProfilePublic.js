@@ -96,7 +96,7 @@ const UserProfilePublic = () => {
                         <h1 className="recipe-title">{ }</h1>
                         <div className="recipe-image-container">
                             <Card className="recipe-image-card">
-                                <Card.Img variant="top" src={user.userprofile || "/dragondancing_1200x1200.jpg"} />
+                                <Card.Img variant="top" src={user.userprofile ||  "/logoUser.jpg"} />
                             </Card>
                         </div>
                     </div>

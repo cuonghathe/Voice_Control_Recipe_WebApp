@@ -4,9 +4,12 @@ const Scrolling = ({
   scrollToInstructions, 
   scrollToReviews, 
   scrollToIngredients,
+  scrollToAppendices,
   handleAddServing,
   handleRemoveServing,
   handleSpeakIngredients,
+  handleSpeakInstruction,
+  handleSpeakAppendices,
   userCommand 
 }) => {
   const [, setCommandLog] = useState([]);
@@ -116,20 +119,35 @@ const Scrolling = ({
           "đầu": () => window.scrollTo(0, 0),
           "đầu trang": () => window.scrollTo(0, 0),
 
-          "hai": scrollToInstructions,
-          "4": scrollToInstructions,
-          "hài": scrollToInstructions,
+          "bước": scrollToInstructions,
+          "bước làm": scrollToInstructions,
+          "cách": scrollToInstructions,
+          "cách làm": scrollToInstructions,
+          "hướng": scrollToInstructions,
+          "hướng dẫn": scrollToInstructions,
 
-          "ba": scrollToReviews,
-          "3": scrollToReviews,
+          "đánh": scrollToReviews,
+          "đánh giá": scrollToReviews,
 
-          "một": scrollToIngredients,
-          "1": scrollToIngredients,
+          "nguyên liệu": scrollToIngredients,
+          "nguyên": scrollToIngredients,
+          
+          "phụ": scrollToAppendices,
+          "phụ lục": scrollToAppendices,
 
           "tăng": handleAddServing,
           "giảm": handleRemoveServing,
 
-          "đọc": handleSpeakIngredients,
+          "đọc nguyên liệu": handleSpeakIngredients,
+          "đọc nguyên": handleSpeakIngredients,
+          
+          "đọc bước": handleSpeakInstruction,
+          "đọc bước làm": handleSpeakInstruction,
+
+          "đọc phụ lục": handleSpeakAppendices,
+          "đọc phụ": handleSpeakAppendices,
+
+          
         };
 
         if (commandMap[command]) {
@@ -149,9 +167,12 @@ const Scrolling = ({
     scrollToInstructions, 
     scrollToReviews, 
     scrollToIngredients,
+    scrollToAppendices,
     handleAddServing,
     handleRemoveServing,
     handleSpeakIngredients,
+    handleSpeakInstruction,
+    handleSpeakAppendices,
     userCommand 
   ]);
 

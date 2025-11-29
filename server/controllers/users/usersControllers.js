@@ -59,7 +59,6 @@ export const register = async (req, res) => {
 // Đăng nhập
 export const login = async (req, res) => {
   const { email, password } = req.body;
-  console.log(":", req.body);
 
   if (!email || !password) {
     return res.status(400).json({ error: "Vui lòng điền đầy đủ thông tin" });
