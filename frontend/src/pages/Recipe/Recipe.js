@@ -178,7 +178,7 @@ const RecipeDetails = () => {
                     <div className="recipe-header">
                         <div className="recipe-image-container">
                             <Card className="recipe-image-card">
-                                <Card.Img variant="top" src={recipe.recipeImg || "/logo192.png"} />
+                                <Card.Img variant="top" src={recipe.recipeImg  || "/dragondancing_1200x1200.jpg"} />
                             </Card>
                         </div>
                     </div>
@@ -385,15 +385,18 @@ const RecipeDetails = () => {
                     {reviews.map((review) => (
                         <Card key={review._id} className="mb-3">
                             <Card.Body>
-                                <div className="info_box">
-                                    <h5>{review.username}
-                                        <span className="stars">
-                                            {"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}
-                                        </span>
-                                    </h5>
-                                </div>
-                                <div>
-                                    <small className="Date">{new Date(review.createdAt).toLocaleDateString()}</small>
+                                <div className="review_info_box">
+                                    <img className = "userProfilePic"src={"/logoUser.jpg"} alt = "user profile"/>
+                                    <div>
+                                        <div className="info_box">
+                                            <h5>{review.username}
+                                                <span className="stars">
+                                                    {"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}
+                                                </span>
+                                            </h5>
+                                        </div>
+                                        <small className="Date">{new Date(review.createdAt).toLocaleDateString()}</small>
+                                    </div>
                                 </div>
 
                                 <p className="mt-2">{review.description}</p>

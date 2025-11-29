@@ -325,6 +325,20 @@
 }
 
 
+.user_review .review_info_box {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  margin-bottom: 12px;
+  .info_box{
+    justify-content: flex-start;
+  }
+  .userProfilePic{
+    width: 58px;
+    height: 58px;
+  }
+}
+
 
 
 @media (max-width: 1023px) {

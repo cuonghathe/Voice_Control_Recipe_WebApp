@@ -100,7 +100,7 @@ if (loading) return <p>Đang tải dữ liệu...</p>;
                 <td>{index + 1}</td>
                 <td>
                   <img
-                    src={user.userprofile || "/dragondancing_1200x1200.jpg"}
+                    src={user.userprofile ||  "/logoUser.jpg"}
                     alt={user.username}
                     style={{ width: "75px", height: "75px", objectFit: "cover"}}
                   />
@@ -130,7 +130,7 @@ if (loading) return <p>Đang tải dữ liệu...</p>;
               </div>
               <div className="rating_picture">
                 <img
-                  src={user.userprofile || "/dragondancing_1200x1200.jpg"}
+                  src={user.userprofile ||  "/logoUser.jpg"}
                   alt={user.username}
                   style={{ width: "85px", height: "112px", objectFit: "cover", borderRadius: "5px" }}
                 />

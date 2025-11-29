@@ -78,7 +78,7 @@ const Header = () => {
                                 {isLoggedIn ? (
                                     <div className="ml-auto userProfile__section">
                                     <Nav className="profile__picture__container">
-                                        <Nav.Link onClick={handlenav}><img className = "userProfilePic"src={userProfilePic || "/dragondancing_1200x1200.jpg"} alt = "user profile"/></Nav.Link>
+                                        <Nav.Link onClick={handlenav}><img className = "userProfilePic"src={userProfilePic || "/logoUser.jpg"} alt = "user profile"/></Nav.Link>
                                         <Nav.Link onClick={handlenav}>@{userName}</Nav.Link>
 
                                     </Nav>
@@ -150,7 +150,7 @@ const Header = () => {
                             {isLoggedIn ? (
                                 <Nav className="ml-auto">
                                 <div className="profile__picture__container">
-                                    <Nav.Link onClick={handlenav}><img className = "userProfilePic"src={userProfilePic || "/dragondancing_1200x1200.jpg"} alt = "user profile"/></Nav.Link>
+                                    <Nav.Link onClick={handlenav}><img className = "userProfilePic"src={userProfilePic || "/logoUser.jpg"} alt = "user profile"/></Nav.Link>
                                 </div>
                                     <Nav.Link onClick={handleLogout}>Đăng xuất</Nav.Link>
                                 </Nav>

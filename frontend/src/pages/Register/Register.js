@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../Login/Login.scss";
+import LoadingPopup from "../../components/LoadingPopup";
 import axios from "axios";
 
 const Register = () => {
@@ -12,6 +13,7 @@ const Register = () => {
     const [passShow, setPassShow] = useState(false);
     const [cpassShow, setCPassShow] = useState(false);
     const [error, setError] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleRegister = async (e) => {
@@ -38,12 +40,15 @@ const Register = () => {
         } catch (error) {
             console.error("Đăng ký thất bại:", error);
             setError(error.response?.data?.error || "Đăng ký thất bại");
+        } finally {
+            setIsLoading(false)
         }
     }
 
     return (
         <>
             <div className="login_body">
+                <LoadingPopup isLoading={isLoading} />
                 <section>
                     <div className="form_data">
                         <div className="form_heading">

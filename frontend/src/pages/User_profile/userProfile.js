@@ -43,11 +43,18 @@ const UserProfile = () => {
         const fetchUserReviews = async () => {
             try {
                 const reviewResponse = await axios.get(`http://localhost:5000/user/api/getuserreview/${userId}`);
-                setReviews(reviewResponse.data);
+                await (reviewResponse.data.forEach( review => {
+                    if(!review.recipeid){
+                        handleAutoDeleteReview(review._id)
+                    }
+                }));
+                const newReviewResponse  = await axios.get(`http://localhost:5000/user/api/getuserreview/${userId}`);
+                setReviews(newReviewResponse.data);
             } catch (error) {
                 console.error("Failed to fetch reviews:", error);
             }
         };
+
 
 
         fetchUserData();
@@ -87,6 +94,17 @@ const UserProfile = () => {
     const handleDeleteReview = async (reviewId) => {
         if (!window.confirm("Bạn có chắc chắn muốn xóa review này?")) return;
 
+        try {
+            await axios.delete(`http://localhost:5000/review/api/deletereview/${reviewId}`, {
+                headers: { Authorization: `${token}` },
+            });
+            setReviews(reviews.filter(review => review._id !== reviewId));
+        } catch (error) {
+            console.error("Failed to delete:", error);
+        }
+    };
+
+    const handleAutoDeleteReview = async (reviewId) => {
         try {
             await axios.delete(`http://localhost:5000/review/api/deletereview/${reviewId}`, {
                 headers: { Authorization: `${token}` },
@@ -142,7 +160,7 @@ const UserProfile = () => {
                         <h1 className="recipe-title">{ }</h1>
                         <div className="recipe-image-container">
                             <Card className="recipe-image-card">
-                                <Card.Img variant="top" src={user.userprofile || "/dragondancing_1200x1200.jpg"} />
+                                <Card.Img variant="top" src={user.userprofile ||  "/logoUser.jpg"} />
                             </Card>
                         </div>
                     </div>
@@ -187,9 +205,9 @@ const UserProfile = () => {
                         <Form>                                      
                         {
                         filteredRecipe.length === 0 ? (
-                            <tr>
-                            <td colSpan="6" className="text-center">Không có công thức nào</td>
-                            </tr>
+                            
+                            <p colSpan="6" className="text-center">Không có công thức nào</p>
+                            
                         ) : (
                             filteredRecipe.map(recipe => (
                                 <Card key={recipe._id} className="recipe-card">
