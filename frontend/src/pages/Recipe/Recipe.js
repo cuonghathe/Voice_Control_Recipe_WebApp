@@ -29,6 +29,7 @@ const RecipeDetails = () => {
     const instructionsRef = useRef(null);
     const reviewRef = useRef(null);
     const ingredientsRef = useRef(null);
+    const appendicesRef = useRef(null);
     const [command, setCommand] = useState("");
     const [adjustmentFactor, setAdjustmentFactor] = useState([]);
 
@@ -143,6 +144,10 @@ const RecipeDetails = () => {
         ingredientsRef.current?.scrollIntoView();
     };
 
+    const scrollToAppendices = () => {
+        appendicesRef.current?.scrollIntoView();
+    };
+
     const toggleDescription = () => {
         setIsExpanded(!isExpanded);
     };
@@ -162,6 +167,13 @@ const RecipeDetails = () => {
         const instructionText = recipe.instructions.map((instruction, index) => `Bước ${index + 1} ${instruction.name}`)
         .join(", ");
         TTS(instructionText);
+    }
+
+    const handleSpeakAppendices = () =>{
+        if(!recipe || !recipe.appendices) return;
+        const appendicesText = recipe.appendices.map((appendix, index) => `Phụ lục ${index + 1} ${appendix.keyWord} ${appendix.defintion}`)
+        .join(", ");
+        TTS(appendicesText);
     }
 
 
@@ -192,9 +204,12 @@ const RecipeDetails = () => {
                             scrollToInstructions={scrollToInstructions}
                             scrollToReviews={scrollToReviews}
                             scrollToIngredients={scrollToIngredients}
+                            scrollToAppendices={scrollToAppendices}
                             handleAddServing={() =>handleServingsChange(servings + 1)}
                             handleRemoveServing={() =>handleServingsChange(servings - 1)}
                             handleSpeakIngredients={handleSpeakIngredients}
+                            handleSpeakInstruction={handleSpeakInstruction}
+                            handleSpeakAppendices={handleSpeakAppendices}
                             handleAddReview={handleAddReview}
                             userCommand={setCommand}
                         />
@@ -224,6 +239,9 @@ const RecipeDetails = () => {
                             </Button>
                         </div>
                     </div>
+                    
+                    <div ref={ingredientsRef}/> 
+
                     <div className="description">
                         <Card.Title>Mô tả:</Card.Title>
                         <p className="detail" style={{WebkitLineClamp: isExpanded ? 'none' : 3}}>
@@ -234,11 +252,12 @@ const RecipeDetails = () => {
                             {isExpanded ? 'Thu gọn' : 'Xem thêm'}
                         </p>
                     </div>
+
                 </div>
             </div>
 
             <div className="recipe-ingredients-instructions">
-                <Card className="ingredients-card" ref={ingredientsRef}>
+                <Card className="ingredients-card" >
                     <Card.Body>
                         <div className="info_box">
                             <div className="ingredients-card-title">
@@ -265,10 +284,11 @@ const RecipeDetails = () => {
                                 />
                             ))}
                         </Form>
+                        <div ref={instructionsRef}/>
                     </Card.Body>
                 </Card>
 
-                <Card className="instructions-card mt-4" ref={instructionsRef}>
+                <Card className="instructions-card mt-4" >
                     <Card.Body>
                         <div className="info_box">
                             <div className="ingredients-card-title">
@@ -299,6 +319,7 @@ const RecipeDetails = () => {
                                 </div>
                             ))}
                         </Form>
+                        <div ref={appendicesRef}/>
                     </Card.Body>
                 </Card>
 
@@ -310,7 +331,7 @@ const RecipeDetails = () => {
                                 <DescriptionBox description={appendixDes}/>
                             </div>
                             <div className="recipe-ingredients-instructions">
-                                    <Button variant="success" className="user__action__button" onClick={handleSpeakInstruction}>Đọc</Button>
+                                    <Button variant="success" className="user__action__button" onClick={handleSpeakAppendices}>Đọc</Button>
                                     <Button variant="danger" className="user__action__button" onClick={stopTTS} >Dừng</Button>
                             </div>
                         </div>
@@ -379,9 +400,10 @@ const RecipeDetails = () => {
                     <Button variant="primary" className="mt-3 userprofile__action" onClick={handleAddReview}>
                         Gửi đánh giá
                     </Button>
+                    <div ref={reviewRef}/>
                 </Form>
 
-                <div className="user_review mt-4" ref={reviewRef}>
+                <div className="user_review mt-4" >
                     {reviews.map((review) => (
                         <Card key={review._id} className="mb-3">
                             <Card.Body>
@@ -411,11 +433,13 @@ const RecipeDetails = () => {
                 scrollToInstructions={scrollToInstructions}
                 scrollToReviews={scrollToReviews}
                 scrollToIngredients={scrollToIngredients}
+                scrollToAppendices={scrollToAppendices}
                 handleAddServing={() =>handleServingsChange(servings + 1)}
                 handleRemoveServing={() =>handleServingsChange(servings - 1)}
                 handleSpeakIngredients={handleSpeakIngredients}
+                handleSpeakInstruction={handleSpeakInstruction}
+                handleSpeakAppendices={handleSpeakAppendices}
                 handleAddReview={handleAddReview}
-                userCommand={setCommand}
             />
             
         </Container>
