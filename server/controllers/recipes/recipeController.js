@@ -3,7 +3,6 @@ import recipeDB from "../../models/recipe/recipeModel.js";
 import reviewDB from "../../models/review/reviewModel.js";
 
 const ITEM_PER_PAGE = 9;
-const appendiceLengthLimit = 600;
 
 
 const adjustMeasurements = (ingredients, originalServings, newServings) => {
@@ -195,6 +194,7 @@ export const deleteRecipe = async (req, res) => {
   const { recipeid } = req.params;
   try {
     const deleteRecipe = await recipeDB.findByIdAndDelete({ _id: recipeid });
+    await reviewDB.deleteMany({ recipeid: recipeid });
     res.status(200).json({ message: "Xóa thành công", deleteRecipe })
   } catch (error) {
     console.log("error", error);

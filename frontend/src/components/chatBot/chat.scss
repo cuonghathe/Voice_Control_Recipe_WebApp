@@ -144,6 +144,21 @@
   gap: 8px;
 }
 
+.tts-controls{
+  .btn-danger{
+    padding: 5px;
+    padding-left: 1px;
+    background-color: transparent;
+    border: none;
+    opacity: 0.75;
+
+    &:hover{
+      opacity: 1;
+    }
+  }
+}
+
+
 .v-controls .description_icon i{
   margin-top: 18px;
 }
