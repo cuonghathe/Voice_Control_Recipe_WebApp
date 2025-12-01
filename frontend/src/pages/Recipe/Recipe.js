@@ -97,25 +97,26 @@ const RecipeDetails = () => {
     
     
     const adjustIngredients = (newServings) => {
-        const newIngredients = recipe.ingredients.map((ingredient, i) => ({
+        return recipe.ingredients.map((ingredient, i) => ({
             ...ingredient,
-            quantity: Math.ceil(newServings * adjustmentFactor[i] * 4)/4
+            quantity: Math.ceil(newServings * adjustmentFactor[i] * 4) / 4
         }));
-        setAdjustedIngredients(newIngredients);
-    };    
+    };
 
     const handleServingsChange = (newServings) => {
-        if (newServings <= 0){
-            newServings = 1;
-        }
-        adjustIngredients(newServings);
+        if (newServings <= 0) newServings = 1;
+    
+        const newIngredients = adjustIngredients(newServings);
+    
+        setAdjustedIngredients(newIngredients);
+    
         setServings(newServings);
+    
         setRecipe(prev => ({
             ...prev,
-            ingredients: adjustedIngredients,
+            ingredients: newIngredients, 
             servingSize: newServings,
         }));
-        
     };
 
 
