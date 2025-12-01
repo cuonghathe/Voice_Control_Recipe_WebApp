@@ -1,5 +1,7 @@
 import { useState } from "react";
 import DescriptionBox from "./DescriptionBox/DescriptionBox";
+import Scrolling from "../api/voiceControl/scrolling";
+
 
 
 const VoiceControlInstruction = (
@@ -55,7 +57,7 @@ const VoiceControlInstruction = (
         <div className="instruction__header__info">
           <div className="v-controls">
             <button className={`AutoTTS ${voiceControl ? "on" : ""}`} onClick={() => toggleVoiceControl()}>
-              <h2 className="instruction__logo-text">Điều khiển bằng giọng nói</h2>
+              <h2 className="instruction__logo-text">Điều khiển giọng nói</h2>
               <i className={`fa-solid ${voiceControl ? "fa-toggle-on" : "fa-toggle-off"}`}></i>
             </button>
             <DescriptionBox description = {description} link = {descriptionHelpLink}/>

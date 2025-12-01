@@ -186,7 +186,8 @@ export const deleteUser = async (req, res) => {
     if (!deletedUser) {
       return res.status(404).json({ error: "User not found" });
     }
-    await reviewDB.deleteMany({ user: userId });
+    await reviewDB.deleteMany({ userId: userId });
+    await recipeDB.deleteMany({ userId: userId });
     res.status(200).json({ message: "User deleted successfully" });
 
   } catch (error) {

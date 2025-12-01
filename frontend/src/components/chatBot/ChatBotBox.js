@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import TTS, { stopTTS } from "../../api/voiceControl/TTS.js";
+import Button from "react-bootstrap/Button";
 import "./chat.scss";
 import ChatBotForm from "./ChatBotForm.js";
 import ChatBotIcon from "./ChatBotIcon";
@@ -24,9 +25,11 @@ const ChatBotBox = ({ command, recipeInfo }) => {
     {
       hideInChat: true,
       role: "model",
-      text: formatData(recipeInfo),
+      text: recipeInfo,
     },
   ]);
+
+  // console.log(recipeInfo)
 
   useEffect(() => {
     if (recipeInfo) {
@@ -139,6 +142,9 @@ const ChatBotBox = ({ command, recipeInfo }) => {
               <span className="ms-2">Đối thoại</span>
               <i className={`fa-solid ${vocalCommunication ? "fa-toggle-on" : "fa-toggle-off"}`}></i>
             </button>
+            <Button variant="danger" className="user__action__button" onClick={stopTTS} >
+              <i class="fa-solid fa-volume-xmark"></i>
+            </Button>
             <div className="description_con">
               <DescriptionBox description = {description} link = {descriptionHelpLink}/>
             </div>

@@ -36,8 +36,7 @@ const UserList = () => {
 
     try {
       const token = localStorage.getItem("authToken");
-      await axios.delete(`http://localhost:5000/admin/api/user/${userId}`, {
-        headers: { Authorization: `${token}` },
+      await axios.delete(`http://localhost:5000/user/api/delprofile/${userId}`, {
       });
       setUsers(users.filter((user) => user._id !== userId));
     } catch (err) {

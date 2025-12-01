@@ -157,12 +157,19 @@ const AdminRecipeDetails = () => {
                         <h4 className='mt-2'>Cách làm</h4>
                         <Form>
                             {recipe.instructions.map((instruction, index) => (
-                                <Form.Check
-                                    key={index}
+                                <div key={index}>
+                                    <Form.Check
                                     type="checkbox"
-                                    label={instruction}
-                                    className='instruction-item'
-                                />
+                                    id={`instruction-${index}`}
+                                    label={instruction.name}
+                                    />
+                                    {instruction.instructionImg?
+                                        <div className="admin_instruction_pic">
+                                            <Card.Img variant="top" src={instruction.instructionImg} />
+                                        </div>
+                                        :<div/>    
+                                }
+                                </div>
                             ))}
                         </Form>
                     </Card.Body>

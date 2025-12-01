@@ -14,6 +14,7 @@ import VoiceControlInstruction from "../../components/voiceControlInstruction";
 import dataWithAppendices from "./dataWithApendices";
 import pushDeviseRecipeHistoryData from "../../components/DeviseRecipeHistory/pushDeviseRecipeHistoryData";
 import "./Recipe.scss";
+import formatRecipeData from "../../components/chatBot/formatData";
 
 const RecipeDetails = () => {
     const { id } = useParams();
@@ -38,11 +39,16 @@ const RecipeDetails = () => {
         văn bản được hỗ trợ. Để sử dụng tính năng tường thuật văn bản, bạn chỉ cần nhấn vào nút 
         “Đọc” được đặt tại các phần nội dung được hỗ trợ trong trang chi tiết công thức.
         Trong quá trình tường thuật, nếu bạn không muốn tiếp tục nghe, chỉ cần nhấn nút “Dừng”.`
-        const ttsDesHelpLink = `/Info`;
+    const ttsDesHelpLink = `/Info`;
     const instuctionDes = `Các bước thực hiện món ăn được trình bày theo thứ tự. 
         Bạn có thể đánh dấu bước đã làm để ẩn hình ảnh (nếu có) hoặc dùng tính năng tường thuật để nghe hướng dẫn.`;
     const appendixDes = `Phần phụ lục cung cấp giải thích cho các thuật ngữ và nguyên liệu có thể gây nhầm lẫn trong công thức. 
         Khi gặp một từ khóa được đánh dấu, bạn có thể di chuột vào chúng xem ngay giải thích`;
+    const voiceControlInstruc = [
+        {function: `scrollToIngredients()`, text: `Đi đến phần nguyên liệu: "nguyên liệu"`},
+        {function: `scrollToInstructions()`, text: `Đi đến phần bước làm: "bước làm", "hướng dẫn"`},
+    ]
+    
 
     useEffect(() => {
         const fetchRecipe = async () => {
@@ -158,7 +164,7 @@ const RecipeDetails = () => {
         const ingredientsText = recipe.ingredients
             .map((ingredient, i) => `${ingredient.name}: ${adjustedIngredients[i].quantity} ${ingredient.measurement}`)
             .join(", ");
-        
+        console.log(ingredientsText)
         TTS(ingredientsText);
     };
 
@@ -167,6 +173,7 @@ const RecipeDetails = () => {
         const instructionText = recipe.instructions.map((instruction, index) => `Bước ${index + 1} ${instruction.name}`)
         .join(", ");
         TTS(instructionText);
+
     }
 
     const handleSpeakAppendices = () =>{
@@ -428,7 +435,7 @@ const RecipeDetails = () => {
                 </div>
             </div>
             
-            <ChatBotBox recipeInfo = {recipe} command={command}/>
+            <ChatBotBox recipeInfo = {formatRecipeData(recipe)} command={command}/>
             <VoiceControlInstruction
                 scrollToInstructions={scrollToInstructions}
                 scrollToReviews={scrollToReviews}
@@ -440,6 +447,7 @@ const RecipeDetails = () => {
                 handleSpeakInstruction={handleSpeakInstruction}
                 handleSpeakAppendices={handleSpeakAppendices}
                 handleAddReview={handleAddReview}
+                voiceControlInstructionArr={voiceControlInstruc}
             />
             
         </Container>
