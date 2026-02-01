@@ -1,6 +1,6 @@
 Đây là sản phẩm website chia sẻ công thức nấu ăn tích hợp điều khiển giọng nói và tường thuật văn bản 
 
-Đây là website chia sẻ công thức nấu ăn cho phép người dùng:
+Website cho phép người dùng:
 
 Tìm kiếm & xem các công thức chi tiết
 
