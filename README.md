@@ -1,4 +1,4 @@
-Đây là sản phẩm website chia sẻ công thức nấu ăn tích hợp điều khiển giọng nói và tường thuật văn bản của sinh viên Nguyễn Thế Hà Cường- mã sinh viên 11221168, giáo viên hướng dẫn Nguyễn Trung Tuấn
+Đây là sản phẩm website chia sẻ công thức nấu ăn tích hợp điều khiển giọng nói và tường thuật văn bản 
 
 Đây là website chia sẻ công thức nấu ăn cho phép người dùng:
 
